@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoviePickerDomain.Model;
 
-public partial class Language
+public partial class Language : Entity
 {
     public byte LanguageId { get; set; }
 

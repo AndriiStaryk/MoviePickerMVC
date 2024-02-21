@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoviePickerDomain.Model;
 
-public partial class Director
+public partial class Director : Entity
 {
     public long DirectorId { get; set; }
 

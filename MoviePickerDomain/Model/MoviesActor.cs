@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoviePickerDomain.Model;
 
-public partial class MoviesActor
+public partial class MoviesActor : Entity
 {
     public long Id { get; set; }
 

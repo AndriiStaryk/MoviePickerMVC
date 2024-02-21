@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoviePickerDomain.Model;
 
-public partial class Country
+public partial class Country : Entity
 {
     public int Id { get; set; }
 
