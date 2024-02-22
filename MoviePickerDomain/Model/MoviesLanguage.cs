@@ -9,7 +9,7 @@ public partial class MoviesLanguage : Entity
 
     public long MovieId { get; set; }
 
-    public byte LanguageId { get; set; }
+    public long LanguageId { get; set; }
 
     public virtual Language Language { get; set; } = null!;
 

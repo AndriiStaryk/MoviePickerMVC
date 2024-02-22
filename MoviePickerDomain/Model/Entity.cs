@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoviePickerDomain.Model;
-
-public abstract class Entity
+namespace MoviePickerDomain.Model
 {
-    public int Id { get; set; }
+    public abstract class Entity
+    {
+        //public long Id { get; set; }
+    }
 }

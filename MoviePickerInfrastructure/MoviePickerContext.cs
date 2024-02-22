@@ -68,7 +68,9 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Director>(entity =>
         {
-            entity.Property(e => e.DirectorId).HasColumnName("DirectorID");
+            entity.Property(e => e.DirectorId)
+                .ValueGeneratedNever()
+                .HasColumnName("DirectorID");
             entity.Property(e => e.BirthCountryId).HasColumnName("BirthCountryID");
             entity.Property(e => e.Name).HasMaxLength(50);
 

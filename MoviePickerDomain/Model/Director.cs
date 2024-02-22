@@ -11,7 +11,7 @@ public partial class Director : Entity
 
     public DateOnly? BirthDate { get; set; }
 
-    public int? BirthCountryId { get; set; }
+    public long? BirthCountryId { get; set; }
 
     public virtual Country? BirthCountry { get; set; }
 

@@ -5,7 +5,7 @@ namespace MoviePickerDomain.Model;
 
 public partial class Language : Entity
 {
-    public byte LanguageId { get; set; }
+    public long LanguageId { get; set; }
 
     public string Name { get; set; } = null!;
 }
