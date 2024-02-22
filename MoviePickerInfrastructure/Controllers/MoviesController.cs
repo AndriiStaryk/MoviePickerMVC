@@ -27,7 +27,7 @@ namespace MoviePickerInfrastructure.Controllers
             ViewBag.Id = id;
             ViewBag.Name = name;
 
-            var movieByGenre = _context.Movies.Where(mov => mov. == id).Include(mov => mov.Genre );
+            //var movieByGenre = _context.Movies.Where(mov => mov. == id).Include(mov => mov.Genre );
 
             var moviePickerContext = _context.Movies.Include(m => m.Director);
             return View(await moviePickerContext.ToListAsync());
