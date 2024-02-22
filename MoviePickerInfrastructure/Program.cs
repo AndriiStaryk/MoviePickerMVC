@@ -30,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Actors}/{action=Index}/{id?}");
+    pattern: "{controller=Genres}/{action=Index}/{id?}");
 
 app.Run();
