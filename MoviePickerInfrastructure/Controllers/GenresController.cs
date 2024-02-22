@@ -34,14 +34,13 @@ namespace MoviePickerInfrastructure.Controllers
             }
 
             var genre = await _context.Genres
-                .FirstOrDefaultAsync(m => m.GenreId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
                 return NotFound();
             }
 
-            //return View(genre);
-            return RedirectToAction("Index", "Movies", new { id = genre.GenreId, name = genre.Name});
+            return View(genre);
         }
 
         // GET: Genres/Create
@@ -55,7 +54,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GenreId,Name")] Genre genre)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
         {
             if (ModelState.IsValid)
             {
@@ -87,9 +86,9 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("GenreId,Name")] Genre genre)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Genre genre)
         {
-            if (id != genre.GenreId)
+            if (id != genre.Id)
             {
                 return NotFound();
             }
@@ -103,7 +102,7 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GenreExists(genre.GenreId))
+                    if (!GenreExists(genre.Id))
                     {
                         return NotFound();
                     }
@@ -126,7 +125,7 @@ namespace MoviePickerInfrastructure.Controllers
             }
 
             var genre = await _context.Genres
-                .FirstOrDefaultAsync(m => m.GenreId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
                 return NotFound();
@@ -152,7 +151,7 @@ namespace MoviePickerInfrastructure.Controllers
 
         private bool GenreExists(long id)
         {
-            return _context.Genres.Any(e => e.GenreId == id);
+            return _context.Genres.Any(e => e.Id == id);
         }
     }
 }

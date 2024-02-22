@@ -5,7 +5,7 @@ namespace MoviePickerDomain.Model;
 
 public partial class Movie : Entity
 {
-    public long MovieId { get; set; }
+    public long Id { get; set; }
 
     public string Title { get; set; } = null!;
 
@@ -24,6 +24,10 @@ public partial class Movie : Entity
     public virtual Director Director { get; set; } = null!;
 
     public virtual ICollection<MoviesActor> MoviesActors { get; set; } = new List<MoviesActor>();
+
+    public virtual ICollection<MoviesGenre> MoviesGenres { get; set; } = new List<MoviesGenre>();
+
+    public virtual ICollection<MoviesLanguage> MoviesLanguages { get; set; } = new List<MoviesLanguage>();
 
     public virtual MoviesReview? MoviesReview { get; set; }
 }

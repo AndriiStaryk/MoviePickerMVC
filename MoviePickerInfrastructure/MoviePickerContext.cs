@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+
 using MoviePickerDomain.Model;
 
 namespace MoviePickerInfrastructure;
@@ -46,7 +47,7 @@ public partial class MoviePickerContext : DbContext
     {
         modelBuilder.Entity<Actor>(entity =>
         {
-            entity.Property(e => e.ActorId).HasColumnName("ActorID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BirthCountryId).HasColumnName("BirthCountryID");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
@@ -60,7 +61,7 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name)
                 .HasMaxLength(20)
                 .IsFixedLength();
@@ -68,28 +69,27 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Director>(entity =>
         {
-            entity.Property(e => e.DirectorId)
+            entity.Property(e => e.Id)
                 .ValueGeneratedNever()
-                .HasColumnName("DirectorID");
+                .HasColumnName("ID");
             entity.Property(e => e.BirthCountryId).HasColumnName("BirthCountryID");
             entity.Property(e => e.Name).HasMaxLength(50);
 
             entity.HasOne(d => d.BirthCountry).WithMany(p => p.Directors)
                 .HasForeignKey(d => d.BirthCountryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Directors_BirthCountryID");
         });
 
         modelBuilder.Entity<Genre>(entity =>
         {
-            entity.Property(e => e.GenreId).HasColumnName("GenreID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Language>(entity =>
         {
-            entity.Property(e => e.LanguageId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("LanguageID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name)
                 .HasMaxLength(30)
                 .IsFixedLength();
@@ -97,7 +97,7 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Movie>(entity =>
         {
-            entity.Property(e => e.MovieId).HasColumnName("MovieID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.DirectorId).HasColumnName("DirectorID");
             entity.Property(e => e.Title).HasMaxLength(50);
 
@@ -113,35 +113,33 @@ public partial class MoviePickerContext : DbContext
 
             entity.HasIndex(e => e.Id, "IX_Movies_Actors");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ActorId).HasColumnName("ActorID");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
             entity.HasOne(d => d.Actor).WithMany(p => p.MoviesActors)
                 .HasForeignKey(d => d.ActorId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Actors_Actors");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.MoviesActors)
                 .HasForeignKey(d => d.MovieId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Actors_Movies");
         });
 
         modelBuilder.Entity<MoviesGenre>(entity =>
         {
-            entity.HasNoKey();
-
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.GenreId).HasColumnName("GenreID");
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("id");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
-            entity.HasOne(d => d.Genre).WithMany()
+            entity.HasOne(d => d.Genre).WithMany(p => p.MoviesGenres)
                 .HasForeignKey(d => d.GenreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Genres_Genres");
 
-            entity.HasOne(d => d.Movie).WithMany()
+            entity.HasOne(d => d.Movie).WithMany(p => p.MoviesGenres)
                 .HasForeignKey(d => d.MovieId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Genres_Movies");
@@ -149,20 +147,16 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<MoviesLanguage>(entity =>
         {
-            entity.HasNoKey();
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.LanguageId).HasColumnName("LanguageID");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
-            entity.HasOne(d => d.Language).WithMany()
+            entity.HasOne(d => d.Language).WithMany(p => p.MoviesLanguages)
                 .HasForeignKey(d => d.LanguageId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Languages_Languages");
 
-            entity.HasOne(d => d.Movie).WithMany()
+            entity.HasOne(d => d.Movie).WithMany(p => p.MoviesLanguages)
                 .HasForeignKey(d => d.MovieId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Movies_Languages_Movies");
@@ -172,9 +166,9 @@ public partial class MoviePickerContext : DbContext
         {
             entity.Property(e => e.Id)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("id");
-            entity.Property(e => e.MovieId).HasColumnName("movieID");
-            entity.Property(e => e.ReviewId).HasColumnName("reviewID");
+                .HasColumnName("ID");
+            entity.Property(e => e.MovieId).HasColumnName("MovieID");
+            entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
 
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.MoviesReview)
                 .HasForeignKey<MoviesReview>(d => d.Id)
@@ -189,7 +183,7 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Text)
                 .HasMaxLength(100)
                 .IsFixedLength();

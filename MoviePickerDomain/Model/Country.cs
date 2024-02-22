@@ -7,7 +7,7 @@ public partial class Country : Entity
 {
     public long Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
     public virtual ICollection<Actor> Actors { get; set; } = new List<Actor>();
 
