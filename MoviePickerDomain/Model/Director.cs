@@ -5,7 +5,7 @@ namespace MoviePickerDomain.Model;
 
 public partial class Director : Entity
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
 
     public string Name { get; set; } = null!;
 

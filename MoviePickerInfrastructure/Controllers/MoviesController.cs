@@ -20,20 +20,10 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Movies
-
-        public async Task<IActionResult> Index ()//(int? id, string? name, MoviesGenre? mg)
+        public async Task<IActionResult> Index()
         {
-            //if (id == null) return RedirectToAction("Genres", "Index");
-
-           // ViewBag.Id = id;
-           // ViewBag.Name = name;
-           // ViewBag.MoviesGenre = mg;
-
-            //var movieByGenre = _context.Movies.Where(mov => mov.Id == id).Include(mg => );
-
             var moviePickerContext = _context.Movies.Include(m => m.Director);
             return View(await moviePickerContext.ToListAsync());
-            //return View(await movieByGenre.ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -69,6 +59,21 @@ namespace MoviePickerInfrastructure.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
         {
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new { x.Key, x.Value.Errors })
+                    .ToArray();
+
+                foreach (var error in errors)
+                {
+                    Console.WriteLine($"Key: {error.Key}, Errors: {string.Join(",", error.Errors.Select(e => e.ErrorMessage))}");
+                }
+            }
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(movie);

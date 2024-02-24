@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using MoviePickerDomain.Model;
-
 namespace MoviePickerInfrastructure;
 
 public partial class MoviePickerContext : DbContext
@@ -69,9 +68,7 @@ public partial class MoviePickerContext : DbContext
 
         modelBuilder.Entity<Director>(entity =>
         {
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.BirthCountryId).HasColumnName("BirthCountryID");
             entity.Property(e => e.Name).HasMaxLength(50);
 

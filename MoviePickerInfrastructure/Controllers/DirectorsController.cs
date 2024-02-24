@@ -10,22 +10,23 @@ using MoviePickerInfrastructure;
 
 namespace MoviePickerInfrastructure.Controllers
 {
-    public class GenresController : Controller
+    public class DirectorsController : Controller
     {
         private readonly MoviePickerContext _context;
 
-        public GenresController(MoviePickerContext context)
+        public DirectorsController(MoviePickerContext context)
         {
             _context = context;
         }
 
-        // GET: Genres
+        // GET: Directors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genres.ToListAsync());
+            var moviePickerContext = _context.Directors.Include(d => d.BirthCountry);
+            return View(await moviePickerContext.ToListAsync());
         }
 
-        // GET: Genres/Details/5
+        // GET: Directors/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genres
+            var director = await _context.Directors
+                .Include(d => d.BirthCountry)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (genre == null)
+            if (director == null)
             {
                 return NotFound();
             }
 
-            return View(genre);
+            return View(director);
         }
 
-        // GET: Genres/Create
+        // GET: Directors/Create
         public IActionResult Create()
         {
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name");
             return View();
         }
 
-        // POST: Genres/Create
+        // POST: Directors/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
+        public async Task<IActionResult> Create([Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(genre);
+                _context.Add(director);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(genre);
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+            return View(director);
         }
 
-        // GET: Genres/Edit/5
+        // GET: Directors/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genres.FindAsync(id);
-            if (genre == null)
+            var director = await _context.Directors.FindAsync(id);
+            if (director == null)
             {
                 return NotFound();
             }
-            return View(genre);
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+            return View(director);
         }
 
-        // POST: Genres/Edit/5
+        // POST: Directors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Genre genre)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
         {
-            if (id != genre.Id)
+            if (id != director.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace MoviePickerInfrastructure.Controllers
             {
                 try
                 {
-                    _context.Update(genre);
+                    _context.Update(director);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GenreExists(genre.Id))
+                    if (!DirectorExists(director.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(genre);
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+            return View(director);
         }
 
-        // GET: Genres/Delete/5
+        // GET: Directors/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -124,34 +130,35 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genres
+            var director = await _context.Directors
+                .Include(d => d.BirthCountry)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (genre == null)
+            if (director == null)
             {
                 return NotFound();
             }
 
-            return View(genre);
+            return View(director);
         }
 
-        // POST: Genres/Delete/5
+        // POST: Directors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var genre = await _context.Genres.FindAsync(id);
-            if (genre != null)
+            var director = await _context.Directors.FindAsync(id);
+            if (director != null)
             {
-                _context.Genres.Remove(genre);
+                _context.Directors.Remove(director);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenreExists(long id)
+        private bool DirectorExists(long id)
         {
-            return _context.Genres.Any(e => e.Id == id);
+            return _context.Directors.Any(e => e.Id == id);
         }
     }
 }
