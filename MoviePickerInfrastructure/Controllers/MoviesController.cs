@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers
 {
@@ -48,9 +49,39 @@ namespace MoviePickerInfrastructure.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
+            //var viewModel = new MovieViewModel
+            //{
+            //    Movie = new Movie(),
+            //};
             ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
             return View();
+            //return View(viewModel);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Create(MovieViewModel viewModel)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    foreach (var genreId in viewModel.SelectedGenres)
+        //    {
+        //        var movieGenre = new MoviesGenre
+        //        {
+        //            MovieId = viewModel.Movie.Id,
+        //            GenreId = genreId
+        //        };
+
+        //        viewModel.Movie.MoviesGenres.Add(movieGenre);
+        //    }
+
+        //    _context.Add(viewModel.Movie);
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToAction(nameof(Index));
+        //    // }
+
+        //    // return View(viewModel);
+        //}
 
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -74,14 +105,14 @@ namespace MoviePickerInfrastructure.Controllers
             }
 
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-            return View(movie);
+            //}
+            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+            //return View(movie);
         }
 
         // GET: Movies/Edit/5
@@ -113,8 +144,8 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
                     _context.Update(movie);
@@ -132,9 +163,9 @@ namespace MoviePickerInfrastructure.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-            return View(movie);
+            //}
+            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+            //return View(movie);
         }
 
         // GET: Movies/Delete/5
