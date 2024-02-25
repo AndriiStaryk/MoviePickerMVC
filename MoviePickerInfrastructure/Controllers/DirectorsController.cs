@@ -61,17 +61,17 @@ namespace MoviePickerInfrastructure.Controllers
         {
             //ViewBag.BirthCountryId = new SelectList(_context.Countries, "Id", "Name");
             //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            
+
             //director.BirthCountryId = 1;
-            // if (ModelState.IsValid)
-            //{
-            _context.Add(director);
+            if (ModelState.IsValid)
+            {
+                _context.Add(director);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-           // }
+            }
 
-            //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            //return View(director);
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+            return View(director);
         }
 
         // GET: Directors/Edit/5
@@ -102,9 +102,9 @@ namespace MoviePickerInfrastructure.Controllers
             {
                 return NotFound();
             }
-            
-            //if (ModelState.IsValid)
-            //{
+
+            if (ModelState.IsValid)
+            {
                 try
                 {
                     _context.Update(director);
@@ -122,9 +122,9 @@ namespace MoviePickerInfrastructure.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            //return View(director);
+            }
+            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+            return View(director);
         }
 
         // GET: Directors/Delete/5

@@ -61,15 +61,15 @@ namespace MoviePickerInfrastructure.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 _context.Add(moviesGenre);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
-        //    ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
-        //    return View(moviesGenre);
+            }
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
+            return View(moviesGenre);
         }
 
         // GET: MoviesGenres/Edit/5
@@ -102,8 +102,8 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 try
                 {
                     _context.Update(moviesGenre);
@@ -121,10 +121,10 @@ namespace MoviePickerInfrastructure.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
-            //ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
-            //return View(moviesGenre);
+            }
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
+            return View(moviesGenre);
         }
 
         // GET: MoviesGenres/Delete/5

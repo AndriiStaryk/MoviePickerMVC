@@ -105,14 +105,14 @@ namespace MoviePickerInfrastructure.Controllers
             }
 
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-            //return View(movie);
+            }
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+            return View(movie);
         }
 
         // GET: Movies/Edit/5
@@ -144,8 +144,8 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 try
                 {
                     _context.Update(movie);
@@ -163,9 +163,9 @@ namespace MoviePickerInfrastructure.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-            //return View(movie);
+            }
+            ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+            return View(movie);
         }
 
         // GET: Movies/Delete/5

@@ -5,13 +5,11 @@ namespace MoviePickerDomain.Model;
 
 public partial class Movie : Entity
 {
-    //public long Id { get; set; }
-
     public string Title { get; set; } = null!;
 
     public DateOnly ReleaseDate { get; set; }
 
-    public long DirectorId { get; set; }
+    public int DirectorId { get; set; }
 
     public long? Budget { get; set; }
 
@@ -21,7 +19,7 @@ public partial class Movie : Entity
 
     public double? Rating { get; set; }
 
-    public virtual Director Director { get; set; } = null!;
+    public virtual Director? Director { get; set; }// = null!;
 
     public virtual ICollection<MoviesActor> MoviesActors { get; set; } = new List<MoviesActor>();
 

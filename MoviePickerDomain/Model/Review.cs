@@ -5,8 +5,6 @@ namespace MoviePickerDomain.Model;
 
 public partial class Review : Entity
 {
-    //public long Id { get; set; }
-
     public string Title { get; set; } = null!;
 
     public string? Text { get; set; }

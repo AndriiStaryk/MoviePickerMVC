@@ -5,11 +5,9 @@ namespace MoviePickerDomain.Model;
 
 public partial class MoviesActor : Entity
 {
-    //public long Id { get; set; }
+    public int MovieId { get; set; }
 
-    public long MovieId { get; set; }
-
-    public long ActorId { get; set; }
+    public int ActorId { get; set; }
 
     public virtual Actor Actor { get; set; } = null!;
 
