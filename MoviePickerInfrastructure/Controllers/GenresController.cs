@@ -26,7 +26,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Genres/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Genres/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name")] Genre genre)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
             if (id != genre.Id)
             {
@@ -117,7 +117,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Genres/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace MoviePickerInfrastructure.Controllers
         // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var genre = await _context.Genres.FindAsync(id);
             if (genre != null)
@@ -149,7 +149,7 @@ namespace MoviePickerInfrastructure.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenreExists(long id)
+        private bool GenreExists(int id)
         {
             return _context.Genres.Any(e => e.Id == id);
         }

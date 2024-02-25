@@ -27,7 +27,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Actors/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -70,7 +70,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Actors/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -91,7 +91,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,BirthDate,BirthCountryId")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BirthDate,BirthCountryId")] Actor actor)
         {
             if (id != actor.Id)
             {
@@ -123,7 +123,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Actors/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -144,7 +144,7 @@ namespace MoviePickerInfrastructure.Controllers
         // POST: Actors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var actor = await _context.Actors.FindAsync(id);
             if (actor != null)
@@ -156,7 +156,7 @@ namespace MoviePickerInfrastructure.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActorExists(long id)
+        private bool ActorExists(int id)
         {
             return _context.Actors.Any(e => e.Id == id);
         }

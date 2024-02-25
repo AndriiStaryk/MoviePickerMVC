@@ -10,23 +10,23 @@ using MoviePickerInfrastructure;
 
 namespace MoviePickerInfrastructure.Controllers
 {
-    public class DirectorsController : Controller
+    public class MoviesReviewsController : Controller
     {
         private readonly MoviePickerContext _context;
 
-        public DirectorsController(MoviePickerContext context)
+        public MoviesReviewsController(MoviePickerContext context)
         {
             _context = context;
         }
 
-        // GET: Directors
+        // GET: MoviesReviews
         public async Task<IActionResult> Index()
         {
-            var moviePickerContext = _context.Directors.Include(d => d.BirthCountry);
+            var moviePickerContext = _context.MoviesReviews.Include(m => m.Movie).Include(m => m.Review);
             return View(await moviePickerContext.ToListAsync());
         }
 
-        // GET: Directors/Details/5
+        // GET: MoviesReviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,47 +34,45 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .Include(d => d.BirthCountry)
+            var moviesReview = await _context.MoviesReviews
+                .Include(m => m.Movie)
+                .Include(m => m.Review)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
+            if (moviesReview == null)
             {
                 return NotFound();
             }
 
-            return View(director);
+            return View(moviesReview);
         }
 
-        // GET: Directors/Create
+        // GET: MoviesReviews/Create
         public IActionResult Create()
         {
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+            ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title");
             return View();
         }
 
-        // POST: Directors/Create
+        // POST: MoviesReviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Create([Bind("MovieId,ReviewId,Id")] MoviesReview moviesReview)
         {
-            //ViewBag.BirthCountryId = new SelectList(_context.Countries, "Id", "Name");
-            //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-
-            //director.BirthCountryId = 1;
             if (ModelState.IsValid)
             {
-                _context.Add(director);
+                _context.Add(moviesReview);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
+            return View(moviesReview);
         }
 
-        // GET: Directors/Edit/5
+        // GET: MoviesReviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,23 +80,24 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors.FindAsync(id);
-            if (director == null)
+            var moviesReview = await _context.MoviesReviews.FindAsync(id);
+            if (moviesReview == null)
             {
                 return NotFound();
             }
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
+            return View(moviesReview);
         }
 
-        // POST: Directors/Edit/5
+        // POST: MoviesReviews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,ReviewId,Id")] MoviesReview moviesReview)
         {
-            if (id != director.Id)
+            if (id != moviesReview.Id)
             {
                 return NotFound();
             }
@@ -107,12 +106,12 @@ namespace MoviePickerInfrastructure.Controllers
             {
                 try
                 {
-                    _context.Update(director);
+                    _context.Update(moviesReview);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DirectorExists(director.Id))
+                    if (!MoviesReviewExists(moviesReview.Id))
                     {
                         return NotFound();
                     }
@@ -123,11 +122,12 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
+            return View(moviesReview);
         }
 
-        // GET: Directors/Delete/5
+        // GET: MoviesReviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,35 +135,36 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .Include(d => d.BirthCountry)
+            var moviesReview = await _context.MoviesReviews
+                .Include(m => m.Movie)
+                .Include(m => m.Review)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
+            if (moviesReview == null)
             {
                 return NotFound();
             }
 
-            return View(director);
+            return View(moviesReview);
         }
 
-        // POST: Directors/Delete/5
+        // POST: MoviesReviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var director = await _context.Directors.FindAsync(id);
-            if (director != null)
+            var moviesReview = await _context.MoviesReviews.FindAsync(id);
+            if (moviesReview != null)
             {
-                _context.Directors.Remove(director);
+                _context.MoviesReviews.Remove(moviesReview);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DirectorExists(int id)
+        private bool MoviesReviewExists(int id)
         {
-            return _context.Directors.Any(e => e.Id == id);
+            return _context.MoviesReviews.Any(e => e.Id == id);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Movies/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -91,18 +91,18 @@ namespace MoviePickerInfrastructure.Controllers
         public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
         {
 
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState
-                    .Where(x => x.Value.Errors.Count > 0)
-                    .Select(x => new { x.Key, x.Value.Errors })
-                    .ToArray();
+            //if (!ModelState.IsValid)
+            //{
+            //    var errors = ModelState
+            //        .Where(x => x.Value.Errors.Count > 0)
+            //        .Select(x => new { x.Key, x.Value.Errors })
+            //        .ToArray();
 
-                foreach (var error in errors)
-                {
-                    Console.WriteLine($"Key: {error.Key}, Errors: {string.Join(",", error.Errors.Select(e => e.ErrorMessage))}");
-                }
-            }
+            //    foreach (var error in errors)
+            //    {
+            //        Console.WriteLine($"Key: {error.Key}, Errors: {string.Join(",", error.Errors.Select(e => e.ErrorMessage))}");
+            //    }
+            //}
 
 
             if (ModelState.IsValid)
@@ -116,7 +116,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Movies/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -169,7 +169,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: Movies/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -190,7 +190,7 @@ namespace MoviePickerInfrastructure.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _context.Movies.FindAsync(id);
             if (movie != null)
@@ -202,7 +202,7 @@ namespace MoviePickerInfrastructure.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieExists(long id)
+        private bool MovieExists(int id)
         {
             return _context.Movies.Any(e => e.Id == id);
         }

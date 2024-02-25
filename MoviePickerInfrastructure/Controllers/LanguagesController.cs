@@ -10,23 +10,22 @@ using MoviePickerInfrastructure;
 
 namespace MoviePickerInfrastructure.Controllers
 {
-    public class DirectorsController : Controller
+    public class LanguagesController : Controller
     {
         private readonly MoviePickerContext _context;
 
-        public DirectorsController(MoviePickerContext context)
+        public LanguagesController(MoviePickerContext context)
         {
             _context = context;
         }
 
-        // GET: Directors
+        // GET: Languages
         public async Task<IActionResult> Index()
         {
-            var moviePickerContext = _context.Directors.Include(d => d.BirthCountry);
-            return View(await moviePickerContext.ToListAsync());
+            return View(await _context.Languages.ToListAsync());
         }
 
-        // GET: Directors/Details/5
+        // GET: Languages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,47 +33,39 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .Include(d => d.BirthCountry)
+            var language = await _context.Languages
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
+            if (language == null)
             {
                 return NotFound();
             }
 
-            return View(director);
+            return View(language);
         }
 
-        // GET: Directors/Create
+        // GET: Languages/Create
         public IActionResult Create()
         {
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name");
             return View();
         }
 
-        // POST: Directors/Create
+        // POST: Languages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Create([Bind("Name,Id")] Language language)
         {
-            //ViewBag.BirthCountryId = new SelectList(_context.Countries, "Id", "Name");
-            //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-
-            //director.BirthCountryId = 1;
             if (ModelState.IsValid)
             {
-                _context.Add(director);
+                _context.Add(language);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            return View(language);
         }
 
-        // GET: Directors/Edit/5
+        // GET: Languages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,23 +73,22 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors.FindAsync(id);
-            if (director == null)
+            var language = await _context.Languages.FindAsync(id);
+            if (language == null)
             {
                 return NotFound();
             }
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            return View(language);
         }
 
-        // POST: Directors/Edit/5
+        // POST: Languages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Id")] Language language)
         {
-            if (id != director.Id)
+            if (id != language.Id)
             {
                 return NotFound();
             }
@@ -107,12 +97,12 @@ namespace MoviePickerInfrastructure.Controllers
             {
                 try
                 {
-                    _context.Update(director);
+                    _context.Update(language);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DirectorExists(director.Id))
+                    if (!LanguageExists(language.Id))
                     {
                         return NotFound();
                     }
@@ -123,11 +113,10 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-            return View(director);
+            return View(language);
         }
 
-        // GET: Directors/Delete/5
+        // GET: Languages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,35 +124,34 @@ namespace MoviePickerInfrastructure.Controllers
                 return NotFound();
             }
 
-            var director = await _context.Directors
-                .Include(d => d.BirthCountry)
+            var language = await _context.Languages
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (director == null)
+            if (language == null)
             {
                 return NotFound();
             }
 
-            return View(director);
+            return View(language);
         }
 
-        // POST: Directors/Delete/5
+        // POST: Languages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var director = await _context.Directors.FindAsync(id);
-            if (director != null)
+            var language = await _context.Languages.FindAsync(id);
+            if (language != null)
             {
-                _context.Directors.Remove(director);
+                _context.Languages.Remove(language);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DirectorExists(int id)
+        private bool LanguageExists(int id)
         {
-            return _context.Directors.Any(e => e.Id == id);
+            return _context.Languages.Any(e => e.Id == id);
         }
     }
 }

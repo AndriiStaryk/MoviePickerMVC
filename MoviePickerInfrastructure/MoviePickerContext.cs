@@ -167,7 +167,7 @@ public partial class MoviePickerContext : DbContext
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
             entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.MoviesReview)
+            entity.HasOne(d => d.Movie).WithOne(p => p.MoviesReview)
                 .HasForeignKey<MoviesReview>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MoviesReviews_Movies");

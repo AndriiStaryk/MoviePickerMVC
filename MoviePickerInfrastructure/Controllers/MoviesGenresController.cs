@@ -27,7 +27,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: MoviesGenres/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -73,7 +73,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: MoviesGenres/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -95,7 +95,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
         {
             if (id != moviesGenre.Id)
             {
@@ -128,7 +128,7 @@ namespace MoviePickerInfrastructure.Controllers
         }
 
         // GET: MoviesGenres/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -150,7 +150,7 @@ namespace MoviePickerInfrastructure.Controllers
         // POST: MoviesGenres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var moviesGenre = await _context.MoviesGenres.FindAsync(id);
             if (moviesGenre != null)
@@ -162,7 +162,7 @@ namespace MoviePickerInfrastructure.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MoviesGenreExists(long id)
+        private bool MoviesGenreExists(int id)
         {
             return _context.MoviesGenres.Any(e => e.Id == id);
         }

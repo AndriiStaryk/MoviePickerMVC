@@ -9,7 +9,7 @@ public partial class MoviesGenre : Entity
 
     public int GenreId { get; set; }
 
-    public virtual Genre Genre { get; set; } = null!;
+    public virtual Genre? Genre { get; set; }// = null!;
 
-    public virtual Movie Movie { get; set; } = null!;
+    public virtual Movie? Movie { get; set; }// = null!;
 }
