@@ -8,101 +8,110 @@ using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 
-namespace MoviePickerInfrastructure.Controllers
+namespace MoviePickerInfrastructure.Controllers;
+
+public class MoviesLanguagesController : Controller
 {
-    public class MoviesLanguagesController : Controller
+    private readonly MoviePickerContext _context;
+
+    public MoviesLanguagesController(MoviePickerContext context)
     {
-        private readonly MoviePickerContext _context;
+        _context = context;
+    }
 
-        public MoviesLanguagesController(MoviePickerContext context)
+    // GET: MoviesLanguages
+    public async Task<IActionResult> Index()
+    {
+        var moviePickerContext = _context.MoviesLanguages.Include(m => m.Language).Include(m => m.Movie);
+        return View(await moviePickerContext.ToListAsync());
+    }
+
+    // GET: MoviesLanguages/Details/5
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        // GET: MoviesLanguages
-        public async Task<IActionResult> Index()
+        var moviesLanguage = await _context.MoviesLanguages
+            .Include(m => m.Language)
+            .Include(m => m.Movie)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (moviesLanguage == null)
         {
-            var moviePickerContext = _context.MoviesLanguages.Include(m => m.Language).Include(m => m.Movie);
-            return View(await moviePickerContext.ToListAsync());
+            return NotFound();
         }
 
-        // GET: MoviesLanguages/Details/5
-        public async Task<IActionResult> Details(int? id)
+        return View(moviesLanguage);
+    }
+
+    // GET: MoviesLanguages/Create
+    public IActionResult Create()
+    {
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+        return View();
+    }
+
+    // POST: MoviesLanguages/Create
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create([Bind("MovieId,LanguageId,Id")] MoviesLanguage moviesLanguage)
+    {
+        if (ModelState.IsValid)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var moviesLanguage = await _context.MoviesLanguages
-                .Include(m => m.Language)
-                .Include(m => m.Movie)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (moviesLanguage == null)
-            {
-                return NotFound();
-            }
-
-            return View(moviesLanguage);
-        }
-
-        // GET: MoviesLanguages/Create
-        public IActionResult Create()
-        {
-            ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
-            return View();
-        }
-
-        // POST: MoviesLanguages/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,LanguageId,Id")] MoviesLanguage moviesLanguage)
-        {
-            if (ModelState.IsValid)
+            if (!await IsMoviesLanguagesExist(moviesLanguage.MovieId, moviesLanguage.LanguageId))
             {
                 _context.Add(moviesLanguage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
-            return View(moviesLanguage);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "This movie-language relation already exists.");
+            }
+        }
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
+        return View(moviesLanguage);
+    }
+
+    // GET: MoviesLanguages/Edit/5
+    public async Task<IActionResult> Edit(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        // GET: MoviesLanguages/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        var moviesLanguage = await _context.MoviesLanguages.FindAsync(id);
+        if (moviesLanguage == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
+        return View(moviesLanguage);
+    }
 
-            var moviesLanguage = await _context.MoviesLanguages.FindAsync(id);
-            if (moviesLanguage == null)
-            {
-                return NotFound();
-            }
-            ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
-            return View(moviesLanguage);
+    // POST: MoviesLanguages/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("MovieId,LanguageId,Id")] MoviesLanguage moviesLanguage)
+    {
+        if (id != moviesLanguage.Id)
+        {
+            return NotFound();
         }
 
-        // POST: MoviesLanguages/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,LanguageId,Id")] MoviesLanguage moviesLanguage)
+        if (ModelState.IsValid)
         {
-            if (id != moviesLanguage.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
+            if (!await IsMoviesLanguagesExist(moviesLanguage.MovieId, moviesLanguage.LanguageId))
             {
                 try
                 {
@@ -122,49 +131,62 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
-            return View(moviesLanguage);
-        }
-
-        // GET: MoviesLanguages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
+            else
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, "This movie-language relation already exists.");
             }
-
-            var moviesLanguage = await _context.MoviesLanguages
-                .Include(m => m.Language)
-                .Include(m => m.Movie)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (moviesLanguage == null)
-            {
-                return NotFound();
-            }
-
-            return View(moviesLanguage);
         }
-
-        // POST: MoviesLanguages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var moviesLanguage = await _context.MoviesLanguages.FindAsync(id);
-            if (moviesLanguage != null)
-            {
-                _context.MoviesLanguages.Remove(moviesLanguage);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool MoviesLanguageExists(int id)
-        {
-            return _context.MoviesLanguages.Any(e => e.Id == id);
-        }
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name", moviesLanguage.LanguageId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesLanguage.MovieId);
+        return View(moviesLanguage);
     }
+
+    // GET: MoviesLanguages/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var moviesLanguage = await _context.MoviesLanguages
+            .Include(m => m.Language)
+            .Include(m => m.Movie)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (moviesLanguage == null)
+        {
+            return NotFound();
+        }
+
+        return View(moviesLanguage);
+    }
+
+    // POST: MoviesLanguages/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var moviesLanguage = await _context.MoviesLanguages.FindAsync(id);
+        if (moviesLanguage != null)
+        {
+            _context.MoviesLanguages.Remove(moviesLanguage);
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool MoviesLanguageExists(int id)
+    {
+        return _context.MoviesLanguages.Any(e => e.Id == id);
+    }
+
+    public async Task<bool> IsMoviesLanguagesExist(int movieID, int languageID)
+    {
+        var moviesLanguages = await _context.MoviesLanguages
+            .FirstOrDefaultAsync(m => m.MovieId == movieID && m.LanguageId == languageID);
+
+        return moviesLanguages != null;
+    }
+
 }

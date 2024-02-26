@@ -8,101 +8,110 @@ using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 
-namespace MoviePickerInfrastructure.Controllers
+namespace MoviePickerInfrastructure.Controllers;
+
+public class MoviesGenresController : Controller
 {
-    public class MoviesGenresController : Controller
+    private readonly MoviePickerContext _context;
+
+    public MoviesGenresController(MoviePickerContext context)
     {
-        private readonly MoviePickerContext _context;
+        _context = context;
+    }
 
-        public MoviesGenresController(MoviePickerContext context)
+    // GET: MoviesGenres
+    public async Task<IActionResult> Index()
+    {
+        var moviePickerContext = _context.MoviesGenres.Include(m => m.Genre).Include(m => m.Movie);
+        return View(await moviePickerContext.ToListAsync());
+    }
+
+    // GET: MoviesGenres/Details/5
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        // GET: MoviesGenres
-        public async Task<IActionResult> Index()
+        var moviesGenre = await _context.MoviesGenres
+            .Include(m => m.Genre)
+            .Include(m => m.Movie)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (moviesGenre == null)
         {
-            var moviePickerContext = _context.MoviesGenres.Include(m => m.Genre).Include(m => m.Movie);
-            return View(await moviePickerContext.ToListAsync());
+            return NotFound();
         }
 
-        // GET: MoviesGenres/Details/5
-        public async Task<IActionResult> Details(int? id)
+        return View(moviesGenre);
+    }
+
+    // GET: MoviesGenres/Create
+    public IActionResult Create()
+    {
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+        return View();
+    }
+
+    // POST: MoviesGenres/Create
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create([Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
+    {
+        if (ModelState.IsValid)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var moviesGenre = await _context.MoviesGenres
-                .Include(m => m.Genre)
-                .Include(m => m.Movie)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (moviesGenre == null)
-            {
-                return NotFound();
-            }
-
-            return View(moviesGenre);
-        }
-
-        // GET: MoviesGenres/Create
-        public IActionResult Create()
-        {
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
-            return View();
-        }
-
-        // POST: MoviesGenres/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
-        {
-            if (ModelState.IsValid)
+            if (!await IsMoviesGenresExist(moviesGenre.MovieId, moviesGenre.GenreId))
             {
                 _context.Add(moviesGenre);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
-            return View(moviesGenre);
+            else
+            {
+                ModelState.AddModelError(string.Empty, "This movie-genre relation already exists.");
+            }
+        }
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
+        return View(moviesGenre);
+    }
+
+    // GET: MoviesGenres/Edit/5
+    public async Task<IActionResult> Edit(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
         }
 
-        // GET: MoviesGenres/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        var moviesGenre = await _context.MoviesGenres.FindAsync(id);
+        if (moviesGenre == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
+        return View(moviesGenre);
+    }
 
-            var moviesGenre = await _context.MoviesGenres.FindAsync(id);
-            if (moviesGenre == null)
-            {
-                return NotFound();
-            }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
-            return View(moviesGenre);
+    // POST: MoviesGenres/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
+    {
+        if (id != moviesGenre.Id)
+        {
+            return NotFound();
         }
 
-        // POST: MoviesGenres/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,GenreId,Id")] MoviesGenre moviesGenre)
+        if (ModelState.IsValid)
         {
-            if (id != moviesGenre.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
+            if (!await IsMoviesGenresExist(moviesGenre.MovieId, moviesGenre.GenreId))
             {
                 try
                 {
@@ -122,49 +131,62 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
-            return View(moviesGenre);
-        }
-
-        // GET: MoviesGenres/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
+            else
             {
-                return NotFound();
+                ModelState.AddModelError(string.Empty, "This movie-genre relation already exists.");
             }
-
-            var moviesGenre = await _context.MoviesGenres
-                .Include(m => m.Genre)
-                .Include(m => m.Movie)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (moviesGenre == null)
-            {
-                return NotFound();
-            }
-
-            return View(moviesGenre);
         }
-
-        // POST: MoviesGenres/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var moviesGenre = await _context.MoviesGenres.FindAsync(id);
-            if (moviesGenre != null)
-            {
-                _context.MoviesGenres.Remove(moviesGenre);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool MoviesGenreExists(int id)
-        {
-            return _context.MoviesGenres.Any(e => e.Id == id);
-        }
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", moviesGenre.GenreId);
+        ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesGenre.MovieId);
+        return View(moviesGenre);
     }
+
+    // GET: MoviesGenres/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var moviesGenre = await _context.MoviesGenres
+            .Include(m => m.Genre)
+            .Include(m => m.Movie)
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (moviesGenre == null)
+        {
+            return NotFound();
+        }
+
+        return View(moviesGenre);
+    }
+
+    // POST: MoviesGenres/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var moviesGenre = await _context.MoviesGenres.FindAsync(id);
+        if (moviesGenre != null)
+        {
+            _context.MoviesGenres.Remove(moviesGenre);
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool MoviesGenreExists(int id)
+    {
+        return _context.MoviesGenres.Any(e => e.Id == id);
+    }
+
+    public async Task<bool> IsMoviesGenresExist(int movieID, int genreID)
+    {
+        var moviesGenres = await _context.MoviesGenres
+            .FirstOrDefaultAsync(m => m.MovieId == movieID && m.GenreId == genreID);
+
+        return moviesGenres != null;
+    }
+
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -58,9 +59,17 @@ namespace MoviePickerInfrastructure.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(language);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!await IsLanguageExist(language.Name))
+                {
+                    _context.Add(language);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "This language already exists.");
+                }
+
             }
             return View(language);
         }
@@ -95,25 +104,33 @@ namespace MoviePickerInfrastructure.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                if (!await IsLanguageExist(language.Name))
                 {
-                    _context.Update(language);
-                    await _context.SaveChangesAsync();
+                    try
+                    {
+                        _context.Update(language);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!LanguageExists(language.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!LanguageExists(language.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError(string.Empty, "This language already exists.");
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(language);
+
         }
 
         // GET: Languages/Delete/5
@@ -153,5 +170,14 @@ namespace MoviePickerInfrastructure.Controllers
         {
             return _context.Languages.Any(e => e.Id == id);
         }
+
+        public async Task<bool> IsLanguageExist(string name)
+        {
+            var language = await _context.Languages
+                .FirstOrDefaultAsync(m => m.Name == name);
+
+            return language != null;
+        }
+
     }
 }

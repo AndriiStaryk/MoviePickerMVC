@@ -7,6 +7,7 @@ namespace MoviePickerDomain.Model;
 public partial class Movie : Entity
 {
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
+    [StringLength(50, ErrorMessage = "Назва не може бути довшою за 50 символів.")]
     public string Title { get; set; } = null!;
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
