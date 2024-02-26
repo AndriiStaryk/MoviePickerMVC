@@ -135,6 +135,9 @@
   <data name="budget" xml:space="preserve">
     <value>Бюджет</value>
   </data>
+  <data name="countries" xml:space="preserve">
+    <value>Країни</value>
+  </data>
   <data name="country" xml:space="preserve">
     <value>Країна</value>
   </data>

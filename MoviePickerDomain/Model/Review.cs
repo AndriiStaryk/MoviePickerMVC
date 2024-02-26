@@ -9,7 +9,7 @@ public partial class Review : Entity
 
     public string? Text { get; set; }
 
-    public int Rating { get; set; }
+    public double Rating { get; set; }
 
     public virtual ICollection<MoviesReview> MoviesReviews { get; set; } = new List<MoviesReview>();
 }

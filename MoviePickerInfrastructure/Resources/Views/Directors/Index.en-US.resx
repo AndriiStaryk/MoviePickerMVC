@@ -165,11 +165,11 @@
   <data name="details" xml:space="preserve">
     <value>Details</value>
   </data>
-  <data name="direcotors" xml:space="preserve">
-    <value>Directors</value>
-  </data>
   <data name="director" xml:space="preserve">
     <value>Director</value>
+  </data>
+  <data name="directors" xml:space="preserve">
+    <value>Directors</value>
   </data>
   <data name="duration" xml:space="preserve">
     <value>Duration</value>
