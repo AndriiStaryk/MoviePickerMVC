@@ -67,7 +67,7 @@ namespace MoviePickerInfrastructure.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.MovieId);
             ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
             return View(moviesReview);
         }
@@ -85,7 +85,7 @@ namespace MoviePickerInfrastructure.Controllers
             {
                 return NotFound();
             }
-            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.MovieId);
             ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
             return View(moviesReview);
         }
@@ -122,7 +122,7 @@ namespace MoviePickerInfrastructure.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.Id);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", moviesReview.MovieId);
             ViewData["ReviewId"] = new SelectList(_context.Reviews, "Id", "Title", moviesReview.ReviewId);
             return View(moviesReview);
         }

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
-using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers
 {
@@ -49,62 +48,17 @@ namespace MoviePickerInfrastructure.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
-            //var viewModel = new MovieViewModel
-            //{
-            //    Movie = new Movie(),
-            //};
             ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
             return View();
-            //return View(viewModel);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Create(MovieViewModel viewModel)
-        //{
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    foreach (var genreId in viewModel.SelectedGenres)
-        //    {
-        //        var movieGenre = new MoviesGenre
-        //        {
-        //            MovieId = viewModel.Movie.Id,
-        //            GenreId = genreId
-        //        };
-
-        //        viewModel.Movie.MoviesGenres.Add(movieGenre);
-        //    }
-
-        //    _context.Add(viewModel.Movie);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToAction(nameof(Index));
-        //    // }
-
-        //    // return View(viewModel);
-        //}
 
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie)
         {
-
-            //if (!ModelState.IsValid)
-            //{
-            //    var errors = ModelState
-            //        .Where(x => x.Value.Errors.Count > 0)
-            //        .Select(x => new { x.Key, x.Value.Errors })
-            //        .ToArray();
-
-            //    foreach (var error in errors)
-            //    {
-            //        Console.WriteLine($"Key: {error.Key}, Errors: {string.Join(",", error.Errors.Select(e => e.ErrorMessage))}");
-            //    }
-            //}
-
-
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -137,7 +91,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie)
         {
             if (id != movie.Id)
             {

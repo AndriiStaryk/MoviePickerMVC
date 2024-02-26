@@ -6,8 +6,7 @@ namespace MoviePickerDomain.Model;
 
 public partial class Genre : Entity
 {
-    [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-    [Display(Name = "Жанр")]
+    [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     public string Name { get; set; } = null!;
 
     public virtual ICollection<MoviesGenre> MoviesGenres { get; set; } = new List<MoviesGenre>();

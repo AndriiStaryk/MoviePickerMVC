@@ -9,7 +9,7 @@ public partial class MoviesReview : Entity
 
     public int ReviewId { get; set; }
 
-    public virtual Movie? Movie { get; set; }// = null!;
+    public virtual Movie? Movie { get; set; } //= null!;
 
-    public virtual Review? Review { get; set; }// = null!;
+    public virtual Review? Review { get; set; } //= null!;
 }

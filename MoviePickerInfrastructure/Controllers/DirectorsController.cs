@@ -57,19 +57,14 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director)
         {
-            //ViewBag.BirthCountryId = new SelectList(_context.Countries, "Id", "Name");
-            //ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-
-            //director.BirthCountryId = 1;
             if (ModelState.IsValid)
             {
                 _context.Add(director);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
             return View(director);
         }
@@ -96,7 +91,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BirthDate,BirthCountryId")] Director director)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director)
         {
             if (id != director.Id)
             {

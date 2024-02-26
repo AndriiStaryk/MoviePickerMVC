@@ -57,7 +57,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,BirthDate,BirthCountryId")] Actor actor)
+        public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace MoviePickerInfrastructure.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BirthDate,BirthCountryId")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
         {
             if (id != actor.Id)
             {
