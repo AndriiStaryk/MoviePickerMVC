@@ -135,7 +135,7 @@
   <data name="deleteQuestion" xml:space="preserve">
     <value>Are you sure you want to delete this?</value>
   </data>
-  <data name="deletion" xml:space="preserve">
+  <data name="deleting" xml:space="preserve">
     <value>Deletion</value>
   </data>
   <data name="name" xml:space="preserve">

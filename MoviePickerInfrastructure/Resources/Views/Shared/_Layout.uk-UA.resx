@@ -135,6 +135,24 @@
   <data name="movies" xml:space="preserve">
     <value>Фільми</value>
   </data>
+  <data name="moviesActors" xml:space="preserve">
+    <value>Фільми-Актори</value>
+  </data>
+  <data name="moviesGenres" xml:space="preserve">
+    <value>Фільми-Жанри</value>
+  </data>
+  <data name="moviesLanguages" xml:space="preserve">
+    <value>Фільми-Мови</value>
+  </data>
+  <data name="moviesReviews" xml:space="preserve">
+    <value>Фільми-Відгуки</value>
+  </data>
+  <data name="personalAccount" xml:space="preserve">
+    <value>Ваш аккаунт</value>
+  </data>
+  <data name="privacy" xml:space="preserve">
+    <value>Конфіденційність</value>
+  </data>
   <data name="reviews" xml:space="preserve">
     <value>Відгуки</value>
   </data>

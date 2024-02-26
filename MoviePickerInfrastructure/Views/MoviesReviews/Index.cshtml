@@ -4,22 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["moviesReviews"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Localizer["create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MovieId)
+               @*  @Html.DisplayNameFor(model => model.Movie) *@
+                @Localizer["movie"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Review)
+                @* @Html.DisplayNameFor(model => model.Review) *@
+                @Localizer["review"]
             </th>
             <th></th>
         </tr>
@@ -28,18 +27,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.MovieId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Movie.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Review.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
             </td>
         </tr>
 }

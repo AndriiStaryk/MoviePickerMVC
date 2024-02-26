@@ -4,19 +4,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["moviesGenres"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Localizer["create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @* @Html.DisplayNameFor(model => model.Genre) *@
+                @Localizer["genre"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie)
+                @* @Html.DisplayNameFor(model => model.Movie) *@
+                @Localizer["movie"]
             </th>
             <th></th>
         </tr>
@@ -31,9 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Movie.Title)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
             </td>
         </tr>
 }

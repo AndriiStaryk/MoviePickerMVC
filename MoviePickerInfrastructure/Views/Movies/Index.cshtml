@@ -4,34 +4,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["movies"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Localizer["createNewMovie"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @* @Html.DisplayNameFor(model => model.Title) *@
+                @Localizer["title"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                @* @Html.DisplayNameFor(model => model.ReleaseDate) *@
+                @Localizer["releaseDate"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Budget)
+                @* @Html.DisplayNameFor(model => model.Budget) *@
+                @Localizer["budget"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BoxOfficeRevenue)
+                @* @Html.DisplayNameFor(model => model.BoxOfficeRevenue) *@
+                @Localizer["boxOfficeRevenue"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration)
+                @* @Html.DisplayNameFor(model => model.Duration) *@
+                @Localizer["duration"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rating)
+                @* @Html.DisplayNameFor(model => model.Rating) *@
+                @Localizer["rating"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Director)
+                @* @Html.DisplayNameFor(model => model.Director) *@
+                @Localizer["director"]
             </th>
             <th></th>
         </tr>
@@ -61,9 +68,9 @@
                 @Html.DisplayFor(modelItem => item.Director.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
             </td>
         </tr>
 }

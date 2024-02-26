@@ -4,50 +4,57 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Localizer["details"]</h1>
 
 <div>
-    <h4>Movie</h4>
+    <h4>@Localizer["movie"]</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
+            @* @Html.DisplayNameFor(model => model.Title) *@
+            @Localizer["title"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+           @*  @Html.DisplayNameFor(model => model.ReleaseDate) *@
+            @Localizer["releaseDate"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Budget)
+           @*  @Html.DisplayNameFor(model => model.Budget) *@
+            @Localizer["budget"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Budget)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BoxOfficeRevenue)
+            @* @Html.DisplayNameFor(model => model.BoxOfficeRevenue) *@
+            @Localizer["boxOfficeRevenue"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BoxOfficeRevenue)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
+            @* @Html.DisplayNameFor(model => model.Duration) *@
+            @Localizer["duration"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Duration)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
+            @* @Html.DisplayNameFor(model => model.Rating) *@
+            @Localizer["rating"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Rating)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Director)
+            @* @Html.DisplayNameFor(model => model.Director) *@
+            @Localizer["director"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Director.Name)
@@ -55,6 +62,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id"> @Localizer["edit"] </a> |
+    <a asp-action="Index">@Localizer["backToList"]</a>
 </div>

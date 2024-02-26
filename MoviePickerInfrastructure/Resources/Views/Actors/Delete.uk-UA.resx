@@ -135,7 +135,7 @@
   <data name="deleteQuestion" xml:space="preserve">
     <value>Ви впевнені що хочете видалити цього актора?</value>
   </data>
-  <data name="deletion" xml:space="preserve">
+  <data name="deleting" xml:space="preserve">
     <value>Видалення</value>
   </data>
   <data name="name" xml:space="preserve">

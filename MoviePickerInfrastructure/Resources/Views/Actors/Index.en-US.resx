@@ -135,10 +135,10 @@
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="name" xml:space="preserve">
+  <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="title" xml:space="preserve">
+  <data name="titleActors" xml:space="preserve">
     <value>Actors</value>
   </data>
 </root>

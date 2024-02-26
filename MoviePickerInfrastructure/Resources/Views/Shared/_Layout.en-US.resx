@@ -135,6 +135,24 @@
   <data name="movies" xml:space="preserve">
     <value>Movies</value>
   </data>
+  <data name="moviesActors" xml:space="preserve">
+    <value>MoviesActors</value>
+  </data>
+  <data name="moviesGenres" xml:space="preserve">
+    <value>MoviesGenres</value>
+  </data>
+  <data name="moviesLanguages" xml:space="preserve">
+    <value>MoviesLanguages</value>
+  </data>
+  <data name="moviesReviews" xml:space="preserve">
+    <value>MoviesReviews</value>
+  </data>
+  <data name="personalAccount" xml:space="preserve">
+    <value>Personal Account</value>
+  </data>
+  <data name="privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
   <data name="reviews" xml:space="preserve">
     <value>Reviews</value>
   </data>
