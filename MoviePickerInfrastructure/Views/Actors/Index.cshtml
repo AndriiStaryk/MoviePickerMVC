@@ -4,22 +4,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@Localizer["title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@Localizer["createNew"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+               @*  @Html.DisplayNameFor(model => model.Name) *@
+               @Localizer["name"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
+                @* @Html.DisplayNameFor(model => model.BirthDate) *@
+                @Localizer["birthDate"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BirthCountry)
+                @* @Html.DisplayNameFor(model => model.BirthCountry) *@
+                @Localizer["birthCountry"]
             </th>
             <th></th>
         </tr>
@@ -37,9 +40,9 @@
                 @Html.DisplayFor(modelItem => item.BirthCountry.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
             </td>
         </tr>
 }

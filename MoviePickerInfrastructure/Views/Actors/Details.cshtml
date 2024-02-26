@@ -4,26 +4,29 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Localizer["details"]</h1>
 
 <div>
-    <h4>Actor</h4>
+    <h4>@Localizer["actor"]</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @* @Html.DisplayNameFor(model => model.Name) *@
+            @Localizer["name"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDate)
+            @* @Html.DisplayNameFor(model => model.BirthDate) *@
+            @Localizer["birthDate"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BirthDate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthCountry)
+           @*  @Html.DisplayNameFor(model => model.BirthCountry) *@
+            @Localizer["birthCountry"]
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BirthCountry.Name)
@@ -31,6 +34,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["edit"]</a> |
+    <a asp-action="Index">@Localizer["backToList"]</a>
 </div>

@@ -9,16 +9,16 @@ namespace MoviePickerDomain.Model;
 public partial class Actor : Entity, IEquatable<Actor>
 {
     [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-    [Display(Name = "Ім'я")]
+    //[Display(Name = "Ім'я")]
     public string Name { get; set; } = null!;
 
     [Required(ErrorMessage = "Поле не повинно бути порожнім")]
-    [Display(Name = "Дата народження")]
+    //[Display(Name = "Дата народження")]
     public DateOnly BirthDate { get; set; }
 
     public int BirthCountryId { get; set; }
 
-    [Display(Name = "Країна народження")]
+    //[Display(Name = "Країна народження")]
     public virtual Country? BirthCountry { get; set; } //= null!;
 
     public virtual ICollection<MoviesActor> MoviesActors { get; set; } = new List<MoviesActor>();
@@ -26,10 +26,6 @@ public partial class Actor : Entity, IEquatable<Actor>
     public bool Equals(Actor? other)
     {
         return this.GetHashCode() == other.GetHashCode();
-        //return Name == other!.Name &&
-        //       BirthDate == other.BirthDate &&
-        //       BirthCountryId == other.BirthCountryId;
-        //throw new NotImplementedException();
     }
     public override int GetHashCode()
     {

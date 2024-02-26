@@ -70,11 +70,45 @@
                                 @Thread.CurrentThread.CurrentUICulture.Name
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li> <a class="dropdown-item" href="~/?ui-culture=en-US"> En</a><</li>
-                                <li> <a class="dropdown-item" href="~/?culture=uk-UA"> Uk</a><</li>
+                                <li><a class="dropdown-item" href="#" onclick="changeLanguage('en-US')">En</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="changeLanguage('uk-UA')">Uk</a></li>
                             </ul>
                         </li>
                     </ul>
+
+                    <script>
+                        function changeLanguage(languageCode) {
+                            var currentUrl = window.location.href;
+                            var newUrl;
+
+                            // Check if the current URL already contains a query string
+                            if (currentUrl.indexOf('?') !== -1) {
+                                // URL contains query string
+                                newUrl = currentUrl.replace(/(\?|&)ui-culture=[^&]*|$/, '$1ui-culture=' + languageCode);
+                            } else {
+                                // URL doesn't contain query string
+                                newUrl = currentUrl + '?ui-culture=' + languageCode;
+                            }
+
+                            // Redirect to the new URL
+                            window.location.href = newUrl;
+                        }
+
+                        function stayOnTheSameLocalization(languageCodee) {
+                            if (currentUrl.indexOf('?') == -1) {
+                                newUrl = currentUrl + '?ui-culture=' + languageCode;
+                            } else {
+                                // URL doesn't contain query string
+                                newUrl = currentUrl.replace(/(\?|&)ui-culture=[^&]*|$/, '$1ui-culture=' + languageCode);
+                            }
+
+                            // Redirect to the new URL
+                            window.location.href = newUrl;
+                        }
+
+                    </script>
+
+
                 </div>
             </div>
         </nav>
