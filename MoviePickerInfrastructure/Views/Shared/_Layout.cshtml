@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index">MoviePicker</a>
+                <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index" style="color: #FFA07A;">MoviePicker</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -76,39 +76,6 @@
                         </li>
                     </ul>
 
-                    <script>
-                        function changeLanguage(languageCode) {
-                            var currentUrl = window.location.href;
-                            var newUrl;
-
-                            // Check if the current URL already contains a query string
-                            if (currentUrl.indexOf('?') !== -1) {
-                                // URL contains query string
-                                newUrl = currentUrl.replace(/(\?|&)ui-culture=[^&]*|$/, '$1ui-culture=' + languageCode);
-                            } else {
-                                // URL doesn't contain query string
-                                newUrl = currentUrl + '?ui-culture=' + languageCode;
-                            }
-
-                            // Redirect to the new URL
-                            window.location.href = newUrl;
-                        }
-
-                        // function stayOnTheSameLocalization(languageCodee) {
-                        //     if (currentUrl.indexOf('?') == -1) {
-                        //         newUrl = currentUrl + '?ui-culture=' + languageCode;
-                        //     } else {
-                        //         // URL doesn't contain query string
-                        //         newUrl = currentUrl.replace(/(\?|&)ui-culture=[^&]*|$/, '$1ui-culture=' + languageCode);
-                        //     }
-
-                        //     // Redirect to the new URL
-                        //     window.location.href = newUrl;
-                        // }
-
-                    </script>
-
-
                 </div>
             </div>
         </nav>
@@ -127,6 +94,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/changeLanguage.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

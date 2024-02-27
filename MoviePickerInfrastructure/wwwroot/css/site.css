@@ -1,22 +1,55 @@
-html {
-  font-size: 14px;
-}
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
 
 body {
-  margin-bottom: 60px;
+    font-family: Candara, sans-serif; /* This is a simple, clean font */
+    background-color: #f0f0f0; /* This is a light gray color */
+    color: #333; /* This is a dark gray color for the text */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', serif; /* This is a more decorative font for headings */
+}
+
+nav {
+    font-family: Candara, Courier, monospace; /* This is a monospace font */
+    font-weight: bold; /* This makes the text bold */
+}
+
+.navbar-brand {
+    font-weight: bold; /* This makes the text bold */
+    font-size: 1.5em; /* This makes the text larger */
+}
+
+.navbar {
+    background-color: #87CEFA; /* This is a light sky blue color */
+}
+
+.navbar-brand {
+    color: #FFD700; /* This is a slightly yellow color */
+}
+
+.nav-link {
+    color: #000000; /* This is black color for the other navigation links */
+}
+
+/* Change the color of links */
+a {
+    color: #FF6347; /* This is a tomato color */
+}
+
+
+.btn {
+    background-color: #FFA07A !important; /* This is a light salmon color */
+    color: #FFFFFF !important; /* This is white color for the text on the button */
+}
+
+    /* Change the color of buttons when hovered over */
+    .btn:hover {
+        background-color: #FF6347 !important; /* This is a tomato color */
+    }
+
+/* Add padding to the button */
+.btn {
+    padding: 10px 20px; /* This adds 10px of padding to the top and bottom, and 20px of padding to the left and right */
+    margin-top: 10px; /* This adds 10px of space above the button */
 }
