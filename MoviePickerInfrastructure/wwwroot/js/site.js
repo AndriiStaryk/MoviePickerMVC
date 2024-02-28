@@ -3,9 +3,35 @@
 
 // Write your JavaScript code.
 
-window.onpopstate = function (event) {
-    
-    
-        changeLanguage(currentLanguage);
-    
-};
+document.addEventListener("DOMContentLoaded", function () {
+    const genrePicker = document.getElementById("genrePicker");
+    const addGenreBtn = document.getElementById("addGenreBtn");
+    const selectedGenresContainer = document.getElementById("selectedGenres");
+
+    addGenreBtn.addEventListener("click", function () {
+        const selectedGenre = genrePicker.value;
+        if (selectedGenre !== "") {
+            addTag(selectedGenre);
+        }
+    });
+
+    function addTag(genre) {
+
+        const existingTags = selectedGenresContainer.getElementsByClassName("tag");
+        for (let i = 0; i < existingTags.length; i++) {
+            if (existingTags[i].textContent === genre) {
+                // Genre already exists, do not add again
+                return;
+            }
+        }
+
+        const tag = document.createElement("div");
+        tag.classList.add("tag");
+        tag.textContent = genre;
+        tag.addEventListener("click", function () {
+            tag.remove();
+        });
+
+        selectedGenresContainer.appendChild(tag);
+    }
+});

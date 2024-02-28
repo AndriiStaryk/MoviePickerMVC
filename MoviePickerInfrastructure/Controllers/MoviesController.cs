@@ -8,13 +8,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers;
 
 public class MoviesController : Controller
 {
     private readonly MoviePickerContext _context;
-
+    private Movie _movie = new Movie();
+    
     public MoviesController(MoviePickerContext context)
     {
         _context = context;
@@ -49,8 +51,13 @@ public class MoviesController : Controller
     // GET: Movies/Create
     public IActionResult Create()
     {
+        MovieViewModel viewModel = new MovieViewModel();
+        viewModel.Movie = _movie;
+        viewModel.Genres = _context.Genres.ToList();
+       // viewModel.Context = _context;
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
-        return View();
+        //return View();
+        return View(viewModel);
     }
 
     // POST: Movies/Create

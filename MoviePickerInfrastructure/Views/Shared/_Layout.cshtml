@@ -40,18 +40,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Reviews" asp-action="Index">@Localizer["reviews"]</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesGenres" asp-action="Index">@Localizer["moviesGenres"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesActors" asp-action="Index">@Localizer["moviesActors"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesLanguages" asp-action="Index">@Localizer["moviesLanguages"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesReviews" asp-action="Index">@Localizer["moviesReviews"]</a>
-                        </li>
+
+                        @*  @if (User.IsInRole("Administrator"))
+                        {
+ *@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesGenres" asp-action="Index">@Localizer["moviesGenres"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesActors" asp-action="Index">@Localizer["moviesActors"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesLanguages" asp-action="Index">@Localizer["moviesLanguages"]</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesReviews" asp-action="Index">@Localizer["moviesReviews"]</a>
+                            </li>
+                        @* } *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["privacy"]</a>
                         </li>

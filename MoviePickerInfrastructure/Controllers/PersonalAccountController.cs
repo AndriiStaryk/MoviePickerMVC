@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MoviePickerInfrastructure.Controllers
 {
@@ -8,5 +9,6 @@ namespace MoviePickerInfrastructure.Controllers
         {
             return View();
         }
+
     }
 }

@@ -12,6 +12,7 @@ namespace MoviePickerInfrastructure.Controllers;
 
 public class ActorsController : Controller
 {
+
     private readonly MoviePickerContext _context;
 
     public ActorsController(MoviePickerContext context)
