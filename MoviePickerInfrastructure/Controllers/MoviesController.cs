@@ -16,10 +16,12 @@ public class MoviesController : Controller
 {
     private readonly MoviePickerContext _context;
     private Movie _movie = new Movie();
+    private readonly List<Genre> _genres = new List<Genre>();
     
     public MoviesController(MoviePickerContext context)
     {
         _context = context;
+        _genres = _context.Genres.ToList();
     }
 
     // GET: Movies
@@ -53,7 +55,7 @@ public class MoviesController : Controller
     {
         MovieViewModel viewModel = new MovieViewModel();
         viewModel.Movie = _movie;
-        viewModel.Genres = _context.Genres.ToList();
+        viewModel.Genres = _genres;
        // viewModel.Context = _context;
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
         //return View();
@@ -65,8 +67,15 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie)
+    public async Task<IActionResult> Create(/*[Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")]*/ [Bind("Movie, Genres")] MovieViewModel movieViewModel)
     {
+        //var movieViewModel = new MovieViewModel();
+        movieViewModel.Movie = ViewBag.Movie;
+        movieViewModel.Genres = _genres;
+        
+        var movie = movieViewModel.Movie;
+        //var genres = movieViewModel.Genres.ToList();
+
         if (ModelState.IsValid)
         {
             if (!await IsMovieExist(movie.Title, movie.ReleaseDate, movie.DirectorId))
@@ -80,8 +89,8 @@ public class MoviesController : Controller
                 ModelState.AddModelError(string.Empty, "This movie already exists.");
             }
         }
-        ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-        return View(movie);
+        //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+        return View(movieViewModel);
     }
 
     // GET: Movies/Edit/5
