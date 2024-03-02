@@ -20,21 +20,40 @@ public class MovieViewModel
     public List<Language> Languages { get; set; }
 
 
-    public MovieViewModel(MoviePickerContext context)
+    public MovieViewModel(MoviePickerContext context, Movie movie)
     {
         _context = context;
-        Reviews = context.Reviews.ToList();
-        //.Include(mr => mr.Review)
-        //.Where(mr => mr.MovieId == id)
-        //.Select(mr => mr.Review.Content)
-        //.ToListAsync();
-        //Reviews = context.MoviesReviews
-        //    .SelectMany(movie => movie.MovieId == Movie.Id);
-        Actors = context.Actors.ToList();
-        Genres = context.Genres.ToList();
-        Languages = context.Languages.ToList();
+        Movie = movie;
+
+        Reviews = context.Reviews
+            .Where(review => review.MovieId == movie.Id).ToList();
+
+        Actors = context.MoviesActors
+            .Where(ma => ma.MovieId == movie.Id)
+            .Select(ma => ma.Actor).ToList()!;
+
+        Genres = context.MoviesGenres
+            .Where(mg => mg.MovieId == movie.Id)
+            .Select(mg => mg.Genre).ToList()!;
+
+        Languages = context.MoviesLanguages
+            .Where(ml => ml.MovieId == movie.Id)
+            .Select(ml => ml.Language).ToList()!;
     }
 
+    public List<Genre> GetAllAvailableGenres()
+    {
+        return _context.Genres.ToList();
+    }
+
+    public void AddGenreByName(string name)
+    {
+        var genre = _context.Genres.FirstOrDefault(genre => genre.Name == name);
+        if (genre != null)
+        {
+           SelectedGenres.Add(genre);
+        }
+    }
 
     public async void AddSelectedGenres()
     {

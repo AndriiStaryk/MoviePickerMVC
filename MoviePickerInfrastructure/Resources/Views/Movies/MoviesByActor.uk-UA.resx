@@ -120,9 +120,6 @@
   <data name="actor" xml:space="preserve">
     <value>Актор</value>
   </data>
-  <data name="actors" xml:space="preserve">
-    <value>Актори</value>
-  </data>
   <data name="backToList" xml:space="preserve">
     <value>Назад до списку</value>
   </data>
@@ -149,6 +146,9 @@
   </data>
   <data name="createNewCountry" xml:space="preserve">
     <value>Додати нову країну</value>
+  </data>
+  <data name="createNewMovie" xml:space="preserve">
+    <value>Додати новий фільм</value>
   </data>
   <data name="creation" xml:space="preserve">
     <value>Додавання</value>
@@ -180,17 +180,14 @@
   <data name="genre" xml:space="preserve">
     <value>Жанр</value>
   </data>
-  <data name="genres" xml:space="preserve">
-    <value>Жанри</value>
-  </data>
   <data name="language" xml:space="preserve">
     <value>Мова</value>
   </data>
-  <data name="languages" xml:space="preserve">
-    <value>Мови</value>
-  </data>
   <data name="movie" xml:space="preserve">
     <value>Фільм</value>
+  </data>
+  <data name="movies" xml:space="preserve">
+    <value>Фільми</value>
   </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>

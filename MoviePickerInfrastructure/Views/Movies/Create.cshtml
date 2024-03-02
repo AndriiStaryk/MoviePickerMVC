@@ -24,20 +24,52 @@
     <div class="picker-wrapper">
                 
         <select id="genrePicker">
-            @foreach (var genre in Model.Genres)
-            {
-              <option value="@genre.Name">@genre.Name</option>
-            }
+                    @foreach (var genre in Model.GetAllAvailableGenres())
+                    {
+                        <option value="@genre.Name">@genre.Name</option>
+                    }
 
       </select>
 
       <button id="addGenreBtn">Add Genre</button>
     </div>
+    <script>
+                // document.getElementById('addGenreBtn').addEventListener('click', function () {
+                //     var selectedGenre = document.getElementById('genrePicker').value;
+                //     if (selectedGenre !== '') {
+                //     //razor syntax {
+                //         Model.AddGenreByName(selectedGenre);
+
+                //         }
+                //     }
+                // });
+
+//                 document.getElementById('addGenreBtn').addEventListener('click', function () {
+//     var selectedGenre = document.getElementById('genrePicker').value;
+//     if (selectedGenre !== '') {
+//         // Make an AJAX request to the server
+//         var xhr = new XMLHttpRequest();
+//         xhr.open('POST', '/Controllers/MoviesController/AddGenreByName', true);
+//         xhr.setRequestHeader('Content-Type', 'application/json');
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState === XMLHttpRequest.DONE) {
+//                 // Handle the response from the server if needed
+//             }
+//         };
+
+//         // Convert the selectedGenre to JSON and send it in the request body
+//         var data = JSON.stringify({ genre: selectedGenre });
+//         xhr.send(data);
+//     }
+// });
+    </script>
+
+
     <div id="selectedGenres" class="selected-genres">
                 @foreach (var genre in Model.SelectedGenres)
                 {
-                    //<span>@genre.Name</span>
-                    Model.SelectedGenres.Add(@genre);
+                    <span>@genre.Name</span>
+                    //Model.SelectedGenres.Add(@genre);
                 }
             </div>
             <input type="hidden" id="selectedGenresInput" name="SelectedGenres" value="" />
