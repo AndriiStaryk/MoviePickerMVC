@@ -13,6 +13,7 @@ public partial class Movie : Entity
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     public DateOnly ReleaseDate { get; set; }
 
+    [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     public int DirectorId { get; set; }
 
     public long? Budget { get; set; }
@@ -31,5 +32,5 @@ public partial class Movie : Entity
 
     public virtual ICollection<MoviesLanguage> MoviesLanguages { get; set; } = new List<MoviesLanguage>();
 
-    public virtual ICollection<MoviesReview> MoviesReviews { get; set; } = new List<MoviesReview>();
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

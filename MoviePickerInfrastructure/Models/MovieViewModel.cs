@@ -12,7 +12,7 @@ public class MovieViewModel
     public List<Genre> Genres { get; set; }
 
     public List<Genre> SelectedGenres { get; set; } = new List<Genre>();
-    
+
     public List<Review> Reviews { get; set; }
 
     public List<Actor> Actors { get; set; }
@@ -20,7 +20,7 @@ public class MovieViewModel
     public List<Language> Languages { get; set; }
 
 
-    public MovieViewModel(MoviePickerContext context) 
+    public MovieViewModel(MoviePickerContext context)
     {
         _context = context;
         Reviews = context.Reviews.ToList();
@@ -37,8 +37,8 @@ public class MovieViewModel
 
 
     public async void AddSelectedGenres()
-    { 
-        foreach (var genre  in SelectedGenres)
+    {
+        foreach (var genre in SelectedGenres)
         {
             MoviesGenre moviesGenre = new MoviesGenre();
             moviesGenre.Genre = genre;

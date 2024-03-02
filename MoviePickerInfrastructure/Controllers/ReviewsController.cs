@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,168 +8,176 @@ using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 
-namespace MoviePickerInfrastructure.Controllers;
-
-public class ReviewsController : Controller
+namespace MoviePickerInfrastructure.Controllers
 {
-    private readonly MoviePickerContext _context;
-
-    public ReviewsController(MoviePickerContext context)
+    public class ReviewsController : Controller
     {
-        _context = context;
-    }
+        private readonly MoviePickerContext _context;
 
-    // GET: Reviews
-    public async Task<IActionResult> Index()
-    {
-        return View(await _context.Reviews.ToListAsync());
-    }
-
-    // GET: Reviews/Details/5
-    public async Task<IActionResult> Details(int? id)
-    {
-        if (id == null)
+        public ReviewsController(MoviePickerContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        var review = await _context.Reviews
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (review == null)
+        // GET: Reviews
+        public async Task<IActionResult> Index()
         {
-            return NotFound();
+            var moviePickerContext = _context.Reviews.Include(r => r.Movie);
+            return View(await moviePickerContext.ToListAsync());
         }
 
-        return View(review);
-    }
-
-    // GET: Reviews/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: Reviews/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,Text,Rating,Id")] Review review)
-    {
-        if (ModelState.IsValid)
+        // GET: Reviews/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            if (!await IsReviewExist(review.Title, review.Text, review.Rating))
+            if (id == null)
             {
-                _context.Add(review);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            else
+
+            var review = await _context.Reviews
+                .Include(r => r.Movie)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (review == null)
             {
-                ModelState.AddModelError(string.Empty, "This review already exists.");
+                return NotFound();
             }
-        }
-        return View(review);
-    }
 
-    // GET: Reviews/Edit/5
-    public async Task<IActionResult> Edit(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
+            return View(review);
         }
 
-        var review = await _context.Reviews.FindAsync(id);
-        if (review == null)
+        // GET: Reviews/Create
+        public IActionResult Create()
         {
-            return NotFound();
-        }
-        return View(review);
-    }
-
-    // POST: Reviews/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Title,Text,Rating,Id")] Review review)
-    {
-        if (id != review.Id)
-        {
-            return NotFound();
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+            return View();
         }
 
-        if (ModelState.IsValid)
+        // POST: Reviews/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Title,Text,Rating,MovieId,Id")] Review review)
         {
-            if (!await IsReviewExist(review.Title, review.Text, review.Rating))
+            if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(review);
+                if (!await IsReviewExist(review.Title, review.Text, review.Rating))
+                {          
+                    _context.Add(review);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!ReviewExists(review.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError(string.Empty, "This review already exists.");
                 }
-                return RedirectToAction(nameof(Index));
             }
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            return View(review);
         }
-        return View(review);
-    }
 
-    // GET: Reviews/Delete/5
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
+        // GET: Reviews/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return NotFound();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            return View(review);
         }
 
-        var review = await _context.Reviews
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (review == null)
+        // POST: Reviews/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Title,Text,Rating,MovieId,Id")] Review review)
         {
-            return NotFound();
+            if (id != review.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (!await IsReviewExist(review.Title, review.Text, review.Rating))
+                {
+                    try
+                    {
+                        _context.Update(review);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!ReviewExists(review.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            return View(review);
         }
 
-        return View(review);
-    }
-
-    // POST: Reviews/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var review = await _context.Reviews.FindAsync(id);
-        if (review != null)
+        // GET: Reviews/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            _context.Reviews.Remove(review);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Reviews
+                .Include(r => r.Movie)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return View(review);
         }
 
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
+        // POST: Reviews/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+            if (review != null)
+            {
+                _context.Reviews.Remove(review);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ReviewExists(int id)
+        {
+            return _context.Reviews.Any(e => e.Id == id);
+        }
+
+
+        public async Task<bool> IsReviewExist(string title, string? text, double rating)
+        {
+            var review = await _context.Reviews
+                .FirstOrDefaultAsync(m => m.Title == title && m.Text == text && m.Rating == rating);
+
+            return review != null;
+        }
     }
-
-    private bool ReviewExists(int id)
-    {
-        return _context.Reviews.Any(e => e.Id == id);
-    }
-
-    public async Task<bool> IsReviewExist(string title, string? text, double rating)
-    {
-        var review = await _context.Reviews
-            .FirstOrDefaultAsync(m => m.Title == title &&  m.Text == text && m.Rating == rating);
-
-        return review != null;
-    }
-
 }

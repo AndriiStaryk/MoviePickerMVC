@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 namespace MoviePickerDomain.Model;
 
-public partial class Actor : Entity
+public partial class Actor : Entity 
 {
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     [StringLength(50, ErrorMessage = "Ім'я не може бути довшим за 50 символів.")]

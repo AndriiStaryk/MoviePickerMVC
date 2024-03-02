@@ -16,5 +16,7 @@ public partial class Review : Entity
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     public double Rating { get; set; }
 
-    public virtual ICollection<MoviesReview> MoviesReviews { get; set; } = new List<MoviesReview>();
+    public int MovieId { get; set; }
+
+    public virtual Movie? Movie { get; set; } //= null!;
 }

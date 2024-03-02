@@ -35,7 +35,7 @@ public partial class MoviePickerContext : DbContext
 
     public virtual DbSet<MoviesLanguage> MoviesLanguages { get; set; }
 
-    public virtual DbSet<MoviesReview> MoviesReviews { get; set; }
+    //public virtual DbSet<MoviesReview> MoviesReviews { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
 
@@ -160,32 +160,28 @@ public partial class MoviePickerContext : DbContext
                 .HasConstraintName("FK_Movies_Languages_Movies");
         });
 
-        modelBuilder.Entity<MoviesReview>(entity =>
-        {
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.MovieId).HasColumnName("MovieID");
-            entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
-
-            entity.HasOne(d => d.Movie).WithMany(p => p.MoviesReviews)
-                .HasForeignKey(d => d.MovieId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MoviesReviews_Movies");
-
-            entity.HasOne(d => d.Review).WithMany(p => p.MoviesReviews)
-                .HasForeignKey(d => d.ReviewId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_MoviesReviews_Reviews");
-        });
+        //modelBuilder.Entity<MoviesReview>(entity =>
+        //{
+        //    entity.Property(e => e.Id).HasColumnName("ID");
+        //    entity.Property(e => e.MovieId).HasColumnName("MovieID");
+        //    entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
+        //});
 
         modelBuilder.Entity<Review>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.MovieId).HasColumnName("MovieID");
             entity.Property(e => e.Text)
                 .HasMaxLength(100)
                 .IsFixedLength();
             entity.Property(e => e.Title)
                 .HasMaxLength(30)
                 .IsFixedLength();
+
+            entity.HasOne(d => d.Movie).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.MovieId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Movies_Reviews");
         });
 
         OnModelCreatingPartial(modelBuilder);

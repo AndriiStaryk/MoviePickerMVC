@@ -4,38 +4,42 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>@Localizer["creation"]</h1>
+<h1>Create</h1>
 
-<h4>@Localizer["review"]</h4>
+<h4>Review</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Title" class="control-label"> @Localizer["title"] </label>
+                <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"> @Localizer["text"] </label>
+                <label asp-for="Text" class="control-label"></label>
                 <input asp-for="Text" class="form-control" />
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rating" class="control-label"> @Localizer["rating"] </label>
+                <label asp-for="Rating" class="control-label"></label>
                 <input asp-for="Rating" class="form-control" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["create"]" class="btn btn-primary" />
+                <label asp-for="MovieId" class="control-label"></label>
+                <select asp-for="MovieId" class ="form-control" asp-items="ViewBag.MovieId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">@Localizer["backToList"]</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
