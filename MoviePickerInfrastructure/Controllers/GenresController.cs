@@ -26,6 +26,16 @@ public class GenresController : Controller
         return View(await _context.Genres.ToListAsync());
     }
 
+
+    public async Task<IActionResult> MoviesByGenre(int genreId)
+    {
+        var moviesByGenreContext = _context.MoviesGenres
+            .Where(mg => mg.GenreId == genreId)
+            .Select(mg => mg.Movie);
+
+        return View(await moviesByGenreContext.ToListAsync());
+    }
+
     // GET: Genres/Details/5
     public async Task<IActionResult> Details(int? id)
     {
