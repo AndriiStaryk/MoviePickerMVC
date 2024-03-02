@@ -35,3 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedGenresContainer.appendChild(tag);
     }
 });
+
+
+
+
+
+
+
+

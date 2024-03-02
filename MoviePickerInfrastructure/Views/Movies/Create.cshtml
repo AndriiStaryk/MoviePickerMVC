@@ -22,19 +22,31 @@
 <body>
   <div class="tag-input">
     <div class="picker-wrapper">
-      <select id="genrePicker">
-
-        @foreach (var genre in Model.Genres)
-        {
-          <option value="@genre.Name">@genre.Name</option>
-        }
+                
+        <select id="genrePicker">
+            @foreach (var genre in Model.Genres)
+            {
+              <option value="@genre.Name">@genre.Name</option>
+            }
 
       </select>
+
       <button id="addGenreBtn">Add Genre</button>
     </div>
-    <div id="selectedGenres" class="selected-genres"></div>
+    <div id="selectedGenres" class="selected-genres">
+                @foreach (var genre in Model.SelectedGenres)
+                {
+                    //<span>@genre.Name</span>
+                    Model.SelectedGenres.Add(@genre);
+                }
+            </div>
+            <input type="hidden" id="selectedGenresInput" name="SelectedGenres" value="" />
   </div>
-</body>
+
+
+
+
+ </body> 
 
     <div class="col-md-4">
         <form asp-action="Create">
@@ -84,8 +96,7 @@
 <div>
     <a asp-action="Index">@Localizer["backToList"]</a>
 </div>
-
-
+ 
 
 @section Scripts {
     @{
@@ -94,6 +105,3 @@
 }
 
 
-
-
-            
