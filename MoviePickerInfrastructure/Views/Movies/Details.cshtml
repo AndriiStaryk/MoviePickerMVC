@@ -60,7 +60,21 @@
             @Html.DisplayFor(model => model.Director.Name)
         </dd>
     </dl>
+
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @* @Html.DisplayNameFor(model => model.Title) *@
+            @Localizer["title"]
+        </dt>
+        
+    </dl>
 </div>
+
+
+
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id"> @Localizer["edit"] </a> |
     <a asp-action="Index">@Localizer["backToList"]</a>

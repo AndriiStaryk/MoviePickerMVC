@@ -17,13 +17,12 @@ namespace MoviePickerInfrastructure.Controllers;
 public class MoviesController : Controller
 {
     private readonly MoviePickerContext _context;
+    private MovieViewModel _movieViewModel;
     private Movie _movie = new Movie();
-    private readonly List<Genre> _genres = new List<Genre>();
-
     public MoviesController(MoviePickerContext context)
     {
         _context = context;
-        _genres = _context.Genres.ToList();
+        _movieViewModel = new MovieViewModel(context);
     }
 
     // GET: Movies
@@ -51,6 +50,7 @@ public class MoviesController : Controller
             return NotFound();
         }
 
+        
         var movie = await _context.Movies
             .Include(m => m.Director)
             .FirstOrDefaultAsync(m => m.Id == id);
@@ -65,13 +65,12 @@ public class MoviesController : Controller
     // GET: Movies/Create
     public IActionResult Create()
     {
-        MovieViewModel viewModel = new MovieViewModel();
-        viewModel.Movie = _movie;
-        viewModel.Genres = _genres;
+        //MovieViewModel viewModel = new MovieViewModel(_context);
+        _movieViewModel.Movie = _movie;
         // viewModel.Context = _context;
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
         //return View();
-        return View(viewModel);
+        return View(_movieViewModel);
     }
 
     // POST: Movies/Create
@@ -81,10 +80,8 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie/*, [FromForm] MovieViewModel movieViewModel*/ /*[Bind("Movie, Genres")] MovieViewModel movieViewModel*/)
     {
-        var movieViewModel = new MovieViewModel();
-        movieViewModel.Movie = movie;
-        movieViewModel.Genres = _genres;
-
+        //var movieViewModel = new MovieViewModel(_context);
+        _movieViewModel.Movie = movie;
         //var genres = movieViewModel.Genres.ToList();
 
 
@@ -96,7 +93,7 @@ public class MoviesController : Controller
                 await _context.SaveChangesAsync();
 
 
-                foreach (var genre in movieViewModel.SelectedGenres)
+                foreach (var genre in _movieViewModel.SelectedGenres)
                 {
                     movie.MoviesGenres.Add(new MoviesGenre { GenreId = genre.Id });
                     //post.PostCategories.Add(new PostCategory { CategoryId = CategoryId });
@@ -113,7 +110,7 @@ public class MoviesController : Controller
         }
         //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
         ViewBag.Genres = new SelectList(_context.Genres, "Id", "Name");
-        return View(movieViewModel);
+        return View(_movieViewModel);
     }
 
 
