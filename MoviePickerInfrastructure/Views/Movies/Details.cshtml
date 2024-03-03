@@ -125,3 +125,22 @@
         </td>
     </tr>
 </table>
+
+
+<table class="table">
+    <tr>
+        <th>@Localizer["reviews"]</th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                @foreach (var review in Model.Reviews)
+                {
+                    <li>
+                        <a asp-action="ShowReviewInfo" asp-route-reviewId="@review.Id">  @review.Title : @review.Text : @review.Rating</a>
+                    </li>
+                }
+            </ul>
+        </td>
+    </tr>
+</table>

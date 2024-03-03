@@ -1,9 +1,5 @@
-
-
 body {
     font-family: Candara, sans-serif; /* This is a simple, clean font */
-    background-color: #f0f0f0; /* This is a light gray color */
-    color: #333; /* This is a dark gray color for the text */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -16,21 +12,19 @@ nav {
 }
 
 .navbar-brand {
-    font-weight: bold; /* This makes the text bold */
-    font-size: 1.5em; /* This makes the text larger */
+    font-weight: bold;   /* This makes the text bold */
+    font-size: 1.5em;  /* This makes the text larger */
+    color: #FFFFFF;  /* Set navbar brand text color to white */
 }
 
 .navbar {
-    background-color: #87CEFA; /* This is a light sky blue color */
-}
-
-.navbar-brand {
-    color: #FFD700; /* This is a slightly yellow color */
+    background-color: #87CEFA;  /* This is a light sky blue color */
 }
 
 .nav-link {
-    color: #000000; /* This is black color for the other navigation links */
+    color: #FFFFFF;  /* Set navigation link text color to white */
 }
+
 
 /* Change the color of links */
 a {

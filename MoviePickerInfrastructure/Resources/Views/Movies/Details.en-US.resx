@@ -201,6 +201,9 @@
   <data name="releaseDate" xml:space="preserve">
     <value>Release Date</value>
   </data>
+  <data name="reviews" xml:space="preserve">
+    <value>Reviews</value>
+  </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>

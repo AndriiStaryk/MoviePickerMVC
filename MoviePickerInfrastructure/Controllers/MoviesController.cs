@@ -51,6 +51,12 @@ public class MoviesController : Controller
         return View(await moviesByGenreContext.ToListAsync());
     }
 
+
+    public async Task<IActionResult> ShowReviewInfo(int reviewId)
+    {
+        return RedirectToAction("Details", "Reviews", new { id = reviewId });
+    }
+
     public async Task<IActionResult> MoviesByActor(int actorId)
     {
         var moviesByActorContext = _context.MoviesActors

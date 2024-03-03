@@ -1,16 +1,17 @@
 ﻿<!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MoviePickerInfrastructure</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap_darkly.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MoviePickerInfrastructure.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3">
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" data-bs-theme="dark"> 
+        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 text-white"> *@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index" style="color: #FFA07A;">MoviePicker</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,58 +21,58 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">@Localizer["movies"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Movies" asp-action="Index" style="color: #FFF;">@Localizer["movies"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">@Localizer["genres"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Genres" asp-action="Index" style="color: #FFF;">@Localizer["genres"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">@Localizer["actors"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Actors" asp-action="Index" style="color: #FFF;">@Localizer["actors"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Directors" asp-action="Index">@Localizer["directors"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Directors" asp-action="Index" style="color: #FFF;">@Localizer["directors"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">@Localizer["countries"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Countries" asp-action="Index" style="color: #FFF;">@Localizer["countries"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Languages" asp-action="Index">@Localizer["languages"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Languages" asp-action="Index" style="color: #FFF;">@Localizer["languages"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reviews" asp-action="Index">@Localizer["reviews"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Reviews" asp-action="Index" style="color: #FFF;">@Localizer["reviews"]</a>
                         </li>
 
                         @*  @if (User.IsInRole("Administrator"))
                         {
  *@
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesGenres" asp-action="Index">@Localizer["moviesGenres"]</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="MoviesGenres" asp-action="Index">@Localizer["moviesGenres"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesActors" asp-action="Index">@Localizer["moviesActors"]</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="MoviesActors" asp-action="Index">@Localizer["moviesActors"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesLanguages" asp-action="Index">@Localizer["moviesLanguages"]</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="MoviesLanguages" asp-action="Index">@Localizer["moviesLanguages"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MoviesReviews" asp-action="Index">@Localizer["moviesReviews"]</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="MoviesReviews" asp-action="Index">@Localizer["moviesReviews"]</a>
                             </li>
                         @* } *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["privacy"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["privacy"]</a>
                         </li>
                     </ul>
 
                     <ul class="navbar-nav ml-auto">
                         <!-- Add this line -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PersonalAccount" asp-action="Index">@Localizer["personalAccount"]</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="PersonalAccount" asp-action="Index">@Localizer["personalAccount"]</a>
                         </li>
                     </ul>
 
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 @Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -80,7 +81,6 @@
                             </ul>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </nav>
