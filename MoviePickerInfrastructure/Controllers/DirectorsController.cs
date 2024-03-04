@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers;
 
 public class DirectorsController : Controller
 {
     private readonly MoviePickerContext _context;
+    private DirectorViewModel _directorViewModel;
 
     public DirectorsController(MoviePickerContext context)
     {
@@ -43,7 +45,9 @@ public class DirectorsController : Controller
             return NotFound();
         }
 
-        return View(director);
+        _directorViewModel = new DirectorViewModel(_context, director);
+
+        return View(_directorViewModel);
     }
 
     // GET: Directors/Create
@@ -183,5 +187,11 @@ public class DirectorsController : Controller
             .FirstOrDefaultAsync(m => m.Name == name && m.BirthDate == birthDate && m.BirthCountryId == birthCountryID);
 
         return director != null;
+    }
+
+
+    public async Task<IActionResult> MovieInfo(int movieId)
+    {
+        return RedirectToAction("Details", "Movies", new { id = movieId });
     }
 }

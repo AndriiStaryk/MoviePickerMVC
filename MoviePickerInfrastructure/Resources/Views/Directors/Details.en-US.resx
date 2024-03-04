@@ -180,6 +180,9 @@
   <data name="language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="moviesDirected" xml:space="preserve">
+    <value>Movies directed by this director</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

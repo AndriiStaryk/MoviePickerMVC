@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<MoviePickerDomain.Model.Movie>
 
-@* @model ActorViewModel *@
-
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>@Localizer["movies"] by Actor</h1>
+<h1>@Localizer["movies"] by Director</h1>
 
 <p>
     <a asp-action="Create">@Localizer["createNewMovie"]</a>

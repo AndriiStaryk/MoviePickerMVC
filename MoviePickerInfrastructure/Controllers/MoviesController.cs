@@ -59,6 +59,11 @@ public class MoviesController : Controller
 
     public async Task<IActionResult> MoviesByActor(int actorId)
     {
+        //Actor actor = _context.Actors.Find(actorId)!;
+
+        //ActorViewModel actorViewModel = new ActorViewModel(_context, actor);
+        //return View(actorViewModel);
+
         var moviesByActorContext = _context.MoviesActors
             .Where(ma => ma.ActorId == actorId)
             .Select(ma => ma.Movie);
@@ -66,6 +71,17 @@ public class MoviesController : Controller
         return View(await moviesByActorContext.ToListAsync());
     }
 
+
+    public async Task<IActionResult> ActorInfo(int actorId)
+    {
+        return RedirectToAction("Details", "Actors", new { id = actorId });
+    }
+
+
+    public async Task<IActionResult> DirectorInfo(int directorId)
+    {
+        return RedirectToAction("Details", "Directors", new { id = directorId });
+    }
 
     public async Task<IActionResult> MoviesByLanguage(int languageId)
     {
@@ -76,6 +92,15 @@ public class MoviesController : Controller
         return View(await moviesByLanguageContext.ToListAsync());
     }
 
+
+    public async Task<IActionResult> MoviesByDirector(int directorId)
+    {
+        var moviesByDirectorContext = _context.Movies
+            .Where(m => m.DirectorId == directorId);
+
+        return View(await moviesByDirectorContext.ToListAsync());
+    }
+ 
     // GET: Movies/Details/5
     public async Task<IActionResult> Details(int? id)
     {
@@ -150,15 +175,7 @@ public class MoviesController : Controller
     }
 
 
-    [HttpPost]
-    public IActionResult AddGenreByName([FromBody] string genre)
-    {
-        // Add your logic to handle the selected genre
-        _movieViewModel.AddGenreByName(genre);
-        return Ok(); // Return an appropriate response
-    }
-
-
+ 
 
     // GET: Movies/Edit/5
     public async Task<IActionResult> Edit(int? id)

@@ -89,6 +89,25 @@
     </tr>
 </table>
 
+
+<table class="table">
+    <tr>
+        <th>@Localizer["director"]</th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                
+               <a asp-action="DirectorInfo" asp-route-directorId="@Model.Movie.DirectorId">  @Model.Movie.Director!.Name </a>
+                    
+               
+            </ul>
+        </td>
+    </tr>
+</table>
+
+
+
 <table class="table">
     <tr>
         <th>@Localizer["actors"]</th>
@@ -99,7 +118,7 @@
                 @foreach (var actor in Model.Actors)
                 {
                     <li>
-                        <a asp-action="MoviesByActor" asp-route-actorId="@actor.Id">  @actor.Name </a>
+                        <a asp-action="ActorInfo" asp-route-actorId="@actor.Id">  @actor.Name </a>
                     </li>
                 }
             </ul>

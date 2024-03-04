@@ -1,10 +1,19 @@
-﻿@model MoviePickerDomain.Model.Director
+﻿@* @model MoviePickerDomain.Model.Director *@
+
+@model DirectorViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>@Localizer["Details"]</h1>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Director.Id">@Localizer["edit"]</a> |
+    <a asp-action="Index">@Localizer["backToList"]</a>
+</div>
+
+
 
 <div>
     <h4>@Localizer["director"]</h4>
@@ -15,25 +24,40 @@
             @Localizer["nameOfPerson"]
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Director.Name)
         </dd>
         <dt class = "col-sm-2">
             @* @Html.DisplayNameFor(model => model.BirthDate) *@
             @Localizer["birthDate"]
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
+            @Html.DisplayFor(model => model.Director.BirthDate)
         </dd>
         <dt class = "col-sm-2">
             @* @Html.DisplayNameFor(model => model.BirthCountry) *@
             @Localizer["birthCountry"]
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthCountry.Name)
+            @Html.DisplayFor(model => model.Director.BirthCountry.Name)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["edit"]</a> |
-    <a asp-action="Index">@Localizer["backToList"]</a>
-</div>
+
+
+<table class="table">
+    <tr>
+        <th>@Localizer["moviesDirected"]</th>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                @foreach (var movie in Model.MoviesDirected)
+                {
+                    <li>
+                        <a asp-action="MovieInfo" asp-route-movieId="@movie.Id">  @movie.Title </a>
+                    </li>
+                }
+            </ul>
+        </td>
+    </tr>
+</table>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -14,6 +15,7 @@ public class ActorsController : Controller
 {
 
     private readonly MoviePickerContext _context;
+    private ActorViewModel _actorViewModel;
 
     public ActorsController(MoviePickerContext context)
     {
@@ -26,6 +28,13 @@ public class ActorsController : Controller
         var moviePickerContext = _context.Actors.Include(a => a.BirthCountry);
         return View(await moviePickerContext.ToListAsync());
     }
+
+
+    public async Task<IActionResult> MovieInfo(int movieId)
+    {
+        return RedirectToAction("Details", "Movies", new { id = movieId });
+    }
+
 
     // GET: Actors/Details/5
     public async Task<IActionResult> Details(int? id)
@@ -42,6 +51,10 @@ public class ActorsController : Controller
         {
             return NotFound();
         }
+
+        _actorViewModel = new ActorViewModel(_context, actor);
+
+        return View(_actorViewModel);
 
         return View(actor);
     }

@@ -135,6 +135,9 @@
   <data name="edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
+  <data name="moviesActed" xml:space="preserve">
+    <value>Фільми в яких грав цей актор</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Ім'я</value>
   </data>

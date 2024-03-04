@@ -147,6 +147,9 @@
   <data name="createNewCountry" xml:space="preserve">
     <value>Додати нову країну</value>
   </data>
+  <data name="createNewMovie" xml:space="preserve">
+    <value>Додати новий фільм</value>
+  </data>
   <data name="creation" xml:space="preserve">
     <value>Додавання</value>
   </data>
@@ -180,8 +183,11 @@
   <data name="language" xml:space="preserve">
     <value>Мова</value>
   </data>
-  <data name="moviesDirected" xml:space="preserve">
-    <value>Фільми зняті цим режисером</value>
+  <data name="movie" xml:space="preserve">
+    <value>Фільм</value>
+  </data>
+  <data name="movies" xml:space="preserve">
+    <value>Фільми</value>
   </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>

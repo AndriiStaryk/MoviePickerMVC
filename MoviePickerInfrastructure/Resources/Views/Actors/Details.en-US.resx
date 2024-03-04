@@ -135,6 +135,9 @@
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="moviesActed" xml:space="preserve">
+    <value>Movies with this actor</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>Name</value>
   </data>

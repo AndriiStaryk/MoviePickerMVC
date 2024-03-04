@@ -19,12 +19,15 @@ public class MovieViewModel
 
     public List<Language> Languages { get; set; }
 
-
+    public Director Director { get; set; } = null!;
     public MovieViewModel(MoviePickerContext context, Movie movie)
     {
         _context = context;
         Movie = movie;
 
+        Director = context.Directors
+            .Find(movie.DirectorId)!;
+            
         Reviews = context.Reviews
             .Where(review => review.MovieId == movie.Id).ToList();
 
