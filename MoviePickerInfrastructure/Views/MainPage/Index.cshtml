@@ -4,16 +4,47 @@
 
 <h1>@ViewData["MoviePicker"]</h1>
 
-<div style="text-align: center; padding: 20px; background-color: #f0f0f0; border-radius: 10px; margin: 20px;">
-    <h1 style="color: #FFA07A;">@Localizer["welcome"] 🎥</h1>
-    <p style="font-size: 1.2em; color: #333;">
-        <strong>@Localizer["1"]</strong> @Localizer["2"]
-    </p>
-    <p style="font-size: 1.2em; color: #333;">
-        @Localizer["3"] <strong>MoviePicker</strong>@Localizer["4"]
-    </p>
-    <p style="font-size: 1.2em; color: #333;">
-        @Localizer["5"] <strong>MoviePicker</strong>@Localizer["6"] <h1> 🍿 </h1>
-    </p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Picker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('/Images/moviePickerLogo4_upscaled.jpg');
+            background-size: 100%;
+            background-position: top;
+            font-family: Arial, sans-serif;
+        }
 
+        .content {
+            text-align: center;
+            padding: 0;
+            background-color: rgba(240, 240, 240, 0.8);
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #FFA07A;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome 🎥</h1>
+        <p><strong>@Localizer["1"]</strong> @Localizer["2"]</p>
+        <p>@Localizer["3"] <strong>MoviePicker</strong>@Localizer["4"]</p>
+        <p>@Localizer["5"] <strong>MoviePicker</strong>@Localizer["6"] <span>🍿</span></p>
+    </div>
+</body>
+</html>

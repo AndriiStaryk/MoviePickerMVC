@@ -33,7 +33,7 @@
 
       <button id="addGenreBtn">Add Genre</button>
     </div>
-    <script>
+   @*  <script>
                 // document.getElementById('addGenreBtn').addEventListener('click', function () {
                 //     var selectedGenre = document.getElementById('genrePicker').value;
                 //     if (selectedGenre !== '') {
@@ -62,7 +62,7 @@
 //         xhr.send(data);
 //     }
 // });
-    </script>
+    </script> *@
 
 
     <div id="selectedGenres" class="selected-genres">
@@ -86,6 +86,32 @@
                 <input asp-for="Movie.Title" class="form-control" />
                 <span asp-validation-for="Movie.Title" class="text-danger"></span>
             </div>
+
+            @* <select multiple search="true">
+                @foreach(var genre in Model.Genres)
+                {
+                    <option value="@genre">@genre.Name</option>
+                }
+            </select> *@
+
+            @* <select multiple search='true'>
+                <option value="Singapore">Singapore</option>
+                <option value="Portland">Portland</option>
+                <option value="Halifax">Halifax</option>
+                <option value="London">London</option>
+                <option value="Seattle">Seattle</option>
+                <option value="Toronto">Toronto</option>
+            </select>
+
+            <div id="dropdownSelected">
+                <h2>Selected</h2>
+            </div> *@
+
+          @*   <div class="form-group">
+                @Html.ListBoxFor(model => model.Genres, new MultiSelectList(Model.SelectedGenres, "Name"), new { @class = "form-control", multiple = "multiple", id = "Genres_selector" })
+            </div>
+ *@
+
             <div class="form-group">
                 <label asp-for="Movie.ReleaseDate" class="control-label"> @Localizer["releaseDate"] </label>
                 <input asp-for="Movie.ReleaseDate" class="form-control" type="date" />
@@ -127,11 +153,56 @@
     <a asp-action="Index">@Localizer["backToList"]</a>
 </div>
  
+<script src="multi-select-dropdown.js"></script>
 
-@section Scripts {
+@* @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+ *@
+@section Scripts {
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
+    <script>
+
+        $(document).ready(function()) {
+            $('Genres_selector').multiselect();
+
+        });
+        // document.getElementById('addGenreBtn').addEventListener('click', function () {
+        //     var selectedGenre = document.getElementById('genrePicker').value;
+        //     if (selectedGenre !== '') {
+        //         var selectedGenresContainer = document.getElementById('selectedGenres');
+        //         var selectedGenresInput = document.getElementById('selectedGenresInput');
+        //         var span = document.createElement('span');
+        //         span.textContent = selectedGenre;
+        //         selectedGenresContainer.appendChild(span);
+
+        //         // Add selected genre to hidden input
+        //         var selectedGenres = selectedGenresInput.value.split(',');
+        //         selectedGenres.push(selectedGenre);
+        //         selectedGenresInput.value = selectedGenres.join(',');
+        //     }
+        // });
+
+        // When the form is submitted, the selected genres will be sent to the view model
+        document.querySelector('form').addEventListener('submit', function () {
+            var selectedGenresInput = document.getElementById('selectedGenresInput');
+            var selectedGenres = selectedGenresInput.value.split(',');
+
+            for (var i = 0; i < selectedGenres.length; i++) {
+                var genreName = selectedGenres[i];
+               
+        @{
+           // Model.AddGenreByName(genreName);
+        }
+
+            }
+        
+                });
+    </script>
+}

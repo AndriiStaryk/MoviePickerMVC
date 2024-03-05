@@ -12,6 +12,7 @@ public partial class Actor : Entity
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
     [DateInThePast(ErrorMessage = "Рік народження не може бути в майбутньому.")]
+    //[DateVeryFarInPast(ErrorMessage ="Рік народження не може бути більше ніж 100 років тому")]
     public DateOnly BirthDate { get; set; }
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
