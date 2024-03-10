@@ -48,10 +48,10 @@
 
         function drawChart() {
 
-            $.get('/api/GenresChart/JsonData', function (JsonData) {
+            $.get('/api/Charts/JsonGenresData', function (JsonData) {
                 data = google.visualization.arrayToDataTable(JsonData, false);
                 var option = {
-                    title: "Співвідношення кількості жанрів та фільмів",
+                    title: "Співвідношення кількості фільмів та жанрів",
                     width: 500,
                     height: 400
                 };
