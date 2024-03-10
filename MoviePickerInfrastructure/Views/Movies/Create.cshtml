@@ -19,8 +19,8 @@
   <title>Tag Input Example</title>
   <link rel="stylesheet" href="~/css/site.css">
 </head>
-<body>
-  <div class="tag-input">
+@* <body> *@
+  <@* div class="tag-input">
     <div class="picker-wrapper">
                 
         <select id="genrePicker">
@@ -32,7 +32,7 @@
       </select>
 
       <button id="addGenreBtn">Add Genre</button>
-    </div>
+    </div> *@
    @*  <script>
                 // document.getElementById('addGenreBtn').addEventListener('click', function () {
                 //     var selectedGenre = document.getElementById('genrePicker').value;
@@ -65,7 +65,7 @@
     </script> *@
 
 
-    <div id="selectedGenres" class="selected-genres">
+    @* <div id="selectedGenres" class="selected-genres">
                 @foreach (var genre in Model.SelectedGenres)
                 {
                     <span>@genre.Name</span>
@@ -73,10 +73,10 @@
                 }
             </div>
             <input type="hidden" id="selectedGenresInput" name="SelectedGenres" value="" />
-  </div>
+  </div> *@
 
 
- </body> 
+ @* </body>  *@
 
     <div class="col-md-4">
         <form asp-action="Create">
@@ -112,6 +112,13 @@
             </div>
  *@
 
+
+            <div class="form-group">
+                <label asp-for="Genres" class="control-label"> @Localizer["genreі"] </label>
+                <select asp-for="Genres" class="form-control" asp-items="ViewBag.GenreId" multiple="multiple"></select>
+            </div>
+
+
             <div class="form-group">
                 <label asp-for="Movie.ReleaseDate" class="control-label"> @Localizer["releaseDate"] </label>
                 <input asp-for="Movie.ReleaseDate" class="form-control" type="date" />
@@ -121,6 +128,18 @@
                 <label asp-for="Movie.DirectorId" class="control-label"> @Localizer["director"] </label>
                 <select asp-for="Movie.DirectorId" class="form-control" asp-items="ViewBag.DirectorId"></select>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
+                <select asp-for="Actors" class="form-control" asp-items="ViewBag.ActorId" multiple="multiple"></select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Languages" class="control-label"> @Localizer["languages"] </label>
+                <select asp-for="Languages" class="form-control" asp-items="ViewBag.LanguageId" multiple="multiple"></select>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Movie.Budget" class="control-label"> @Localizer["budget"] </label>
                 <input asp-for="Movie.Budget" class="form-control" />
@@ -155,12 +174,6 @@
  
 <script src="multi-select-dropdown.js"></script>
 
-@* @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
- *@
 @section Scripts {
 
     @{

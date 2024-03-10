@@ -11,7 +11,7 @@ public class MovieViewModel
 
     public List<Genre> Genres { get; set; }
 
-    public List<Genre> SelectedGenres { get; set; } = new List<Genre>();
+    //public List<Genre> SelectedGenres { get; set; } = new List<Genre>();
 
     public List<Review> Reviews { get; set; }
 
@@ -49,30 +49,31 @@ public class MovieViewModel
         return _context.Genres.ToList();
     }
 
-    public void AddGenreByName(string name)
-    {
-        var genre = _context.Genres.FirstOrDefault(genre => genre.Name == name);
-        if (genre != null)
-        {
-           SelectedGenres.Add(genre);
-        }
-    }
+    //public void AddGenreById(int genreId)
+    //{
+    //    var genre = _context.Genres.FirstOrDefault(genre => genre.Id == genreId);
+    //    if (genre != null)
+    //    {
+    //       SelectedGenres.Add(genre);
+    //    }
+    //}
 
-    public async void AddSelectedGenres()
-    {
-        foreach (var genre in SelectedGenres)
-        {
-            MoviesGenre moviesGenre = new MoviesGenre();
-            moviesGenre.Genre = genre;
-            moviesGenre.Movie = Movie;
 
-            if (!await IsMoviesGenresExist(moviesGenre.MovieId, moviesGenre.GenreId))
-            {
-                _context.Add(moviesGenre);
-                await _context.SaveChangesAsync();
-            }
-        }
-    }
+    //public async void AddSelectedGenres()
+    //{
+    //    foreach (var genre in SelectedGenres)
+    //    {
+    //        MoviesGenre moviesGenre = new MoviesGenre { MovieId = Movie.Id, GenreId = genre.Id };
+
+    //        if (!await IsMoviesGenresExist(moviesGenre.MovieId, moviesGenre.GenreId))
+    //        {
+    //            Movie.MoviesGenres.Add(moviesGenre);
+    //            //_context.Add(moviesGenre);
+    //            //await context.SaveChangesAsync();
+    //        }
+    //    }
+        
+    //}
 
     private async Task<bool> IsMoviesGenresExist(int movieID, int genreID)
     {

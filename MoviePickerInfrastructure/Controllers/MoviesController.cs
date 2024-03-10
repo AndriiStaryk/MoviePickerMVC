@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 using MoviePickerInfrastructure.Models;
+using System.IO;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -127,9 +128,16 @@ public class MoviesController : Controller
     public IActionResult Create()
     {
         //MovieViewModel viewModel = new MovieViewModel(_context);
-        _movieViewModel.Movie = _movie;
+
+        //_movieViewModel.Movie = _movie;
+        _movieViewModel = new MovieViewModel(_context, _movie);
+
         // viewModel.Context = _context;
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
+
         //return View();
         return View(_movieViewModel);
     }
@@ -139,7 +147,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie/*, [FromForm] MovieViewModel movieViewModel*/ /*[Bind("Movie, Genres")] MovieViewModel movieViewModel*/)
+    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie, int[] genres, int[] actors, int[] languages/*, [FromForm] MovieViewModel movieViewModel*/ /*[Bind("Movie, Genres")] MovieViewModel movieViewModel*/)
     {
         //var movieViewModel = new MovieViewModel(_context);
         _movieViewModel.Movie = movie;
@@ -151,15 +159,38 @@ public class MoviesController : Controller
             if (!await IsMovieExist(movie.Title, movie.ReleaseDate, movie.DirectorId))
             {
                 _context.Add(movie);
+
+                //foreach (var genreId in genres)
+                //{
+                //    //_movieViewModel.SelectedGenres.Add(new Genre { Id = genreId });
+                //    _movieViewModel.AddGenreById(genreId);
+
+                //    //var mg = new MoviesGenre { MovieId = movie.Id, GenreId = genreId};
+                //    //_movieViewModel.Movie.MoviesGenres.Add(mg);
+
+                //}
+
+                //_movieViewModel.AddSelectedGenres();
+
+                foreach (var genreId in genres)
+                {
+                    _movieViewModel.Movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
+                }
+
+                foreach (var actorId in actors)
+                {
+                    _movieViewModel.Movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
+                }
+
+                foreach (var languageId in languages)
+                {
+                    _movieViewModel.Movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
+                }
+
                 await _context.SaveChangesAsync();
 
 
-                foreach (var genre in _movieViewModel.SelectedGenres)
-                {
-                    movie.MoviesGenres.Add(new MoviesGenre { GenreId = genre.Id });
-                    //post.PostCategories.Add(new PostCategory { CategoryId = CategoryId });
-                }
-                _context.SaveChanges();
+                //_context.SaveChanges();
 
                 //movieViewModel.AddSelectedGenres(_context);
                 return RedirectToAction(nameof(Index));
@@ -170,12 +201,13 @@ public class MoviesController : Controller
             }
         }
         //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-        ViewBag.Genres = new SelectList(_context.Genres, "Id", "Name");
+
+        ViewData["GenreId"] = new SelectList(_context.Genres.Include(g => g.Id), "Id", "Name");
+
+        //ViewBag.Genres = new SelectList(_context.Genres, "Id", "Name");
         return View(_movieViewModel);
     }
 
-
- 
 
     // GET: Movies/Edit/5
     public async Task<IActionResult> Edit(int? id)

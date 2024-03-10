@@ -120,6 +120,9 @@
   <data name="actor" xml:space="preserve">
     <value>Actor</value>
   </data>
+  <data name="actors" xml:space="preserve">
+    <value>Actors</value>
+  </data>
   <data name="backToList" xml:space="preserve">
     <value>Back to List</value>
   </data>
@@ -177,8 +180,14 @@
   <data name="genre" xml:space="preserve">
     <value>Genre</value>
   </data>
+  <data name="genres" xml:space="preserve">
+    <value>Genre</value>
+  </data>
   <data name="language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="languages" xml:space="preserve">
+    <value>Languages</value>
   </data>
   <data name="movie" xml:space="preserve">
     <value>Movie</value>
