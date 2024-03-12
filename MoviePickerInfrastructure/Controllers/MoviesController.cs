@@ -53,7 +53,7 @@ public class MoviesController : Controller
     }
 
 
-    public async Task<IActionResult> ShowReviewInfo(int reviewId)
+    public IActionResult ShowReviewInfo(int reviewId)
     {
         return RedirectToAction("Details", "Reviews", new { id = reviewId });
     }
@@ -73,13 +73,13 @@ public class MoviesController : Controller
     }
 
 
-    public async Task<IActionResult> ActorInfo(int actorId)
+    public IActionResult ActorInfo(int actorId)
     {
         return RedirectToAction("Details", "Actors", new { id = actorId });
     }
 
 
-    public async Task<IActionResult> DirectorInfo(int directorId)
+    public IActionResult DirectorInfo(int directorId)
     {
         return RedirectToAction("Details", "Directors", new { id = directorId });
     }
@@ -294,9 +294,12 @@ public class MoviesController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var movie = await _context.Movies.FindAsync(id);
+        _movieViewModel.Movie = movie;
+
         if (movie != null)
         {
-            _context.Movies.Remove(movie);
+            _movieViewModel.DeleteMovie();
+           // _context.Movies.Remove(movie);
         }
 
         await _context.SaveChangesAsync();

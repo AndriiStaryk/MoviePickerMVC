@@ -16,10 +16,12 @@ public class ActorsController : Controller
 
     private readonly MoviePickerContext _context;
     private ActorViewModel _actorViewModel;
+    private Actor _actor = new Actor();
 
     public ActorsController(MoviePickerContext context)
     {
         _context = context;
+        _actorViewModel = new ActorViewModel(context, _actor);
     }
 
     // GET: Actors
@@ -30,7 +32,7 @@ public class ActorsController : Controller
     }
 
 
-    public async Task<IActionResult> MovieInfo(int movieId)
+    public IActionResult MovieInfo(int movieId)
     {
         return RedirectToAction("Details", "Movies", new { id = movieId });
     }
@@ -56,7 +58,7 @@ public class ActorsController : Controller
 
         return View(_actorViewModel);
 
-        return View(actor);
+        //return View(actor);
     }
 
     // GET: Actors/Create

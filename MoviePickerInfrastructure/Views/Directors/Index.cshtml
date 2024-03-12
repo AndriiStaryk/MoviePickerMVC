@@ -4,50 +4,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>@Localizer["directors"]</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@Localizer["directors"]</h1>
+    <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewDirector"]</a>
+</div>
 
-<p>
-    <a asp-action="Create">@Localizer["createNewDirector"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Name) *@
-                @Localizer["nameOfPerson"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.BirthDate) *@
-                @Localizer["birthDate"]
-            </th>
-            <th>
-               @*  @Html.DisplayNameFor(model => model.BirthCountry) *@
-                @Localizer["birthCountry"]
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthCountry.Name)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">@Localizer["birthDate"]: @item.BirthDate</p>
+                    <p class="card-text">@Localizer["birthCountry"]: @item.BirthCountry.Name</p>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                        <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+                        <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
 
 
 <div class="container">
@@ -63,13 +44,22 @@
 
             $.get('/api/Charts/JsonDirectorsData', function (JsonData) {
                 data = google.visualization.arrayToDataTable(JsonData, false);
-                var option = {
+                var options = {
                     title: "Співвідношення кількості фільмів та режисерів",
                     width: 500,
-                    height: 400
+                    height: 400,
+                    backgroundColor: 'transparent',
+                    titleTextStyle: {
+                        color: '#FF6347'
+                    },
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    }
                 };
                 chart = new google.visualization.PieChart(document.getElementById('chart1'));
-                chart.draw(data, option);
+                chart.draw(data, options);
             })
         }
     </script>

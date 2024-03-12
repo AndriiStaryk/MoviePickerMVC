@@ -16,10 +16,12 @@ public class DirectorsController : Controller
 {
     private readonly MoviePickerContext _context;
     private DirectorViewModel _directorViewModel;
+    private Director _director = new Director();
 
     public DirectorsController(MoviePickerContext context)
     {
         _context = context;
+        _directorViewModel = new DirectorViewModel(context, _director);
     }
 
     // GET: Directors
@@ -190,7 +192,7 @@ public class DirectorsController : Controller
     }
 
 
-    public async Task<IActionResult> MovieInfo(int movieId)
+    public IActionResult MovieInfo(int movieId)
     {
         return RedirectToAction("Details", "Movies", new { id = movieId });
     }

@@ -48,6 +48,9 @@ a {
     margin-top: 10px; /* This adds 10px of space above the button */
 }
 
+.btn-group > .btn {
+    margin-right: 5px;
+}
 
 
 .tag-input {

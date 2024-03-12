@@ -6,22 +6,26 @@ namespace MoviePickerDomain.Model;
 
 public partial class Movie : Entity
 {
-    [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
+    [Required(ErrorMessage = "Поле не повинно бути порожнім")]
     [StringLength(50, ErrorMessage = "Назва не може бути довшою за 50 символів.")]
     public string Title { get; set; } = null!;
 
-    [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
+    [Required(ErrorMessage = "Поле не повинно бути порожнім")]
     public DateOnly ReleaseDate { get; set; }
 
-    [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
+    [Required(ErrorMessage = "Поле не повинно бути порожнім")]
     public int DirectorId { get; set; }
 
+    [Range(0, double.MaxValue, ErrorMessage = "Бюджет повинен бути більше або рівним 0.")]
     public long? Budget { get; set; }
 
+    [Range(0, double.MaxValue, ErrorMessage = "Дохід від каси повинен бути більше або рівним 0.")]
     public long? BoxOfficeRevenue { get; set; }
 
+    [Range(0, 1200, ErrorMessage = "Тривалість повинна бути більше або рівною 0.")]
     public int? Duration { get; set; }
 
+    [Range(0.0, 10.0, ErrorMessage = "Рейтинг повинен бути в діапазоні від 0.0 до 10.0.")]
     public double? Rating { get; set; }
 
     public virtual Director? Director { get; set; } //= null!;

@@ -49,13 +49,22 @@
 
             $.get('/api/Charts/JsonLanguagesData', function (JsonData) {
                 data = google.visualization.arrayToDataTable(JsonData, false);
-                var option = {
+                var options = {
                     title: "Співвідношення кількості фільмів та мов",
                     width: 500,
-                    height: 400
+                    height: 400,
+                    backgroundColor: 'transparent',
+                    titleTextStyle: {
+                        color: '#FF6347'
+                    },
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    }
                 };
                 chart = new google.visualization.PieChart(document.getElementById('chart1'));
-                chart.draw(data, option);
+                chart.draw(data, options);
             })
         }
     </script>

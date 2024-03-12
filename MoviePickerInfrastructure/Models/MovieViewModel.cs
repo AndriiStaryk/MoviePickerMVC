@@ -35,6 +35,7 @@ public class MovieViewModel
             .Where(ma => ma.MovieId == movie.Id)
             .Select(ma => ma.Actor).ToList()!;
 
+
         Genres = context.MoviesGenres
             .Where(mg => mg.MovieId == movie.Id)
             .Select(mg => mg.Genre).ToList()!;
@@ -74,6 +75,47 @@ public class MovieViewModel
     //    }
         
     //}
+
+    public void DeleteMovie()
+    {
+
+        var mas = _context.MoviesActors
+            .Where(ma => ma.MovieId == Movie.Id).ToList();
+
+        foreach (var ma in mas)
+        {
+            if (ma != null)
+            {
+                _context.MoviesActors.Remove(ma);
+            }
+        }
+
+        var mgs = _context.MoviesGenres
+            .Where(mg => mg.MovieId == Movie.Id).ToList();
+
+        foreach (var mg in mgs)
+        {
+            if (mg != null)
+            {
+                _context.MoviesGenres.Remove(mg);
+            }
+        }
+
+
+        var mls = _context.MoviesLanguages
+            .Where(ml => ml.MovieId == Movie.Id).ToList();
+
+        foreach (var ml in mls)
+        {
+            if (ml != null)
+            {
+                _context.MoviesLanguages.Remove(ml);
+            }
+        }
+
+        _context.Movies.Remove(Movie);
+        _context.SaveChanges();
+    }
 
     private async Task<bool> IsMoviesGenresExist(int movieID, int genreID)
     {
