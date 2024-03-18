@@ -177,9 +177,13 @@ public class ActorsController : Controller
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var actor = await _context.Actors.FindAsync(id);
+        
+
         if (actor != null)
         {
-            _context.Actors.Remove(actor);
+            _actorViewModel.Actor = actor;
+            _actorViewModel.DeleteActor();
+            //_context.Actors.Remove(actor);
         }
 
         await _context.SaveChangesAsync();

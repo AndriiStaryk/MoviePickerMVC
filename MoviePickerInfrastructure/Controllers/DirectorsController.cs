@@ -170,7 +170,9 @@ public class DirectorsController : Controller
         var director = await _context.Directors.FindAsync(id);
         if (director != null)
         {
-            _context.Directors.Remove(director);
+            _directorViewModel.Director = director;
+            _directorViewModel.DeleteDirector();
+            //_context.Directors.Remove(director);
         }
 
         await _context.SaveChangesAsync();

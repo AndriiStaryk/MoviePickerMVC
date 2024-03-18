@@ -19,64 +19,6 @@
   <title>Tag Input Example</title>
   <link rel="stylesheet" href="~/css/site.css">
 </head>
-@* <body> *@
-  <@* div class="tag-input">
-    <div class="picker-wrapper">
-                
-        <select id="genrePicker">
-                    @foreach (var genre in Model.GetAllAvailableGenres())
-                    {
-                        <option value="@genre.Name">@genre.Name</option>
-                    }
-
-      </select>
-
-      <button id="addGenreBtn">Add Genre</button>
-    </div> *@
-   @*  <script>
-                // document.getElementById('addGenreBtn').addEventListener('click', function () {
-                //     var selectedGenre = document.getElementById('genrePicker').value;
-                //     if (selectedGenre !== '') {
-                //     //razor syntax {
-                //         Model.AddGenreByName(selectedGenre);
-
-                //         }
-                //     }
-                // });
-
-//                 document.getElementById('addGenreBtn').addEventListener('click', function () {
-//     var selectedGenre = document.getElementById('genrePicker').value;
-//     if (selectedGenre !== '') {
-//         // Make an AJAX request to the server
-//         var xhr = new XMLHttpRequest();
-//         xhr.open('POST', '/Controllers/MoviesController/AddGenreByName', true);
-//         xhr.setRequestHeader('Content-Type', 'application/json');
-//         xhr.onreadystatechange = function () {
-//             if (xhr.readyState === XMLHttpRequest.DONE) {
-//                 // Handle the response from the server if needed
-//             }
-//         };
-
-//         // Convert the selectedGenre to JSON and send it in the request body
-//         var data = JSON.stringify({ genre: selectedGenre });
-//         xhr.send(data);
-//     }
-// });
-    </script> *@
-
-
-    @* <div id="selectedGenres" class="selected-genres">
-                @foreach (var genre in Model.SelectedGenres)
-                {
-                    <span>@genre.Name</span>
-                    //Model.SelectedGenres.Add(@genre);
-                }
-            </div>
-            <input type="hidden" id="selectedGenresInput" name="SelectedGenres" value="" />
-  </div> *@
-
-
- @* </body>  *@
 
     <div class="col-md-4">
         <form asp-action="Create">
@@ -86,32 +28,6 @@
                 <input asp-for="Movie.Title" class="form-control" />
                 <span asp-validation-for="Movie.Title" class="text-danger"></span>
             </div>
-
-            @* <select multiple search="true">
-                @foreach(var genre in Model.Genres)
-                {
-                    <option value="@genre">@genre.Name</option>
-                }
-            </select> *@
-
-            @* <select multiple search='true'>
-                <option value="Singapore">Singapore</option>
-                <option value="Portland">Portland</option>
-                <option value="Halifax">Halifax</option>
-                <option value="London">London</option>
-                <option value="Seattle">Seattle</option>
-                <option value="Toronto">Toronto</option>
-            </select>
-
-            <div id="dropdownSelected">
-                <h2>Selected</h2>
-            </div> *@
-
-          @*   <div class="form-group">
-                @Html.ListBoxFor(model => model.Genres, new MultiSelectList(Model.SelectedGenres, "Name"), new { @class = "form-control", multiple = "multiple", id = "Genres_selector" })
-            </div>
- *@
-
 
             <div class="form-group">
                 <label asp-for="Genres" class="control-label"> @Localizer["genres"] </label>
@@ -174,48 +90,3 @@
  
 <script src="multi-select-dropdown.js"></script>
 
-@section Scripts {
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    <script>
-
-        $(document).ready(function()) {
-            $('Genres_selector').multiselect();
-
-        });
-        // document.getElementById('addGenreBtn').addEventListener('click', function () {
-        //     var selectedGenre = document.getElementById('genrePicker').value;
-        //     if (selectedGenre !== '') {
-        //         var selectedGenresContainer = document.getElementById('selectedGenres');
-        //         var selectedGenresInput = document.getElementById('selectedGenresInput');
-        //         var span = document.createElement('span');
-        //         span.textContent = selectedGenre;
-        //         selectedGenresContainer.appendChild(span);
-
-        //         // Add selected genre to hidden input
-        //         var selectedGenres = selectedGenresInput.value.split(',');
-        //         selectedGenres.push(selectedGenre);
-        //         selectedGenresInput.value = selectedGenres.join(',');
-        //     }
-        // });
-
-        // When the form is submitted, the selected genres will be sent to the view model
-        document.querySelector('form').addEventListener('submit', function () {
-            var selectedGenresInput = document.getElementById('selectedGenresInput');
-            var selectedGenres = selectedGenresInput.value.split(',');
-
-            for (var i = 0; i < selectedGenres.length; i++) {
-                var genreName = selectedGenres[i];
-               
-        @{
-           // Model.AddGenreByName(genreName);
-        }
-
-            }
-        
-                });
-    </script>
-}

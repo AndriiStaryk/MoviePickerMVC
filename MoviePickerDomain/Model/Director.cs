@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace MoviePickerDomain.Model;
 
 public partial class Director : Entity
@@ -12,8 +13,7 @@ public partial class Director : Entity
 
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
-    [DateInThePast(ErrorMessage = "Рік народження не може бути в майбутньому.")]
-    //[DateVeryFarInPast(ErrorMessage = "Рік народження не може бути більше ніж 100 років тому")]
+    [DataValidation(ErrorMessage = "Рік народження не валідний. Режисеру може бути від 7 до 110")]
     public DateOnly BirthDate { get; set; }
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
@@ -22,4 +22,9 @@ public partial class Director : Entity
     public virtual Country? BirthCountry { get; set; } //= null!;
 
     public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
+
+    public int GetYears()
+    {
+        return DateTime.Now.Year - BirthDate.Year;
+    }
 }

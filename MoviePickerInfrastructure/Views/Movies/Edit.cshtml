@@ -1,4 +1,5 @@
-﻿@model MoviePickerDomain.Model.Movie
+﻿@* @model MoviePickerDomain.Model.Movie *@
+@model MovieViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,44 +13,62 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Title" class="control-label"> @Localizer["title"]  </label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Movie.Title" class="control-label"> @Localizer["title"] </label>
+                <input asp-for="Movie.Title" class="form-control" />
+                <span asp-validation-for="Movie.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Genres" class="control-label"> @Localizer["genres"] </label>
+                <select asp-for="Genres" class="form-control" asp-items="ViewBag.GenreId" multiple="multiple"></select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Movie.ReleaseDate" class="control-label"> @Localizer["releaseDate"] </label>
+                <input asp-for="Movie.ReleaseDate" class="form-control" type="date" />
+                <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReleaseDate" class="control-label"> @Localizer["releaseDate"] </label>
-                <input asp-for="ReleaseDate" class="form-control" type="date" />
-                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                <label asp-for="Movie.DirectorId" class="control-label"> @Localizer["director"] </label>
+                <select asp-for="Movie.DirectorId" class="form-control" asp-items="ViewBag.DirectorId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
+                <select asp-for="Actors" class="form-control" asp-items="ViewBag.ActorId" multiple="multiple"></select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Languages" class="control-label"> @Localizer["languages"] </label>
+                <select asp-for="Languages" class="form-control" asp-items="ViewBag.LanguageId" multiple="multiple"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Budget" class="control-label"> @Localizer["budget"] </label>
+                <input asp-for="Movie.Budget" class="form-control" />
+                <span asp-validation-for="Movie.Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DirectorId" class="control-label"> @Localizer["director"] </label>
-                <select asp-for="DirectorId" class="form-control" asp-items="ViewBag.DirectorId"></select>
-                <span asp-validation-for="DirectorId" class="text-danger"></span>
+                <label asp-for="Movie.BoxOfficeRevenue" class="control-label"> @Localizer["boxOfficeRevenue"] </label>
+                <input asp-for="Movie.BoxOfficeRevenue" class="form-control" />
+                <span asp-validation-for="Movie.BoxOfficeRevenue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Budget" class="control-label"> @Localizer["budget"] </label>
-                <input asp-for="Budget" class="form-control" />
-                <span asp-validation-for="Budget" class="text-danger"></span>
+                <label asp-for="Movie.Duration" class="control-label"> @Localizer["duration"] </label>
+                <input asp-for="Movie.Duration" class="form-control" />
+                <span asp-validation-for="Movie.Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BoxOfficeRevenue" class="control-label"> @Localizer["boxOfficeRevenue"] </label>
-                <input asp-for="BoxOfficeRevenue" class="form-control" />
-                <span asp-validation-for="BoxOfficeRevenue" class="text-danger"></span>
+                <label asp-for="Movie.Rating" class="control-label"> @Localizer["rating"] </label>
+                <input asp-for="Movie.Rating" class="form-control" />
+                <span asp-validation-for="Movie.Rating" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"> @Localizer["duration"]  </label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"> @Localizer["rating"] </label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
-                    <p class="card-text">@Localizer["birthDate"]: @item.BirthDate</p>
+                    <p class="card-text">@Localizer["age"]: @item.GetYears()</p>
                     <p class="card-text">@Localizer["birthCountry"]: @item.BirthCountry.Name</p>
                     <div class="btn-group" role="group" aria-label="Actions">
                         <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>

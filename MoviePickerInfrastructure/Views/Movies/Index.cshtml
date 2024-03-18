@@ -17,12 +17,12 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@item.Title</h5>
-                    <p class="card-text">@Localizer["releaseDate"]: @item.ReleaseDate</p>
-                    <p class="card-text">@Localizer["budget"]: @item.Budget</p>
-                    <p class="card-text">@Localizer["boxOfficeRevenue"]: @item.BoxOfficeRevenue</p>
-                    <p class="card-text">@Localizer["duration"]: @item.Duration</p>
-                    <p class="card-text">@Localizer["rating"]: @item.Rating</p>
                     <p class="card-text">@Localizer["director"]: @item.Director.Name</p>
+                    <p class="card-text">@Localizer["releaseYear"]: @item.ReleaseDate.Year</p>
+                    <p class="card-text">@Localizer["duration"]: @item.Duration @Localizer["minutes"]</p>
+                    <p class="card-text">@Localizer["rating"]: @item.Rating</p>
+                    <p class="card-text">@Localizer["budget"]: @item.ShowCash(item.Budget) @Localizer["millions"]</p>
+                    <p class="card-text">@Localizer["boxOfficeRevenue"]: @item.ShowCash(item.BoxOfficeRevenue) @Localizer["millions"]</p>
                     <div class="btn-group" role="group" aria-label="Actions">
                         <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
                         <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>

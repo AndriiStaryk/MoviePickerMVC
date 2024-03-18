@@ -19,4 +19,23 @@ public class ActorViewModel
             .Where(ma => ma.ActorId == actor.Id)
             .Select(ma => ma.Movie).ToList()!;
     }
+
+
+    public void DeleteActor()
+    {
+
+        var mas = _context.MoviesActors
+            .Where(ma => ma.ActorId == Actor.Id).ToList();
+
+        foreach (var ma in mas)
+        {
+            if (ma != null)
+            {
+                _context.MoviesActors.Remove(ma);
+            }
+        }
+
+        _context.Actors.Remove(Actor);
+        _context.SaveChanges();
+    }
 }

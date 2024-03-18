@@ -11,8 +11,8 @@ public partial class Actor : Entity
     public string Name { get; set; } = null!;
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
-    [DateInThePast(ErrorMessage = "Рік народження не може бути в майбутньому.")]
-    //[DateVeryFarInPast(ErrorMessage ="Рік народження не може бути більше ніж 100 років тому")]
+    [DataValidation(ErrorMessage = "Рік народження не валідний. Актору може бути від 7 до 110")]
+
     public DateOnly BirthDate { get; set; }
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
@@ -21,4 +21,9 @@ public partial class Actor : Entity
     public virtual Country? BirthCountry { get; set; } //= null!;
 
     public virtual ICollection<MoviesActor> MoviesActors { get; set; } = new List<MoviesActor>();
+
+    public int GetYears()
+    {
+        return DateTime.Now.Year - BirthDate.Year;
+    }
 }

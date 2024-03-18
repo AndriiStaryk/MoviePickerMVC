@@ -37,4 +37,15 @@ public partial class Movie : Entity
     public virtual ICollection<MoviesLanguage> MoviesLanguages { get; set; } = new List<MoviesLanguage>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public double ShowCash(long? cash)
+    {
+        if (cash != null)
+        {
+            return (double)(cash) / 1_000_000.0;
+        }
+
+        return 0;
+    }
+
 }

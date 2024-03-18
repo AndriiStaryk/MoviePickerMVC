@@ -6,18 +6,18 @@ namespace MoviePickerInfrastructure.Models;
 
 public class MovieViewModel
 {
-    private MoviePickerContext _context;
+    private MoviePickerContext _context = new MoviePickerContext();
     public Movie Movie { get; set; } = null!;
 
-    public List<Genre> Genres { get; set; }
+    public List<Genre> Genres { get; set; } //= new List<Genre>();
 
     //public List<Genre> SelectedGenres { get; set; } = new List<Genre>();
 
-    public List<Review> Reviews { get; set; }
+    public List<Review> Reviews { get; set; } //= new List<Review>();
 
-    public List<Actor> Actors { get; set; }
+    public List<Actor> Actors { get; set; } //= new List<Actor>();
 
-    public List<Language> Languages { get; set; }
+    public List<Language> Languages { get; set; } //= new List<Language>();
 
     public Director Director { get; set; } = null!;
     public MovieViewModel(MoviePickerContext context, Movie movie)
@@ -45,10 +45,12 @@ public class MovieViewModel
             .Select(ml => ml.Language).ToList()!;
     }
 
-    public List<Genre> GetAllAvailableGenres()
-    {
-        return _context.Genres.ToList();
-    }
+
+
+    //public List<Genre> GetAllAvailableGenres()
+    //{
+    //    return _context.Genres.ToList();
+    //}
 
     //public void AddGenreById(int genreId)
     //{
@@ -76,52 +78,43 @@ public class MovieViewModel
         
     //}
 
-    public void DeleteMovie()
+    public static void DeleteMovie(Movie movie, MoviePickerContext context)
     {
-
-        var mas = _context.MoviesActors
-            .Where(ma => ma.MovieId == Movie.Id).ToList();
+        var mas = context.MoviesActors
+            .Where(ma => ma.MovieId == movie.Id).ToList();
 
         foreach (var ma in mas)
         {
             if (ma != null)
             {
-                _context.MoviesActors.Remove(ma);
+                context.MoviesActors.Remove(ma);
             }
         }
 
-        var mgs = _context.MoviesGenres
-            .Where(mg => mg.MovieId == Movie.Id).ToList();
+        var mgs = context.MoviesGenres
+            .Where(mg => mg.MovieId == movie.Id).ToList();
 
         foreach (var mg in mgs)
         {
             if (mg != null)
             {
-                _context.MoviesGenres.Remove(mg);
+                context.MoviesGenres.Remove(mg);
             }
         }
 
 
-        var mls = _context.MoviesLanguages
-            .Where(ml => ml.MovieId == Movie.Id).ToList();
+        var mls = context.MoviesLanguages
+            .Where(ml => ml.MovieId == movie.Id).ToList();
 
         foreach (var ml in mls)
         {
             if (ml != null)
             {
-                _context.MoviesLanguages.Remove(ml);
+                context.MoviesLanguages.Remove(ml);
             }
         }
 
-        _context.Movies.Remove(Movie);
-        _context.SaveChanges();
-    }
-
-    private async Task<bool> IsMoviesGenresExist(int movieID, int genreID)
-    {
-        var moviesGenres = await _context.MoviesGenres
-            .FirstOrDefaultAsync(m => m.MovieId == movieID && m.GenreId == genreID);
-
-        return moviesGenres != null;
+        context.Movies.Remove(movie);
+        context.SaveChanges();
     }
 }

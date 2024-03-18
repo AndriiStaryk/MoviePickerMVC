@@ -20,4 +20,23 @@ public class DirectorViewModel
             .Where(m => m.DirectorId == director.Id)
             .ToList()!;
     }
+
+    
+    public void DeleteDirector()
+    {
+        var moviesByThisDirector = _context.Movies
+            .Where(m => m.DirectorId == Director.Id).ToList();
+
+        foreach (var movie in moviesByThisDirector)
+        {
+            if (movie != null)
+            {
+                MovieViewModel.DeleteMovie(movie, _context);
+                //_context.Movies.Remove(movie);
+            }
+        }
+
+        _context.Directors.Remove(Director);
+        _context.SaveChanges();
+    }
 }
