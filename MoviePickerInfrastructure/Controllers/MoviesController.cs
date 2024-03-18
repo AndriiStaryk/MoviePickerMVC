@@ -210,114 +210,52 @@ public class MoviesController : Controller
         ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
         ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
 
-        return View(movie);
+        return View(_movieViewModel);
+       // return View(movie);
     }
 
     // POST: Movies/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie, int[] genres, int[] actors, int[] languages)
-    {
-        if (id != movie.Id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            if (!await IsMovieExist(movie.Title, movie.ReleaseDate, movie.DirectorId, movie.Budget, movie.BoxOfficeRevenue, movie.Rating))
-            {
-                try
-                {
-                    _movieViewModel.Movie = movie;
-
-                    _context.Update(movie);
-
-                    foreach (var genreId in genres)
-                    {
-                        _movieViewModel.Movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
-                    }
-
-                    foreach (var actorId in actors)
-                    {
-                        _movieViewModel.Movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
-                    }
-
-                    foreach (var languageId in languages)
-                    {
-                        _movieViewModel.Movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
-                    }
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MovieExists(movie.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "This movie already exists.");
-            }
-        }
-        ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-        return View(_movieViewModel);
-    }
-
-
-
     //[HttpPost]
     //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] MovieViewModel movieViewModel, int[] genres, int[] actors, int[] languages)
+    //public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie, int[] genres, int[] actors, int[] languages)
     //{
-    //    if (id != movieViewModel.Movie.Id)
+    //    if (id != movie.Id)
     //    {
     //        return NotFound();
     //    }
 
     //    if (ModelState.IsValid)
     //    {
-    //        if (!await IsMovieExist(movieViewModel.Movie.Title, movieViewModel.Movie.ReleaseDate, movieViewModel.Movie.DirectorId, movieViewModel.Movie.Budget, movieViewModel.Movie.BoxOfficeRevenue, movieViewModel.Movie.Rating))
+    //        if (!await IsMovieExist(movie.Title, movie.ReleaseDate, movie.DirectorId, movie.Budget, movie.BoxOfficeRevenue, movie.Rating))
     //        {
     //            try
     //            {
-
-    //                var movie = movieViewModel.Movie; // Get the main movie entity from the view model
-
-    //                movieViewModel = new MovieViewModel(_context, movie);
+    //                _movieViewModel.Movie = movie;
 
     //                _context.Update(movie);
 
     //                foreach (var genreId in genres)
     //                {
-    //                    movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
+    //                    _movieViewModel.Movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
     //                }
 
     //                foreach (var actorId in actors)
     //                {
-    //                    movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
+    //                    _movieViewModel.Movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
     //                }
 
     //                foreach (var languageId in languages)
     //                {
-    //                    movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
+    //                    _movieViewModel.Movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
     //                }
 
     //                await _context.SaveChangesAsync();
     //            }
     //            catch (DbUpdateConcurrencyException)
     //            {
-    //                if (!MovieExists(movieViewModel.Movie.Id))
+    //                if (!MovieExists(movie.Id))
     //                {
     //                    return NotFound();
     //                }
@@ -333,15 +271,78 @@ public class MoviesController : Controller
     //            ModelState.AddModelError(string.Empty, "This movie already exists.");
     //        }
     //    }
-
-    //    // Repopulate ViewData for dropdowns
-    //    ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movieViewModel.Movie.DirectorId);
-    //    ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
-    //    ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
-    //    ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
-
-    //    return View(movieViewModel);
+    //    ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+    //    return View(_movieViewModel);
     //}
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] MovieViewModel movieViewModel, int[] genres, int[] actors, int[] languages)
+    {
+        if (id != movieViewModel.Movie.Id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            if (!await IsMovieExist(movieViewModel.Movie.Title, movieViewModel.Movie.ReleaseDate, movieViewModel.Movie.DirectorId, movieViewModel.Movie.Budget, movieViewModel.Movie.BoxOfficeRevenue, movieViewModel.Movie.Rating))
+            {
+                try
+                {
+
+                    var movie = movieViewModel.Movie; // Get the main movie entity from the view model
+
+                    movieViewModel = new MovieViewModel(_context, movie);
+
+                    _context.Update(movie);
+
+                    foreach (var genreId in genres)
+                    {
+                        movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
+                    }
+
+                    foreach (var actorId in actors)
+                    {
+                        movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
+                    }
+
+                    foreach (var languageId in languages)
+                    {
+                        movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MovieExists(movieViewModel.Movie.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "This movie already exists.");
+            }
+        }
+
+        // Repopulate ViewData for dropdowns
+        ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movieViewModel.Movie.DirectorId);
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
+
+        return View(movieViewModel);
+    }
 
 
 

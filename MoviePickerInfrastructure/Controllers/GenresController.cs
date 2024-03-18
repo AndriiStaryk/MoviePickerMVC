@@ -168,7 +168,17 @@ public class GenresController : Controller
         var genre = await _context.Genres.FindAsync(id);
         if (genre != null)
         {
+            var mgs = _context.MoviesGenres
+                .Where(mg => mg.GenreId == genre.Id)
+                .ToList();
+
+            foreach(var mg in mgs)
+            {
+                _context.MoviesGenres.Remove(mg);
+            }
+
             _context.Genres.Remove(genre);
+
         }
 
         await _context.SaveChangesAsync();

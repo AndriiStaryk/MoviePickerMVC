@@ -4,7 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>@Localizer["creation"]</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@Localizer["creation"]</h1>
+    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+</div>
+
+
 
 <h4>@Localizer["director"]</h4>
 <hr />
@@ -27,15 +32,12 @@
                 <select asp-for="BirthCountryId" class ="form-control" asp-items="ViewBag.BirthCountryId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["create"]" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["create"]" class="btn btn-primary rounded-pill" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">@Localizer["backToList"]</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

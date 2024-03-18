@@ -4,7 +4,10 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>@Localizer["editing"]</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@Localizer["editing"]</h1>
+    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+</div>
 
 <h4>@Localizer["genre"]</h4>
 <hr />
@@ -19,15 +22,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Localizer["save"]" class="btn btn-primary" />
+                <input type="submit" value="@Localizer["save"]" class="btn btn-primary rounded-pill" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">@Localizer["backToList"]t</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
