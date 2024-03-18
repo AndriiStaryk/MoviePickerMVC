@@ -11,7 +11,7 @@ public partial class Actor : Entity
     public string Name { get; set; } = null!;
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
-    [DataValidation(ErrorMessage = "Рік народження не валідний. Актору може бути від 7 до 110")]
+    [PersonDataValidation(ErrorMessage = "Рік народження не валідний. Актору може бути від 7 до 110")]
 
     public DateOnly BirthDate { get; set; }
 

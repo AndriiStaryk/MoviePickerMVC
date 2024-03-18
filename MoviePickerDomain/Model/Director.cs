@@ -13,7 +13,7 @@ public partial class Director : Entity
 
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]
-    [DataValidation(ErrorMessage = "Рік народження не валідний. Режисеру може бути від 7 до 110")]
+    [PersonDataValidation(ErrorMessage = "Рік народження не валідний. Режисеру може бути від 7 до 110")]
     public DateOnly BirthDate { get; set; }
 
     [Required(ErrorMessage = "Поле не повинно бути  порожнім")]

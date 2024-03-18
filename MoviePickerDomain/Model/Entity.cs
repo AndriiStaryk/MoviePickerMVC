@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,13 +15,16 @@ public abstract class Entity
 }
 
 
-public class DataValidationAttribute : ValidationAttribute
+public class PersonDataValidationAttribute : ValidationAttribute
 {
+    const int MinimumAmountOfYears = 7;
+    const int MaximumAmountOfYears = 110;
+
     public override bool IsValid(object value)
     {
         var dt = (DateOnly)value;
        
-        if (DateTime.Now.Year - dt.Year > 110 || DateTime.Now.Year - dt.Year < 7)
+        if (DateTime.Now.Year - dt.Year > MaximumAmountOfYears || DateTime.Now.Year - dt.Year < MinimumAmountOfYears)
         {
             return false;
         }
@@ -28,45 +33,19 @@ public class DataValidationAttribute : ValidationAttribute
     }
 }
 
-//public class DateInThePastAttribute : ValidationAttribute
-//{
-//    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-//    {
-//        if (value is DateTime)
-//        {
-//            DateTime date = (DateTime)value;
-//            if (date > DateTime.Now)
-//            {
-//                return new ValidationResult("Date cannot be in the future");
-//            }
-//            else if (date < DateTime.Now.AddYears(-100))
-//            {
-//                return new ValidationResult("Date must not be more than 100 years ago");
-//            }
-//        }
+public class MovieDataValidationAttribute : ValidationAttribute
+{
+    const int MaximumAmountOfYears = 129;
 
-//        return ValidationResult.Success;
-//    }
-//}
+    public override bool IsValid(object value)
+    {
+        var dt = (DateOnly)value;
 
-//public class DateVeryFarInPast : ValidationAttribute
-//{
-//    private int _maxYearsAgo = 100;
-//    public override bool IsValid(object value)
-//    {
-//        if (value is not DateTime)
-//        {
-//            return false; // Not a DateTime object
-//        }
+        if (DateTime.Now.Year - dt.Year > MaximumAmountOfYears)
+        {
+            return false;
+        }
 
-//        var date = (DateTime)value;
-
-//        // Calculate the minimum allowed date
-//        var minDate = DateTime.Now.Date.AddYears(-_maxYearsAgo);
-
-//        // Check if the provided date is not in the future and not more than _maxYearsAgo years ago
-//        return date <= DateTime.Now.Date && date >= minDate;
-//    }
-//}
-
-
+        return true;
+    }
+}

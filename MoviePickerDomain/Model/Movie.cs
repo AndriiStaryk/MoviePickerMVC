@@ -10,6 +10,7 @@ public partial class Movie : Entity
     [StringLength(50, ErrorMessage = "Назва не може бути довшою за 50 символів.")]
     public string Title { get; set; } = null!;
 
+    [MovieDataValidation(ErrorMessage = "Рік релізу не валідний. Фільму не може бути більше за 129 років")]
     [Required(ErrorMessage = "Поле не повинно бути порожнім")]
     public DateOnly ReleaseDate { get; set; }
 
