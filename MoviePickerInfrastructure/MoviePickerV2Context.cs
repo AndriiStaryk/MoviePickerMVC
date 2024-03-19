@@ -6,13 +6,13 @@ using MoviePickerDomain.Model;
 
 namespace MoviePickerInfrastructure;
 
-public partial class MoviePickerContext : DbContext
+public partial class MoviePickerV2Context : DbContext
 {
-    public MoviePickerContext()
+    public MoviePickerV2Context()
     {
     }
 
-    public MoviePickerContext(DbContextOptions<MoviePickerContext> options)
+    public MoviePickerV2Context(DbContextOptions<MoviePickerV2Context> options)
         : base(options)
     {
     }
@@ -35,13 +35,12 @@ public partial class MoviePickerContext : DbContext
 
     public virtual DbSet<MoviesLanguage> MoviesLanguages { get; set; }
 
-    //public virtual DbSet<MoviesReview> MoviesReviews { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-7KLUTEC\\SQLEXPRESS;Database=MoviePicker;Trusted_Connection=True;Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-7KLUTEC\\SQLEXPRESS;Database=MoviePicker_v2;Trusted_Connection=True;Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -96,6 +95,7 @@ public partial class MoviePickerContext : DbContext
         modelBuilder.Entity<Movie>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Description).HasMaxLength(800);
             entity.Property(e => e.DirectorId).HasColumnName("DirectorID");
             entity.Property(e => e.Title).HasMaxLength(50);
 
@@ -160,16 +160,10 @@ public partial class MoviePickerContext : DbContext
                 .HasConstraintName("FK_Movies_Languages_Movies");
         });
 
-        //modelBuilder.Entity<MoviesReview>(entity =>
-        //{
-        //    entity.Property(e => e.Id).HasColumnName("ID");
-        //    entity.Property(e => e.MovieId).HasColumnName("MovieID");
-        //    entity.Property(e => e.ReviewId).HasColumnName("ReviewID");
-        //});
-
         modelBuilder.Entity<Review>(entity =>
         {
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CreationTime).HasColumnType("datetime");
             entity.Property(e => e.MovieId).HasColumnName("MovieID");
             entity.Property(e => e.Text)
                 .HasMaxLength(100)

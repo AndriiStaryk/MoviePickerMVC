@@ -6,7 +6,7 @@ namespace MoviePickerInfrastructure.Models;
 
 public class MovieViewModel
 {
-    private MoviePickerContext _context = new MoviePickerContext();
+    private MoviePickerV2Context _context = new MoviePickerV2Context();
     public Movie Movie { get; set; } = null!;
 
     public List<Genre> Genres { get; set; } //= new List<Genre>();
@@ -20,14 +20,14 @@ public class MovieViewModel
     public List<Language> Languages { get; set; } //= new List<Language>();
 
     public Director Director { get; set; } = null!;
-    public MovieViewModel(MoviePickerContext context, Movie movie)
+    public MovieViewModel(MoviePickerV2Context context, Movie movie)
     {
         _context = context;
         Movie = movie;
 
         Director = context.Directors
             .Find(movie.DirectorId)!;
-            
+
         Reviews = context.Reviews
             .Where(review => review.MovieId == movie.Id).ToList();
 
@@ -75,10 +75,10 @@ public class MovieViewModel
     //            //await context.SaveChangesAsync();
     //        }
     //    }
-        
+
     //}
 
-    public static void DeleteMovie(Movie movie, MoviePickerContext context)
+    public static void DeleteMovie(Movie movie, MoviePickerV2Context context)
     {
         var mas = context.MoviesActors
             .Where(ma => ma.MovieId == movie.Id).ToList();

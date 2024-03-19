@@ -14,11 +14,11 @@ namespace MoviePickerInfrastructure.Controllers;
 
 public class DirectorsController : Controller
 {
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
     private DirectorViewModel _directorViewModel;
     private Director _director = new Director();
 
-    public DirectorsController(MoviePickerContext context)
+    public DirectorsController(MoviePickerV2Context context)
     {
         _context = context;
         _directorViewModel = new DirectorViewModel(context, _director);

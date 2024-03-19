@@ -13,9 +13,9 @@ namespace MoviePickerInfrastructure.Controllers;
 
 public class CountriesController : Controller
 {
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
 
-    public CountriesController(MoviePickerContext context)
+    public CountriesController(MoviePickerV2Context context)
     {
         _context = context;
     }

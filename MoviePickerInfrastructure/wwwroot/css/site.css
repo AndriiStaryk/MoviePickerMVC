@@ -107,3 +107,8 @@ button {
     border-radius: 20px; /* Rounded rectangle */
     color: #FF6347; /* Text color for picker and button */
 }
+
+.small-image {
+    width: 100px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+}

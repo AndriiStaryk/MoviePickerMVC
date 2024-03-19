@@ -5,13 +5,13 @@ namespace MoviePickerInfrastructure.Models;
 
 public class DirectorViewModel
 {
-    private MoviePickerContext _context;
+    private MoviePickerV2Context _context;
     public Director Director { get; set; } = null!;
 
     public List<Movie> MoviesDirected { get; set; }
 
 
-    public DirectorViewModel(MoviePickerContext context, Director director)
+    public DirectorViewModel(MoviePickerV2Context context, Director director)
     {
         _context = context;
         Director = director;
@@ -21,7 +21,7 @@ public class DirectorViewModel
             .ToList()!;
     }
 
-    
+
     public void DeleteDirector()
     {
         var moviesByThisDirector = _context.Movies

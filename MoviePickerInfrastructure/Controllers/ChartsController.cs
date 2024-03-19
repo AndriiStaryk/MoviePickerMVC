@@ -7,9 +7,9 @@ namespace MoviePickerInfrastructure.Controllers;
 [ApiController]
 public class ChartsController : ControllerBase
 {
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
 
-    public ChartsController(MoviePickerContext context)
+    public ChartsController(MoviePickerV2Context context)
     {
         _context = context;
     }

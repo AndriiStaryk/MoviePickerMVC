@@ -13,9 +13,9 @@ namespace MoviePickerInfrastructure.Controllers;
 
 public class GenresController : Controller
 {
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
 
-    public GenresController(MoviePickerContext context)
+    public GenresController(MoviePickerV2Context context)
     {
         _context = context;
     }

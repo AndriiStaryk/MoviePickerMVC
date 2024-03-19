@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<MoviePickerContext>(option => option.UseSqlServer(
+builder.Services.AddDbContext<MoviePickerV2Context>(option => option.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
 ));
 

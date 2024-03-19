@@ -14,11 +14,11 @@ namespace MoviePickerInfrastructure.Controllers;
 public class ActorsController : Controller
 {
 
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
     private ActorViewModel _actorViewModel;
     private Actor _actor = new Actor();
 
-    public ActorsController(MoviePickerContext context)
+    public ActorsController(MoviePickerV2Context context)
     {
         _context = context;
         _actorViewModel = new ActorViewModel(context, _actor);
@@ -73,12 +73,21 @@ public class ActorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
+    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile actorImage)
     {
         if (ModelState.IsValid)
         {
             if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
             {
+
+                if (actorImage != null && actorImage.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await actorImage.CopyToAsync(memoryStream);
+                        actor.ActorImage = memoryStream.ToArray();
+                    }
+                }
                 _context.Add(actor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -126,7 +135,7 @@ public class ActorsController : Controller
             if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
             {
                 try
-                {
+                {    
                     _context.Update(actor);
                     await _context.SaveChangesAsync();
                 }

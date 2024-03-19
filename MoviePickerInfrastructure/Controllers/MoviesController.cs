@@ -17,10 +17,10 @@ namespace MoviePickerInfrastructure.Controllers;
 
 public class MoviesController : Controller
 {
-    private readonly MoviePickerContext _context;
+    private readonly MoviePickerV2Context _context;
     private MovieViewModel _movieViewModel;
     private Movie _movie = new Movie();
-    public MoviesController(MoviePickerContext context)
+    public MoviesController(MoviePickerV2Context context)
     {
         _context = context;
         _movieViewModel = new MovieViewModel(context, _movie);

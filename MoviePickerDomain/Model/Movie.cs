@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace MoviePickerDomain.Model;
 
 public partial class Movie : Entity
 {
+
     [Required(ErrorMessage = "Поле не повинно бути порожнім")]
     [StringLength(50, ErrorMessage = "Назва не може бути довшою за 50 символів.")]
+
     public string Title { get; set; } = null!;
 
     [MovieDataValidation(ErrorMessage = "Рік релізу не валідний. Фільму не може бути більше за 129 років")]
@@ -27,7 +30,11 @@ public partial class Movie : Entity
     public int? Duration { get; set; }
 
     [Range(0.0, 10.0, ErrorMessage = "Рейтинг повинен бути в діапазоні від 0.0 до 10.0.")]
-    public double? Rating { get; set; }
+    public double Rating { get; set; }
+
+    public byte[]? MovieImage { get; set; }
+
+    public string? Description { get; set; }
 
     public virtual Director? Director { get; set; } //= null!;
 
@@ -43,10 +50,9 @@ public partial class Movie : Entity
     {
         if (cash != null)
         {
-            return (double)(cash) / 1_000_000.0;
+            return Math.Round((double)(cash) / 1_000_000.0, 2);
         }
 
         return 0;
     }
-
 }
