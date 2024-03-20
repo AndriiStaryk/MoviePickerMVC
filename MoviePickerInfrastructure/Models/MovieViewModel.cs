@@ -20,6 +20,9 @@ public class MovieViewModel
     public List<Language> Languages { get; set; } //= new List<Language>();
 
     public Director Director { get; set; } = null!;
+
+    public IFormFile MovieImage { get; set; }
+
     public MovieViewModel(MoviePickerV2Context context, Movie movie)
     {
         _context = context;
@@ -45,38 +48,7 @@ public class MovieViewModel
             .Select(ml => ml.Language).ToList()!;
     }
 
-
-
-    //public List<Genre> GetAllAvailableGenres()
-    //{
-    //    return _context.Genres.ToList();
-    //}
-
-    //public void AddGenreById(int genreId)
-    //{
-    //    var genre = _context.Genres.FirstOrDefault(genre => genre.Id == genreId);
-    //    if (genre != null)
-    //    {
-    //       SelectedGenres.Add(genre);
-    //    }
-    //}
-
-
-    //public async void AddSelectedGenres()
-    //{
-    //    foreach (var genre in SelectedGenres)
-    //    {
-    //        MoviesGenre moviesGenre = new MoviesGenre { MovieId = Movie.Id, GenreId = genre.Id };
-
-    //        if (!await IsMoviesGenresExist(moviesGenre.MovieId, moviesGenre.GenreId))
-    //        {
-    //            Movie.MoviesGenres.Add(moviesGenre);
-    //            //_context.Add(moviesGenre);
-    //            //await context.SaveChangesAsync();
-    //        }
-    //    }
-
-    //}
+    
 
     public static void DeleteMovie(Movie movie, MoviePickerV2Context context)
     {

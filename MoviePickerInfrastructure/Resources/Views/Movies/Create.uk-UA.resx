@@ -192,6 +192,9 @@
   <data name="movie" xml:space="preserve">
     <value>Фільм</value>
   </data>
+  <data name="movieImage" xml:space="preserve">
+    <value>Фото фільму</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

@@ -27,6 +27,14 @@ public partial class Director : Entity
 
     public int GetYears()
     {
-        return DateTime.Now.Year - BirthDate.Year;
+        DateTime now = DateTime.Today;
+        int years = now.Year - BirthDate.Year;
+
+        if (now.Month < BirthDate.Month || (now.Month == BirthDate.Month && now.Day < BirthDate.Day))
+        {
+            years--;
+        }
+
+        return years;
     }
 }

@@ -20,36 +20,24 @@
 
 <div class="row">
     <div class="col-md-6">
-        
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Localizer["name"]
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Actor.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Localizer["birthDate"]
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Actor.BirthDate)
-            </dd>
-            <dt class="col-sm-2">
-                @Localizer["birthCountry"]
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Actor.BirthCountry.Name)
-            </dd>
-        </dl>
-    </div>
-    <div class="col-md-6 d-flex align-items-start">
-        @if (Model.Actor.ActorImage != null && Model.Actor.ActorImage.Length > 0)
-        {
-            <img src="data:image;base64,@Convert.ToBase64String(Model.Actor.ActorImage)" alt="Actor Image" class="small-image">
-        }
+        <div class="d-flex align-items-center">
+            @if (Model.Actor.ActorImage != null && Model.Actor.ActorImage.Length > 0)
+            {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.Actor.ActorImage)" alt="Actor Image" class="small-image mr-3">
+            }
+            <div>
+                <dl class="row m-0">
+                    <dt class="col-sm-4">@Localizer["name"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.Name)</dd>
+                    <dt class="col-sm-4">@Localizer["birthDate"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthDate)</dd>
+                    <dt class="col-sm-4">@Localizer["birthCountry"]</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthCountry.Name)</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
-
 
 
 

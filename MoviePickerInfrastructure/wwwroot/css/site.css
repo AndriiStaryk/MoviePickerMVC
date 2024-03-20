@@ -109,6 +109,45 @@ button {
 }
 
 .small-image {
-    width: 100px; /* Adjust width as needed */
+    width: auto; 
+    height: 125px; 
+}
+
+.image-container {
+    width: 100px;
+    height: 200px;
+    overflow: hidden; /* Ensure image does not overflow container */
+}
+
+.image-fit {
+    width: 90%; /* Make image fill container width */
     height: auto; /* Maintain aspect ratio */
+}
+
+/* Custom CSS for adjusting padding, button size, and rounding */
+
+
+/* Adjust the button size and padding */
+/*.btn-outline-success {
+    height: 30px;*/ /* Adjust the height of the button */
+    /*padding: 0.375rem 0.5rem;*/ /* Adjust the padding of the button */
+/*}*/
+
+    /* Center the icon in the button */
+    /*.btn-outline-success svg {
+        vertical-align: middle;
+    }*/
+/* Custom CSS to add padding between the search bar and button */
+/*.input-group-append {
+    margin-left: 10px;*/ /* Adjust the amount of padding between the search bar and button */
+/*}*/
+
+/* Ensure the search bar and button are vertically aligned */
+/*.input-group {
+    align-items: center;
+}*/
+
+.search-wrapper {
+    align-items: center;
+    gap: 5px;
 }

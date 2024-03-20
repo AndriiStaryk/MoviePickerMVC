@@ -64,12 +64,22 @@ public class DirectorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director)
+    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile directorImage)
     {
         if (ModelState.IsValid)
         {
             if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId))
             {
+
+                if (directorImage != null && directorImage.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await directorImage.CopyToAsync(memoryStream);
+                        director.DirectorImage = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Add(director);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

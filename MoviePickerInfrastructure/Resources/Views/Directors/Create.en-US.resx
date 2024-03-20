@@ -165,6 +165,9 @@
   <data name="director" xml:space="preserve">
     <value>Director</value>
   </data>
+  <data name="directorImage" xml:space="preserve">
+    <value>Director Image</value>
+  </data>
   <data name="duration" xml:space="preserve">
     <value>Duration</value>
   </data>

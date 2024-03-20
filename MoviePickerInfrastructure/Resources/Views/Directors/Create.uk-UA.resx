@@ -165,6 +165,9 @@
   <data name="director" xml:space="preserve">
     <value>Режисер</value>
   </data>
+  <data name="directorImage" xml:space="preserve">
+    <value>Фото  режисера</value>
+  </data>
   <data name="duration" xml:space="preserve">
     <value>Тривалість</value>
   </data>

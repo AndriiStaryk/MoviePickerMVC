@@ -192,6 +192,9 @@
   <data name="movie" xml:space="preserve">
     <value>Movie</value>
   </data>
+  <data name="movieImage" xml:space="preserve">
+    <value>Movie Image</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

@@ -12,6 +12,7 @@ using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 using MoviePickerInfrastructure.Models;
 using System.IO;
+using System.Numerics;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -142,7 +143,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie, int[] genres, int[] actors, int[] languages/*, [FromForm] MovieViewModel movieViewModel*/ /*[Bind("Movie, Genres")] MovieViewModel movieViewModel*/)
+    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile movieImage)
     {
         //_movieViewModel.Movie = movie;
         
@@ -151,6 +152,15 @@ public class MoviesController : Controller
             if (!await IsMovieExist(movie.Title, movie.ReleaseDate, movie.DirectorId, movie.Budget, movie.BoxOfficeRevenue, movie.Rating))
             {
                 _movieViewModel.Movie = movie;
+
+                if (movieImage != null && movieImage.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await movieImage.CopyToAsync(memoryStream);
+                        movie.MovieImage = memoryStream.ToArray();
+                    }
+                }
 
                 _context.Add(movie);
 
@@ -180,8 +190,7 @@ public class MoviesController : Controller
         }
         //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
 
-        ViewData["GenreId"] = new SelectList(_context.Genres.Include(g => g.Id), "Id", "Name");
-
+       
         //ViewBag.Genres = new SelectList(_context.Genres, "Id", "Name");
         return View(_movieViewModel);
     }

@@ -26,16 +26,19 @@
                             <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
                         </div>
                     </div>
-                    @if (item.ActorImage != null && item.ActorImage.Length > 0)
-                    {
-                        <img src="data:image;base64,@Convert.ToBase64String(item.ActorImage)" alt="Actor Image" class="small-image ml-auto">
-                    }
+
+                    <div class="image-container ml-auto">
+                        @if (item.ActorImage != null && item.ActorImage.Length > 0)
+                        {
+                            <img src="data:image;base64,@Convert.ToBase64String(item.ActorImage)" alt="Actor Image" class="image-fit">
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-
     }
 </div>
+
 
 
 

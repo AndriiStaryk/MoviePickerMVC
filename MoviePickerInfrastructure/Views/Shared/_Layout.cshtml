@@ -69,13 +69,53 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["privacy"]</a>
                         </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">@Localizer["privacy"]</a>
+                        </li>
+
                     </ul>
 
+
+
+                   
+
+
+
+
                     <ul class="navbar-nav ml-auto">
-                        <!-- Add this line -->
-                        <li class="nav-item">
+
+                        @*  <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+                            <div class="d-flex">
+                                <div class="input-group rounded-pill search-wrapper mr-2">
+                                    <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-success rounded-pill px-3 align-self-center" type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.413l-3.85-3.85zm-4.242 0a4.5 4.5 0 1 1 1.397-1.398 4.5 4.5 0 0 1-1.398 1.398z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+
+
+ *@
+                        <div class="input-group rounded-pill search-wrapper mr-2">
+
+                            <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success rounded-pill px-3 align-self-center" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.413l-3.85-3.85zm-4.242 0a4.5 4.5 0 1 1 1.397-1.398 4.5 4.5 0 0 1-1.398 1.398z" />
+                                    </svg>
+                                </button>
+                            </div>
                             <a class="nav-link text-white" asp-area="" asp-controller="PersonalAccount" asp-action="Index">@Localizer["personalAccount"]</a>
-                        </li>
+
+                        </div>
                     </ul>
 
                     <ul class="navbar-nav">
