@@ -4,6 +4,76 @@
     ViewData["Title"] = "Index";
 }
 
+
+<div class="background-image-blurred"></div>
+
+
+    <div class="d-flex justify-content-between align-items-center container">
+        <h1>@Localizer["movies"]</h1>
+        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewMovie"]</a>
+    </div>
+
+
+<div class="card-container">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">@Localizer["director"]: @item.Director.Name</p>
+                            <p class="card-text">@Localizer["releaseYear"]: @item.ReleaseDate.Year</p>
+                            <p class="card-text">@Localizer["duration"]: @item.Duration @Localizer["minutes"]</p>
+                            <p class="card-text">@Localizer["rating"]: @item.Rating</p>
+                            <p class="card-text">@Localizer["budget"]: @item.ShowCash(item.Budget) @Localizer["millions"]</p>
+                            <p class="card-text">@Localizer["boxOfficeRevenue"]: @item.ShowCash(item.BoxOfficeRevenue) @Localizer["millions"]</p>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                                <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+                                <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<MoviePickerDomain.Model.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>@Localizer["movies"]</h1>
     <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewMovie"]</a>
@@ -42,6 +112,4 @@
             </div>
         </div>
     }
-</div>
-
-
+</div> *@

@@ -151,3 +151,28 @@ button {
     align-items: center;
     gap: 5px;
 }
+
+
+.background-image-blurred {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/Images/moviePickerLogo4_upscaled.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(7px); /* Apply blur effect */
+    z-index: -1; /* Send it behind other content */
+}
+
+
+.card-container {
+    padding-top: 50px; /* Adjust according to navbar height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Add padding for card container */
+}
+
+.card {
+    margin-bottom: 20px;
+}

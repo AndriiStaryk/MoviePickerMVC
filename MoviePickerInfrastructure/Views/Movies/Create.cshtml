@@ -83,9 +83,9 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="MovieImage" class="control-label"> @Localizer["movieImage"] </label>
+                <label asp-for="Movie.MovieImage" class="control-label"> @Localizer["movieImage"] </label>
                 <input type="file" name="MovieImage" accept="image/*" class="form-control" />
-                <span asp-validation-for="MovieImage" class="text-danger"></span>
+                <span asp-validation-for="Movie.MovieImage" class="text-danger"></span>
             </div>
 
             <div class="form-group">

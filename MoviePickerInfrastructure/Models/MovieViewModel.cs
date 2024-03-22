@@ -21,7 +21,7 @@ public class MovieViewModel
 
     public Director Director { get; set; } = null!;
 
-    public IFormFile MovieImage { get; set; }
+    //public IFormFile MovieImage { get; set; }
 
     public MovieViewModel(MoviePickerV2Context context, Movie movie)
     {
