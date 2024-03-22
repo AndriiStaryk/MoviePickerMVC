@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Humanizer.Bytes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +69,7 @@ public class DirectorsController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId))
+            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
             {
 
                 if (directorImage != null && directorImage.Length > 0)
@@ -115,7 +116,8 @@ public class DirectorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director)
+
+    public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile? directorImage)
     {
         if (id != director.Id)
         {
@@ -124,10 +126,32 @@ public class DirectorsController : Controller
 
         if (ModelState.IsValid)
         {
-            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId))
+            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
             {
                 try
                 {
+                    var existingDirector = await _context.Directors.FindAsync(id);
+
+                    if (existingDirector == null)
+                    {
+                        return NotFound();
+                    }
+
+                    _context.Entry(existingDirector).State = EntityState.Detached;
+
+                    if (directorImage != null && directorImage.Length > 0)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await directorImage.CopyToAsync(memoryStream);
+                            director.DirectorImage = memoryStream.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        director.DirectorImage = existingDirector.DirectorImage;
+                    }
+
                     _context.Update(director);
                     await _context.SaveChangesAsync();
                 }
@@ -149,9 +173,69 @@ public class DirectorsController : Controller
                 ModelState.AddModelError(string.Empty, "This director already exists.");
             }
         }
+
         ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
         return View(director);
     }
+
+
+
+
+    //public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile directorImage)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
+    //        {
+    //            try
+    //            {
+    //                var existingDirector = await _context.Directors.FindAsync(id);
+
+    //                if (existingDirector == null)
+    //                {
+    //                    return NotFound();
+    //                }
+
+    //                _context.Entry(existingDirector).State = EntityState.Detached;
+
+    //                if (directorImage != null && directorImage.Length > 0)
+    //                {
+    //                    using (var memoryStream = new MemoryStream())
+    //                    {
+    //                        await directorImage.CopyToAsync(memoryStream);
+    //                        director.DirectorImage = memoryStream.ToArray();
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    director.DirectorImage = existingDirector.DirectorImage;
+    //                }
+
+    //                _context.Update(director);
+    //                await _context.SaveChangesAsync();
+    //            }
+    //            catch (DbUpdateConcurrencyException)
+    //            {
+    //                if (!DirectorExists(director.Id))
+    //                {
+    //                    return NotFound();
+    //                }
+    //                else
+    //                {
+    //                    throw;
+    //                }
+    //            }
+    //            return RedirectToAction(nameof(Index));
+    //        }
+    //        else
+    //        {
+    //            ModelState.AddModelError(string.Empty, "This director already exists.");
+    //        }
+    //    }
+
+    //    ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
+    //    return View(director);
+    //}
 
     // GET: Directors/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -195,12 +279,28 @@ public class DirectorsController : Controller
     }
 
 
-    public async Task<bool> IsDirectorExist(string name, DateOnly birthDate, int birthCountryID)
+    public async Task<bool> IsDirectorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? directorImage)
     {
-        var director = await _context.Directors
-            .FirstOrDefaultAsync(m => m.Name == name && m.BirthDate == birthDate && m.BirthCountryId == birthCountryID);
+        byte[]? image = [];
+        if (directorImage != null && directorImage.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await directorImage.CopyToAsync(memoryStream);
+                image = memoryStream.ToArray();
+            }
+        }
 
-        return director != null;
+        var director = await _context.Directors.FirstOrDefaultAsync(m => m.Name == name &&
+                                                                     m.BirthDate == birthDate &&
+                                                                     m.BirthCountryId == birthCountryID);
+
+        if (director != null && image != null && director.DirectorImage.SequenceEqual(image))
+        {
+            return true; 
+        }
+
+        return false;
     }
 
 

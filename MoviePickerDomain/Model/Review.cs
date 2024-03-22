@@ -23,5 +23,6 @@ public partial class Review : Entity
 
     public DateTime? CreationTime { get; set; }
 
-    public virtual Movie Movie { get; set; } = null!;
+    public virtual Movie? Movie { get; set; } //= null!;
+
 }

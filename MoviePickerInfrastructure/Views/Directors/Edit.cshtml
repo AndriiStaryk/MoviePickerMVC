@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -31,12 +31,25 @@
                 <select asp-for="BirthCountryId" class="form-control" asp-items="ViewBag.BirthCountryId"></select>
                 <span asp-validation-for="BirthCountryId" class="text-danger"></span>
             </div>
+
+            @if (Model.DirectorImage != null && Model.DirectorImage.Length > 0)
+            {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.DirectorImage)" alt="Director Image" class="small-image mr-3">
+            }
+
+            <div class="form-group">
+                <label asp-for="DirectorImage" class="control-label"> @Localizer["changeDirectorImage"] </label>
+                <input type="file" name="DirectorImage" accept="image/*" class="form-control" />
+                <span asp-validation-for="DirectorImage" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="@Localizer["save"]" class="btn btn-primary rounded-pill" />
             </div>
         </form>
     </div>
 </div>
+
 
 
 @section Scripts {

@@ -120,6 +120,9 @@
   <data name="actor" xml:space="preserve">
     <value>Актор</value>
   </data>
+  <data name="age" xml:space="preserve">
+    <value>Вік</value>
+  </data>
   <data name="backToList" xml:space="preserve">
     <value>Назад до списку</value>
   </data>

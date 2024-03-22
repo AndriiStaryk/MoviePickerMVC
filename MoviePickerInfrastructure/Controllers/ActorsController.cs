@@ -77,7 +77,7 @@ public class ActorsController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
+            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage))
             {
 
                 if (actorImage != null && actorImage.Length > 0)
@@ -123,7 +123,8 @@ public class ActorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
+
+    public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile? actorImage)
     {
         if (id != actor.Id)
         {
@@ -132,10 +133,32 @@ public class ActorsController : Controller
 
         if (ModelState.IsValid)
         {
-            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
+            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage))
             {
                 try
-                {    
+                {
+                    var existingActor = await _context.Actors.FindAsync(id);
+
+                    if (existingActor == null)
+                    {
+                        return NotFound();
+                    }
+
+                    _context.Entry(existingActor).State = EntityState.Detached;
+
+                    if (actorImage != null && actorImage.Length > 0)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await actorImage.CopyToAsync(memoryStream);
+                            actor.ActorImage = memoryStream.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        actor.ActorImage = existingActor.ActorImage;
+                    }
+
                     _context.Update(actor);
                     await _context.SaveChangesAsync();
                 }
@@ -157,9 +180,52 @@ public class ActorsController : Controller
                 ModelState.AddModelError(string.Empty, "This actor already exists.");
             }
         }
+
         ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", actor.BirthCountryId);
         return View(actor);
     }
+
+
+
+
+
+    //public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
+    //{
+    //    if (id != actor.Id)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    if (ModelState.IsValid)
+    //    {
+    //        if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
+    //        {
+    //            try
+    //            {    
+    //                _context.Update(actor);
+    //                await _context.SaveChangesAsync();
+    //            }
+    //            catch (DbUpdateConcurrencyException)
+    //            {
+    //                if (!ActorExists(actor.Id))
+    //                {
+    //                    return NotFound();
+    //                }
+    //                else
+    //                {
+    //                    throw;
+    //                }
+    //            }
+    //            return RedirectToAction(nameof(Index));
+    //        }
+    //        else
+    //        {
+    //            ModelState.AddModelError(string.Empty, "This actor already exists.");
+    //        }
+    //    }
+    //    ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", actor.BirthCountryId);
+    //    return View(actor);
+    //}
 
     // GET: Actors/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -204,12 +270,29 @@ public class ActorsController : Controller
         return _context.Actors.Any(e => e.Id == id);
     }
 
-    public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID)
+    public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage)
     {
-        var actor = await _context.Actors
-            .FirstOrDefaultAsync(m => m.Name == name && m.BirthDate == birthDate && m.BirthCountryId == birthCountryID);
+        byte[]? image = null;
+        if (actorImage != null && actorImage.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await actorImage.CopyToAsync(memoryStream);
+                image = memoryStream.ToArray();
+            }
+        }
 
-        return actor != null;
+        var actor = await _context.Actors.FirstOrDefaultAsync(m => m.Name == name &&
+                                                                   m.BirthDate == birthDate &&
+                                                                   m.BirthCountryId == birthCountryID);
+
+        if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
+        {
+            return true; 
+        }
+
+        return false;
     }
+
 
 }

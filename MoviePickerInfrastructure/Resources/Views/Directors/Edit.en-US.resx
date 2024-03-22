@@ -135,6 +135,9 @@
   <data name="budget" xml:space="preserve">
     <value>Budget</value>
   </data>
+  <data name="changeDirectorImage" xml:space="preserve">
+    <value>Change the director's photo</value>
+  </data>
   <data name="country" xml:space="preserve">
     <value>Country</value>
   </data>

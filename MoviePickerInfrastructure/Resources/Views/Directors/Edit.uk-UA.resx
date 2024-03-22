@@ -135,6 +135,9 @@
   <data name="budget" xml:space="preserve">
     <value>Бюджет</value>
   </data>
+  <data name="changeDirectorImage" xml:space="preserve">
+    <value>Змінити фото режисера</value>
+  </data>
   <data name="country" xml:space="preserve">
     <value>Країна</value>
   </data>
