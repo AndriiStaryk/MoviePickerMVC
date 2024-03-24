@@ -291,9 +291,9 @@ public class DirectorsController : Controller
             }
         }
 
-        var director = await _context.Directors.FirstOrDefaultAsync(m => m.Name == name &&
-                                                                     m.BirthDate == birthDate &&
-                                                                     m.BirthCountryId == birthCountryID);
+        var director = await _context.Directors.FirstOrDefaultAsync(d => d.Name == name &&
+                                                                     d.BirthDate == birthDate &&
+                                                                     d.BirthCountryId == birthCountryID);
 
         if (director != null && image != null && director.DirectorImage.SequenceEqual(image))
         {

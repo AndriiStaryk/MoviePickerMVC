@@ -48,9 +48,8 @@ public class MovieViewModel
             .Select(ml => ml.Language).ToList()!;
     }
 
-    
 
-    public static void DeleteMovie(Movie movie, MoviePickerV2Context context)
+    static public void DeleteMovieRelations(Movie movie, MoviePickerV2Context context)
     {
         var mas = context.MoviesActors
             .Where(ma => ma.MovieId == movie.Id).ToList();
@@ -85,8 +84,53 @@ public class MovieViewModel
                 context.MoviesLanguages.Remove(ml);
             }
         }
+        context.SaveChanges();
+    }
+
+    public static void DeleteMovie(Movie movie, MoviePickerV2Context context)
+    {
+        //var mas = context.MoviesActors
+        //    .Where(ma => ma.MovieId == movie.Id).ToList();
+
+        //foreach (var ma in mas)
+        //{
+        //    if (ma != null)
+        //    {
+        //        context.MoviesActors.Remove(ma);
+        //    }
+        //}
+
+        //var mgs = context.MoviesGenres
+        //    .Where(mg => mg.MovieId == movie.Id).ToList();
+
+        //foreach (var mg in mgs)
+        //{
+        //    if (mg != null)
+        //    {
+        //        context.MoviesGenres.Remove(mg);
+        //    }
+        //}
+
+
+        //var mls = context.MoviesLanguages
+        //    .Where(ml => ml.MovieId == movie.Id).ToList();
+
+        //foreach (var ml in mls)
+        //{
+        //    if (ml != null)
+        //    {
+        //        context.MoviesLanguages.Remove(ml);
+        //    }
+        //}
+
+        MovieViewModel.DeleteMovieRelations(movie, context);
 
         context.Movies.Remove(movie);
         context.SaveChanges();
     }
+
+    
+
 }
+
+

@@ -282,9 +282,9 @@ public class ActorsController : Controller
             }
         }
 
-        var actor = await _context.Actors.FirstOrDefaultAsync(m => m.Name == name &&
-                                                                   m.BirthDate == birthDate &&
-                                                                   m.BirthCountryId == birthCountryID);
+        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
+                                                                   a.BirthDate == birthDate &&
+                                                                   a.BirthCountryId == birthCountryID);
 
         if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
         {

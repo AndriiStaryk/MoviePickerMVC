@@ -34,6 +34,7 @@ public partial class Movie : Entity
 
     public byte[]? MovieImage { get; set; }
 
+    [StringLength(800, ErrorMessage = "Назва не може бути довшою за 800 символів.")]
     public string? Description { get; set; }
 
     public virtual Director? Director { get; set; } //= null!;

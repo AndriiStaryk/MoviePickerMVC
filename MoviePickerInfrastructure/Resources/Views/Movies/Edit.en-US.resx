@@ -138,6 +138,9 @@
   <data name="budget" xml:space="preserve">
     <value>Budget</value>
   </data>
+  <data name="changeMovieImage" xml:space="preserve">
+    <value>Change movie image</value>
+  </data>
   <data name="country" xml:space="preserve">
     <value>Country</value>
   </data>

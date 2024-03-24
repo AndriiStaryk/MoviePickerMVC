@@ -14,14 +14,14 @@
     </div>
 
 
-<div class="card-container">
-    <div class="container">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex">
+                        <div>
                             <h5 class="card-title">@item.Title</h5>
                             <p class="card-text">@Localizer["director"]: @item.Director.Name</p>
                             <p class="card-text">@Localizer["releaseYear"]: @item.ReleaseDate.Year</p>
@@ -35,11 +35,19 @@
                                 <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
                             </div>
                         </div>
+
+                        <div class="image-container ml-auto">
+                            @if (item.MovieImage != null && item.MovieImage.Length > 0)
+                            {
+                                <img src="data:image;base64,@Convert.ToBase64String(item.MovieImage)" alt="Movie Image" class="image-fit">
+                            }
+                        </div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
 </div>
 
 

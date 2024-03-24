@@ -14,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Movie.Title" class="control-label"> @Localizer["title"] </label>
@@ -37,6 +37,13 @@
                 <label asp-for="Movie.DirectorId" class="control-label"> @Localizer["director"] </label>
                 <select asp-for="Movie.DirectorId" class="form-control" asp-items="ViewBag.DirectorId"></select>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Description" class="control-label"> @Localizer["description"] </label>
+                <textarea asp-for="Movie.Description" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Movie.Description" class="text-danger"></span>
+            </div>
+
 
             <div class="form-group">
                 <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
@@ -69,6 +76,20 @@
                 <input asp-for="Movie.Rating" class="form-control" />
                 <span asp-validation-for="Movie.Rating" class="text-danger"></span>
             </div>
+
+
+            @if (Model.Movie.MovieImage != null && Model.Movie.MovieImage.Length > 0)
+            {
+                <img src="data:image;base64,@Convert.ToBase64String(Model.Movie.MovieImage)" alt="Director Image" class="small-image mr-3">
+            }
+
+            <div class="form-group">
+                <label asp-for="Movie.MovieImage" class="control-label"> @Localizer["changeMovieImage"] </label>
+                <input type="file" name="MovieImage" accept="image/*" class="form-control" />
+                <span asp-validation-for="Movie.MovieImage" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="Movie.Id" />
 
             <div class="form-group">
                 <input type="submit" value="@Localizer["save"]" class="btn btn-primary rounded-pill" />

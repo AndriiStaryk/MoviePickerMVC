@@ -4,7 +4,201 @@
 
 <h1>@ViewData["MoviePicker"]</h1>
 
+
 <!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Picker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Hide main scrollbar */
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Hide overflow of the background container */
+            z-index: -1; /* Move it behind other content */
+        }
+
+        .background-image {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .content {
+            text-align: center;
+            padding: 0;
+            background-color: rgba(240, 240, 240, 0.8);
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            z-index: 1; /* Keep it above the background */
+            overflow: auto; /* Enable scrolling */
+            max-height: 90vh; /* Limit maximum height of the content */
+        }
+
+        h1 {
+            color: #FFA07A;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img class="background-image" src="/Images/moviePickerLogo4_upscaled.jpg" alt="">
+    </div>
+
+    <div class="content">
+        <h1>@Localizer["welcome"] 🎥</h1>
+        <p><strong>@Localizer["1"]</strong> @Localizer["2"]</p>
+        <p>@Localizer["3"] <strong>@Localizer["MoviePicker"]</strong> @Localizer["4"]</p>
+        <p>@Localizer["5"] <strong>@Localizer["MoviePicker"]</strong> @Localizer["6"] <span>🍿</span></p>
+    </div>
+
+    <script>
+        // Get background container and image
+        const backgroundContainer = document.querySelector('.background-container');
+        const backgroundImage = document.querySelector('.background-image');
+
+        // Get height of background image
+        const imageHeight = backgroundImage.clientHeight;
+
+        // Function to handle automatic scrolling
+        function scrollBackground() {
+            // Scroll one pixel downwards
+            backgroundContainer.scrollTop++;
+
+            // If reached the bottom, reset scroll position to the top
+            if (backgroundContainer.scrollTop >= imageHeight - backgroundContainer.clientHeight) {
+                backgroundContainer.scrollTop = 0;
+            }
+        }
+
+        // Call scrollBackground function repeatedly
+        setInterval(scrollBackground, 50);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+@* <!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Picker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Hide main scrollbar */
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Hide overflow of the background container */
+            z-index: -1; /* Move it behind other content */
+        }
+
+        .background-image {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            animation: scrollBackground linear infinite; /* Apply scrolling animation */
+        }
+
+        .content {
+            text-align: center;
+            padding: 0;
+            background-color: rgba(240, 240, 240, 0.8);
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            z-index: 1; /* Keep it above the background */
+            overflow: auto; /* Enable scrolling */
+            max-height: 90vh; /* Limit maximum height of the content */
+        }
+
+        h1 {
+            color: #FFA07A;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img class="background-image" src="/Images/moviePickerLogo4_upscaled.jpg" alt="">
+    </div>
+
+    <div class="content">
+        <h1>Welcome 🎥</h1>
+        <p><strong>@Localizer["1"]</strong> @Localizer["2"]</p>
+        <p>@Localizer["3"] <strong>@Localizer["MoviePicker"]</strong> @Localizer["4"]</p>
+        <p>@Localizer["5"] <strong>@Localizer["MoviePicker"]</strong> @Localizer["6"] <span>🍿</span></p>
+    </div>
+
+    <script>
+        // Get background container and image
+        const backgroundContainer = document.querySelector('.background-container');
+        const backgroundImage = document.querySelector('.background-image');
+
+        // Get height of background image
+        const imageHeight = backgroundImage.clientHeight;
+
+        // Function to handle automatic scrolling
+        function scrollBackground() {
+            // If scrolled to the end, reverse direction
+            if (backgroundContainer.scrollTop >= imageHeight) {
+                backgroundContainer.scrollTop = 0;
+            } else {
+                // Otherwise, continue scrolling
+                backgroundContainer.scrollTop++;
+            }
+        }
+
+        // Call scrollBackground function repeatedly
+        setInterval(scrollBackground, 50);
+    </script>
+</body>
+</html>
+ *@
+
+
+
+
+@*  scrollable background  *@
+
+@* <!DOCTYPE html>
 <html>
 <head>
     <title>Movie Picker</title>
@@ -77,54 +271,7 @@
 </body>
 </html>
 
+ *@
 
 
 
-
-
-
-
-@* <!DOCTYPE html>
-<html>
-<head>
-    <title>Movie Picker</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('/Images/moviePickerLogo4_upscaled.jpg');
-            background-size: 100%;
-            background-position: top;
-            font-family: Arial, sans-serif;
-        }
-
-        .content {
-            text-align: center;
-            padding: 0;
-            background-color: rgba(240, 240, 240, 0.8);
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 600px;
-        }
-
-        h1 {
-            color: #FFA07A;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <h1>@Localizer["welcome"] 🎥</h1>
-        <p><strong>@Localizer["1"]</strong> @Localizer["2"]</p>
-        <p>@Localizer["3"] <strong>MoviePicker</strong>@Localizer["4"]</p>
-        <p>@Localizer["5"] <strong>MoviePicker</strong>@Localizer["6"] <span>🍿</span></p>
-    </div>
-</body>
-</html> *@
