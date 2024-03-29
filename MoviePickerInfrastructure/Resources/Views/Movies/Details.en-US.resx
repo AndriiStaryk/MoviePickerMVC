@@ -162,6 +162,9 @@
   <data name="deletingQuestion" xml:space="preserve">
     <value>Are you sure you want to delete this?</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="details" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="languages" xml:space="preserve">
     <value>Languages</value>
+  </data>
+  <data name="millions" xml:space="preserve">
+    <value>millions</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>minutes</value>
   </data>
   <data name="movie" xml:space="preserve">
     <value>Movie</value>

@@ -162,6 +162,9 @@
   <data name="deletingQuestion" xml:space="preserve">
     <value>Ви впевнені що хочете видалити цього актора?</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
   <data name="details" xml:space="preserve">
     <value>Деталі</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="languages" xml:space="preserve">
     <value>Мови</value>
+  </data>
+  <data name="millions" xml:space="preserve">
+    <value>мільйонів</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>хвилин</value>
   </data>
   <data name="movie" xml:space="preserve">
     <value>Фільм</value>

@@ -138,6 +138,9 @@
   <data name="edit" xml:space="preserve">
     <value>Редагувати</value>
   </data>
+  <data name="import" xml:space="preserve">
+    <value>Імпортувати</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

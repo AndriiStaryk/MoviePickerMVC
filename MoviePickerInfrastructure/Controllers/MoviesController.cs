@@ -13,6 +13,8 @@ using MoviePickerInfrastructure;
 using MoviePickerInfrastructure.Models;
 using System.IO;
 using System.Numerics;
+using Newtonsoft.Json;
+using DocumentFormat.OpenXml.Office2010.PowerPoint;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -30,27 +32,21 @@ public class MoviesController : Controller
     // GET: Movies
     public async Task<IActionResult> Index()
     {
+
         var moviePickerContext = _context.Movies.Include(m => m.Director);
         return View(await moviePickerContext.ToListAsync());
     }
 
-    //public async Task<IActionResult> Index(int genreId)
-    //{
-    //    var moviesByGenreContext = _context.MoviesGenres
-    //        .Where(mg => mg.GenreId == genreId)
-    //        .Select(mg => mg.Movie);
-
-    //    return View(await moviesByGenreContext.ToListAsync());
-    //}
-
-
-    public async Task<IActionResult> MoviesByGenre(int genreId)
+    public IActionResult MoviesByGenre(int genreId)
     {
-        var moviesByGenreContext = _context.MoviesGenres
+        var moviesByGenre = _context.MoviesGenres
             .Where(mg => mg.GenreId == genreId)
-            .Select(mg => mg.Movie);
+            .Include(mg => mg.Movie.Director)
+            .Select(mg => mg.Movie)
+            .ToList();
 
-        return View(await moviesByGenreContext.ToListAsync());
+        return View(moviesByGenre);
+
     }
 
 
@@ -59,18 +55,27 @@ public class MoviesController : Controller
         return RedirectToAction("Details", "Reviews", new { id = reviewId });
     }
 
-    public async Task<IActionResult> MoviesByActor(int actorId)
+    public IActionResult MoviesByActor(int actorId)
     {
-        //Actor actor = _context.Actors.Find(actorId)!;
 
-        //ActorViewModel actorViewModel = new ActorViewModel(_context, actor);
-        //return View(actorViewModel);
-
-        var moviesByActorContext = _context.MoviesActors
+        var moviesByActor = _context.MoviesActors
             .Where(ma => ma.ActorId == actorId)
-            .Select(ma => ma.Movie);
+            .Include(ma => ma.Movie.Director)
+            .Select(ma => ma.Movie)
+            .ToList();
 
-        return View(await moviesByActorContext.ToListAsync());
+        return View(moviesByActor);
+    }
+
+    public IActionResult MoviesByLanguage(int languageId)
+    {
+        var moviesByLanguage = _context.MoviesLanguages
+            .Where(ml => ml.LanguageId == languageId)
+            .Include(ml => ml.Movie.Director)
+            .Select(ml => ml.Movie)
+            .ToList();
+
+        return View(moviesByLanguage);
     }
 
 
@@ -85,14 +90,7 @@ public class MoviesController : Controller
         return RedirectToAction("Details", "Directors", new { id = directorId });
     }
 
-    public async Task<IActionResult> MoviesByLanguage(int languageId)
-    {
-        var moviesByLanguageContext = _context.MoviesLanguages
-            .Where(ml => ml.LanguageId == languageId)
-            .Select(ml => ml.Movie);
-
-        return View(await moviesByLanguageContext.ToListAsync());
-    }
+   
 
 
     public async Task<IActionResult> MoviesByDirector(int directorId)
@@ -145,8 +143,6 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
-        //_movieViewModel.Movie = movie;
-        
         if (ModelState.IsValid)
         {
             if (!await IsMovieExist(movie.Title,
@@ -196,10 +192,12 @@ public class MoviesController : Controller
                 ModelState.AddModelError(string.Empty, "This movie already exists.");
             }
         }
-        //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
 
-       
-        //ViewBag.Genres = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
+
         return View(_movieViewModel);
     }
 
@@ -220,15 +218,12 @@ public class MoviesController : Controller
 
         _movieViewModel = new MovieViewModel(_context, movie);
 
-        //ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
-
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name");
         ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
         ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
         ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
 
         return View(_movieViewModel);
-       // return View(movie);
     }
 
     // POST: Movies/Edit/5
@@ -322,6 +317,9 @@ public class MoviesController : Controller
             }
         }
         ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movie.DirectorId);
+        ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+        ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
+        ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
         return View(_movieViewModel);
     }
 

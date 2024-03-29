@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
+using Newtonsoft.Json;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -37,6 +39,26 @@ public class GenresController : Controller
     }
 
     // GET: Genres/Details/5
+    //public async Task<IActionResult> Details(int? id)
+    //{
+    //    if (id == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    var genre = await _context.Genres
+    //        .FirstOrDefaultAsync(m => m.Id == id);
+
+    //    if (genre == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    
+
+    //     return View(genre);
+    //}
+
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -44,15 +66,25 @@ public class GenresController : Controller
             return NotFound();
         }
 
-        var genre = await _context.Genres
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var genre = await _context.Genres.FirstOrDefaultAsync(m => m.Id == id);
+
         if (genre == null)
         {
             return NotFound();
         }
 
-        return View(genre);
+        var moviesByGenre = _context.MoviesGenres
+            .Where(mg => mg.GenreId == id)
+            .Select(mg => mg.Movie).ToList();
+
+        //var serializedMovies = JsonConvert.SerializeObject(moviesByGenre);
+        //TempData["MoviesByGenre"] = serializedMovies;
+
+        return RedirectToAction("MoviesByGenre", "Movies", new { genreId = id });
     }
+
+
+
 
     // GET: Genres/Create
     public IActionResult Create()

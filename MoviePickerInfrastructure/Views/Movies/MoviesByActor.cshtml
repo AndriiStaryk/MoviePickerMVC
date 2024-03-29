@@ -1,81 +1,54 @@
 ﻿@model IEnumerable<MoviePickerDomain.Model.Movie>
 
-@* @model ActorViewModel *@
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "MoviesByActor";
 }
 
-<h1>@Localizer["movies"] by Actor</h1>
 
-<p>
-    <a asp-action="Create">@Localizer["createNewMovie"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Title) *@
-                @Localizer["title"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.ReleaseDate) *@
-                @Localizer["releaseDate"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Budget) *@
-                @Localizer["budget"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.BoxOfficeRevenue) *@
-                @Localizer["boxOfficeRevenue"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Duration) *@
-                @Localizer["duration"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Rating) *@
-                @Localizer["rating"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Director) *@
-                @Localizer["director"]
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="background-image-blurred"></div>
+
+
+<div class="d-flex justify-content-between align-items-center container">
+    <h1>@Localizer["movies"] @Localizer["byActor"] </h1>
+    <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewMovie"]</a>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Budget)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BoxOfficeRevenue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Director.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-                </td>
-            </tr>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <div class="d-flex flex-column">
+                            <div class="d-flex mb-3">
+                                <div class="ml-auto">
+                                    @if (item.MovieImage != null && item.MovieImage.Length > 0)
+                                    {
+                                        <img src="data:image;base64,@Convert.ToBase64String(item.MovieImage)" alt="Movie Image" class="image-fit-movie" />
+                                    }
+                                </div>
+                                <div>
+                                    <p class="card-text">@Localizer["director"]: @item.Director.Name</p>
+                                    <p class="card-text">@Localizer["releaseYear"]: @item.ReleaseDate.Year</p>
+                                    <p class="card-text">@Localizer["duration"]: @item.Duration @Localizer["minutes"]</p>
+                                    <p class="card-text">@Localizer["rating"]: @item.Rating</p>
+                                    <p class="card-text">@Localizer["budget"]: @item.ShowCash(item.Budget) @Localizer["millions"]</p>
+                                    <p class="card-text">@Localizer["boxOfficeRevenue"]: @item.ShowCash(item.BoxOfficeRevenue) @Localizer["millions"]</p>
+                                </div>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                                <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+                                <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

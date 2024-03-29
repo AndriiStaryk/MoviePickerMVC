@@ -30,7 +30,7 @@ public partial class Movie : Entity
     public int? Duration { get; set; }
 
     [Range(0.0, 10.0, ErrorMessage = "Рейтинг повинен бути в діапазоні від 0.0 до 10.0.")]
-    public double Rating { get; set; }
+    public double Rating { get; set; } //= 0;
 
     public byte[]? MovieImage { get; set; }
 

@@ -129,6 +129,9 @@
   <data name="birthDate" xml:space="preserve">
     <value>Дата Народження</value>
   </data>
+  <data name="changeActorImage" xml:space="preserve">
+    <value>Змінити фото акора</value>
+  </data>
   <data name="editing" xml:space="preserve">
     <value>Редагування</value>
   </data>

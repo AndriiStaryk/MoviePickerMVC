@@ -36,4 +36,5 @@ public partial class Actor : Entity
 
         return years;
     }
+
 }

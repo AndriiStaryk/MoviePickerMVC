@@ -109,8 +109,8 @@ button {
 }
 
 .small-image {
-    width: auto; 
-    height: 125px; 
+    width: auto;
+    height: 125px;
 }
 
 .image-container {
@@ -122,9 +122,23 @@ button {
 .image-fit {
     width: 90%; /* Make image fill container width */
     height: auto; /* Maintain aspect ratio */
+    
 }
 
-/* Custom CSS for adjusting padding, button size, and rounding */
+.image-fit-movie {
+    width: 200px;
+    height: 300px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.image-fit-person {
+    width: 100px;
+    height: 160px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
 
 
 /* Adjust the button size and padding */

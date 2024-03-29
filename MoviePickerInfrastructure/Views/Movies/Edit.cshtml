@@ -24,7 +24,23 @@
 
             <div class="form-group">
                 <label asp-for="Genres" class="control-label"> @Localizer["genres"] </label>
-                <select asp-for="Genres" class="form-control" asp-items="ViewBag.GenreId" multiple="multiple"></select>
+                <select asp-for="Genres" class="form-control"  multiple="multiple">
+
+                    @foreach (var item in ViewData["GenreId"] as SelectList)
+                    {
+                        var genreId = Convert.ToInt32(item.Value);
+
+                        if (Model.Genres.Any(genre => genre.Id == genreId))
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+
+                </select>
             </div>
 
 
@@ -45,15 +61,51 @@
             </div>
 
 
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
                 <select asp-for="Actors" class="form-control" asp-items="ViewBag.ActorId" multiple="multiple"></select>
+            </div> *@
+
+            <div class="form-group">
+                <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
+                <select asp-for="Actors" class="form-control" multiple="multiple">
+                    @foreach (var item in ViewData["ActorId"] as SelectList)
+                    {
+                        var actorId = Convert.ToInt32(item.Value);
+
+                        if (Model.Actors.Any(actor => actor.Id == actorId))
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+                </select>
             </div>
+
 
 
             <div class="form-group">
                 <label asp-for="Languages" class="control-label"> @Localizer["languages"] </label>
-                <select asp-for="Languages" class="form-control" asp-items="ViewBag.LanguageId" multiple="multiple"></select>
+                <select asp-for="Languages" class="form-control" multiple="multiple">
+
+                    @foreach (var item in ViewData["LanguageId"] as SelectList)
+                    {
+                        var languageId = Convert.ToInt32(item.Value);
+
+                        if (Model.Languages.Any(language => language.Id == languageId))
+                        {
+                            <option value="@item.Value" selected>@item.Text</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    }
+
+                </select>
             </div>
 
             <div class="form-group">
@@ -80,7 +132,7 @@
 
             @if (Model.Movie.MovieImage != null && Model.Movie.MovieImage.Length > 0)
             {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.Movie.MovieImage)" alt="Director Image" class="small-image mr-3">
+                <img src="data:image;base64,@Convert.ToBase64String(Model.Movie.MovieImage)" alt="Director Image" class="image-fit">
             }
 
             <div class="form-group">
@@ -102,3 +154,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

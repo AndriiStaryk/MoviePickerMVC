@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label asp-for="Movie.ReleaseDate" class="control-label"> @Localizer["releaseDate"] </label>
-                <input asp-for="Movie.ReleaseDate" class="form-control" type="date" />
+                <input asp-for="Movie.ReleaseDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Movie.ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">

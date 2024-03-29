@@ -12,24 +12,25 @@
     <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewGenre"]</a>
 </div>
 
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <div class="btn-group" role="group" aria-label="Actions">
-                        <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
-                        <a class="btn btn-secondary rounded-pill mr-1" asp-action="MoviesByGenre" asp-route-genreid="@item.Id">@Localizer["details"]</a>
-                        <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body flex-lg-row">
+                        <h5 class="card-title">@item.Name</h5>
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                            <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+                            <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
-
 
 
 <div class="container">

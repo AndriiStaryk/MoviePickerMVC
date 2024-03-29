@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Import";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@Localizer["import"]</h1>
+    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+</div>
+
+<div>
+    <h3>Оберіть excel-файл для завантаження</h3>
+    @using (Html.BeginForm("Import", "Actors", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+        <div>
+            Завантажте Excel-файл:
+            <input type="file" name="fileExcel" id="fileExcel" />
+            <div>
+                <input type="submit" value="Завантажити" />
+            </div>
+        </div>
+    }
+</div>

@@ -138,6 +138,9 @@
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="import" xml:space="preserve">
+    <value>Import</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

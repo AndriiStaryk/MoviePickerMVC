@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 using MoviePickerInfrastructure.Models;
+using MoviePickerInfrastructure.Services;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -17,11 +18,13 @@ public class ActorsController : Controller
     private readonly MoviePickerV2Context _context;
     private ActorViewModel _actorViewModel;
     private Actor _actor = new Actor();
+    private ActorDataPortServiceFactory _actorDataPortServiceFactory;
 
     public ActorsController(MoviePickerV2Context context)
     {
         _context = context;
         _actorViewModel = new ActorViewModel(context, _actor);
+        _actorDataPortServiceFactory = new ActorDataPortServiceFactory(context);
     }
 
     // GET: Actors
@@ -77,7 +80,7 @@ public class ActorsController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage))
+            if (!await ActorViewModel.IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage, _context))
             {
 
                 if (actorImage != null && actorImage.Length > 0)
@@ -133,7 +136,7 @@ public class ActorsController : Controller
 
         if (ModelState.IsValid)
         {
-            if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage))
+            if (!await ActorViewModel.IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage, _context))
             {
                 try
                 {
@@ -188,45 +191,6 @@ public class ActorsController : Controller
 
 
 
-
-    //public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor)
-    //{
-    //    if (id != actor.Id)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    if (ModelState.IsValid)
-    //    {
-    //        if (!await IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId))
-    //        {
-    //            try
-    //            {    
-    //                _context.Update(actor);
-    //                await _context.SaveChangesAsync();
-    //            }
-    //            catch (DbUpdateConcurrencyException)
-    //            {
-    //                if (!ActorExists(actor.Id))
-    //                {
-    //                    return NotFound();
-    //                }
-    //                else
-    //                {
-    //                    throw;
-    //                }
-    //            }
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        else
-    //        {
-    //            ModelState.AddModelError(string.Empty, "This actor already exists.");
-    //        }
-    //    }
-    //    ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", actor.BirthCountryId);
-    //    return View(actor);
-    //}
-
     // GET: Actors/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
@@ -270,29 +234,51 @@ public class ActorsController : Controller
         return _context.Actors.Any(e => e.Id == id);
     }
 
-    public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage)
+
+
+    [HttpGet]
+    public IActionResult Import()
     {
-        byte[]? image = null;
-        if (actorImage != null && actorImage.Length > 0)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                await actorImage.CopyToAsync(memoryStream);
-                image = memoryStream.ToArray();
-            }
-        }
-
-        var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
-                                                                   a.BirthDate == birthDate &&
-                                                                   a.BirthCountryId == birthCountryID);
-
-        if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
-        {
-            return true; 
-        }
-
-        return false;
+        return View();
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+
+    public async Task<IActionResult> Import(IFormFile fileExcel, CancellationToken cancellationToken = default)
+    {
+        var importService = _actorDataPortServiceFactory.GetImportService(fileExcel.ContentType);
+
+        using var stream = fileExcel.OpenReadStream();
+
+        await importService.ImportFromStreamAsync(stream, cancellationToken);
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    //public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage)
+    //{
+    //    byte[]? image = null;
+    //    if (actorImage != null && actorImage.Length > 0)
+    //    {
+    //        using (var memoryStream = new MemoryStream())
+    //        {
+    //            await actorImage.CopyToAsync(memoryStream);
+    //            image = memoryStream.ToArray();
+    //        }
+    //    }
+
+    //    var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
+    //                                                               a.BirthDate == birthDate &&
+    //                                                               a.BirthCountryId == birthCountryID);
+
+    //    if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
+    //    {
+    //        return true; 
+    //    }
+
+    //    return false;
+    //}
 
 
 }

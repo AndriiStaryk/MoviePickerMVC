@@ -1,4 +1,5 @@
-﻿using MoviePickerDomain.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using MoviePickerDomain.Model;
 using System.Runtime.CompilerServices;
 
 namespace MoviePickerInfrastructure.Models;
@@ -38,4 +39,29 @@ public class ActorViewModel
         _context.Actors.Remove(Actor);
         _context.SaveChanges();
     }
+
+    static public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage, MoviePickerV2Context context)
+    {
+        byte[]? image = null;
+        if (actorImage != null && actorImage.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await actorImage.CopyToAsync(memoryStream);
+                image = memoryStream.ToArray();
+            }
+        }
+
+        var actor = await context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
+                                                                   a.BirthDate == birthDate &&
+                                                                   a.BirthCountryId == birthCountryID);
+
+        if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

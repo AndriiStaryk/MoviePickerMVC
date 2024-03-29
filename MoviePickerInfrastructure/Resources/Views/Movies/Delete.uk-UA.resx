@@ -159,6 +159,9 @@
   <data name="deletingQuestion" xml:space="preserve">
     <value>Ви впевнені що хочете видалити цей фільм?</value>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
   <data name="details" xml:space="preserve">
     <value>Деталі</value>
   </data>
