@@ -1,29 +1,33 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using MoviePickerDomain.Model;
 
 namespace MoviePickerInfrastructure.Services;
 
-public class ActorExportService : IExportService<Actor>
+public class DirectorExportService: IExportService<Director>
 {
     private const string RootWorksheetName = "";
 
     private static readonly IReadOnlyList<string> HeaderNames =
-        new string[]
-        {
+    new string[]
+    {
                 "Ім'я",
                 "Дата народження",
                 "Країна народження",
                 "Фільм 1",
                 "Фільм 2",
                 "Фільм 3",
-        };
+    };
 
-    private const int MoviesForActorCount = 3;
+    private const int MoviesForDirectorCount = 3;
 
     private readonly MoviePickerV2Context _context;
+
+    public DirectorExportService(MoviePickerV2Context context)
+    {
+        _context = context;
+    }
 
     private static void WriteHeader(IXLWorksheet worksheet)
     {
@@ -34,43 +38,39 @@ public class ActorExportService : IExportService<Actor>
         worksheet.Row(1).Style.Font.Bold = true;
     }
 
-    private void WriteActor(IXLWorksheet worksheet, Actor actor, int rowIndex)
+    private void WriteDirector(IXLWorksheet worksheet, Director director, int rowIndex)
     {
         var columnIndex = 1;
-        worksheet.Cell(rowIndex, columnIndex++).Value = actor.Name;
-        worksheet.Cell(rowIndex, columnIndex++).Value = actor.BirthDate.ToString();
+        worksheet.Cell(rowIndex, columnIndex++).Value = director.Name;
+        worksheet.Cell(rowIndex, columnIndex++).Value = director.BirthDate.ToString();
 
-        var countryName = _context.Countries.Find(actor.BirthCountryId)!.Name;
+        var countryName = _context.Countries.Find(director.BirthCountryId)!.Name;
         worksheet.Cell(rowIndex, columnIndex++).Value = countryName;
 
 
-        var moviesWithActor = _context.MoviesActors.Where(ma => ma.ActorId == actor.Id)
-                                                .Select(ma => ma.Movie)
+        var moviesByDirector = _context.Movies.Where(m => m.DirectorId == director.Id)
                                                 .ToList();
 
 
 
-        foreach (var mov in moviesWithActor.Take(MoviesForActorCount))
+        foreach (var mov in moviesByDirector.Take(MoviesForDirectorCount))
         {
             worksheet.Cell(rowIndex, columnIndex++).Value = mov.Title;
         }
     }
 
-    private void WriteActors(IXLWorksheet worksheet, ICollection<Actor> actors)
+    private void WriteDirectors(IXLWorksheet worksheet, ICollection<Director> directors)
     {
         WriteHeader(worksheet);
         int rowIndex = 2;
-        foreach (var actor in actors)
+        foreach (var director in directors)
         {
-            WriteActor(worksheet, actor, rowIndex);
+            WriteDirector(worksheet, director, rowIndex);
             rowIndex++;
         }
     }
 
-    public ActorExportService(MoviePickerV2Context context)
-    {
-        _context = context;
-    }
+   
 
     public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
     {
@@ -79,20 +79,17 @@ public class ActorExportService : IExportService<Actor>
             throw new ArgumentException("Input stream is not writable");
         }
 
-        var actors = await _context.Actors
+        var directors = await _context.Directors
             .ToArrayAsync(cancellationToken);
 
 
         using (var workbook = new XLWorkbook())
         {
-            var worksheet = workbook.Worksheets.Add("Actors");
+            var worksheet = workbook.Worksheets.Add("Directors");
 
-            WriteActors(worksheet, actors);
+            WriteDirectors(worksheet, directors);
 
             workbook.SaveAs(stream);
         }
     }
-
 }
-
-

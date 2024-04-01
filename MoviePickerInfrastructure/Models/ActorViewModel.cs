@@ -41,7 +41,7 @@ public class ActorViewModel
 
     static public async Task<bool> IsActorExist(string name,
                                                 DateOnly birthDate,
-                                                int birthCountryID, 
+                                                int birthCountryID,
                                                 IFormFile? actorImage,
                                                 MoviePickerV2Context context)
     {
@@ -54,12 +54,22 @@ public class ActorViewModel
                 image = memoryStream.ToArray();
             }
         }
+        else
+        {
+            string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_person_image.jpg";
+            if (System.IO.File.Exists(imagePath))
+            {
+                byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                image = defaultImageBytes;
+            }
+        }
 
         var actor = await context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
                                                                    a.BirthDate == birthDate &&
                                                                    a.BirthCountryId == birthCountryID);
 
-        if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
+
+        if (actor != null && image != null && actor.ActorImage!.SequenceEqual(image))
         {
             return true;
         }

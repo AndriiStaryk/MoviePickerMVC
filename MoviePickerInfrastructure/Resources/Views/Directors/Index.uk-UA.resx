@@ -183,8 +183,14 @@
   <data name="editing" xml:space="preserve">
     <value>Редагування</value>
   </data>
+  <data name="export" xml:space="preserve">
+    <value>Експортувати</value>
+  </data>
   <data name="genre" xml:space="preserve">
     <value>Жанр</value>
+  </data>
+  <data name="import" xml:space="preserve">
+    <value>Імпортувати</value>
   </data>
   <data name="language" xml:space="preserve">
     <value>Мова</value>

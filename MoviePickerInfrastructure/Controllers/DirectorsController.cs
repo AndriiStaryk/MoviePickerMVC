@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
 using MoviePickerInfrastructure;
 using MoviePickerInfrastructure.Models;
+using MoviePickerInfrastructure.Services;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -18,11 +19,13 @@ public class DirectorsController : Controller
     private readonly MoviePickerV2Context _context;
     private DirectorViewModel _directorViewModel;
     private Director _director = new Director();
+    private DirectorDataPortServiceFactory _directorDataPortServiceFactory;
 
     public DirectorsController(MoviePickerV2Context context)
     {
         _context = context;
         _directorViewModel = new DirectorViewModel(context, _director);
+        _directorDataPortServiceFactory = new DirectorDataPortServiceFactory(context);
     }
 
     // GET: Directors
@@ -69,7 +72,11 @@ public class DirectorsController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
+            if (!await DirectorViewModel.IsDirectorExist(director.Name,
+                                                         director.BirthDate,
+                                                         director.BirthCountryId,
+                                                         directorImage,
+                                                         _context))
             {
 
                 if (directorImage != null && directorImage.Length > 0)
@@ -135,7 +142,11 @@ public class DirectorsController : Controller
 
         if (ModelState.IsValid)
         {
-            if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
+            if (!await DirectorViewModel.IsDirectorExist(director.Name,
+                                                         director.BirthDate,
+                                                         director.BirthCountryId,
+                                                         directorImage,
+                                                         _context))
             {
                 try
                 {
@@ -188,64 +199,6 @@ public class DirectorsController : Controller
     }
 
 
-
-
-    //public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile directorImage)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        if (!await IsDirectorExist(director.Name, director.BirthDate, director.BirthCountryId, directorImage))
-    //        {
-    //            try
-    //            {
-    //                var existingDirector = await _context.Directors.FindAsync(id);
-
-    //                if (existingDirector == null)
-    //                {
-    //                    return NotFound();
-    //                }
-
-    //                _context.Entry(existingDirector).State = EntityState.Detached;
-
-    //                if (directorImage != null && directorImage.Length > 0)
-    //                {
-    //                    using (var memoryStream = new MemoryStream())
-    //                    {
-    //                        await directorImage.CopyToAsync(memoryStream);
-    //                        director.DirectorImage = memoryStream.ToArray();
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    director.DirectorImage = existingDirector.DirectorImage;
-    //                }
-
-    //                _context.Update(director);
-    //                await _context.SaveChangesAsync();
-    //            }
-    //            catch (DbUpdateConcurrencyException)
-    //            {
-    //                if (!DirectorExists(director.Id))
-    //                {
-    //                    return NotFound();
-    //                }
-    //                else
-    //                {
-    //                    throw;
-    //                }
-    //            }
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        else
-    //        {
-    //            ModelState.AddModelError(string.Empty, "This director already exists.");
-    //        }
-    //    }
-
-    //    ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", director.BirthCountryId);
-    //    return View(director);
-    //}
-
     // GET: Directors/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
@@ -288,28 +241,59 @@ public class DirectorsController : Controller
     }
 
 
-    public async Task<bool> IsDirectorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? directorImage)
+    [HttpGet]
+    public IActionResult Import()
     {
-        byte[]? image = [];
-        if (directorImage != null && directorImage.Length > 0)
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+
+    public async Task<IActionResult> Import(IFormFile fileExcel, CancellationToken cancellationToken = default)
+    {
+
+        try
         {
-            using (var memoryStream = new MemoryStream())
+            if (fileExcel == null)
             {
-                await directorImage.CopyToAsync(memoryStream);
-                image = memoryStream.ToArray();
+                throw new Exception("Choose the file");
             }
+            var importService = _directorDataPortServiceFactory.GetImportService(fileExcel.ContentType);
+
+            using var stream = fileExcel.OpenReadStream();
+
+            await importService.ImportFromStreamAsync(stream, cancellationToken);
+            return RedirectToAction(nameof(Index));
         }
-
-        var director = await _context.Directors.FirstOrDefaultAsync(d => d.Name == name &&
-                                                                     d.BirthDate == birthDate &&
-                                                                     d.BirthCountryId == birthCountryID);
-
-        if (director != null && image != null && director.DirectorImage.SequenceEqual(image))
+        catch (Exception ex)
         {
-            return true; 
+
+            ViewBag.ErrorMessage = ex.Message;
+            return View();
         }
 
-        return false;
+
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Export([FromQuery] string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    CancellationToken cancellationToken = default)
+    {
+        var exportService = _directorDataPortServiceFactory.GetExportService(contentType);
+
+        var memoryStream = new MemoryStream();
+
+        await exportService.WriteToAsync(memoryStream, cancellationToken);
+
+        await memoryStream.FlushAsync(cancellationToken);
+        memoryStream.Position = 0;
+
+
+        return new FileStreamResult(memoryStream, contentType)
+        {
+            FileDownloadName = $"directors_{DateTime.UtcNow.ToShortDateString()}.xlsx"
+        };
     }
 
 

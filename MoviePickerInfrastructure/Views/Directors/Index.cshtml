@@ -7,11 +7,15 @@
 
 <div class="background-image-blurred"></div>
 
-
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>@Localizer["directors"]</h1>
-    <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewDirector"]</a>
+    <div class="ml-auto">
+        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewDirector"]</a>
+        <a asp-action="Import" class="btn btn-primary rounded-pill">@Localizer["import"]</a>
+        <a asp-action="Export" class="btn btn-primary rounded-pill">@Localizer["export"]</a>
+    </div>
 </div>
+
 
 <div class="row" id="container-card-da">
     @foreach (var item in Model)
@@ -53,7 +57,7 @@
     <div id="chart1"></div>
 </div>
 @section scripts {
-    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);

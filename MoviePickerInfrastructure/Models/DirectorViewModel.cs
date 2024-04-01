@@ -39,4 +39,45 @@ public class DirectorViewModel
         _context.Directors.Remove(Director);
         _context.SaveChanges();
     }
+
+
+
+    public static async Task<bool> IsDirectorExist(string name,
+                                                    DateOnly birthDate,
+                                                    int birthCountryID,
+                                                    IFormFile? directorImage,
+                                                    MoviePickerV2Context context)
+    {
+        byte[]? image = [];
+        if (directorImage != null && directorImage.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await directorImage.CopyToAsync(memoryStream);
+                image = memoryStream.ToArray();
+            }
+        }
+        else
+        {
+            string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_person_image.jpg";
+            if (System.IO.File.Exists(imagePath))
+            {
+                byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                image = defaultImageBytes;
+            }
+        }
+
+        var director = await context.Directors.FirstOrDefaultAsync(d => d.Name == name &&
+                                                                     d.BirthDate == birthDate &&
+                                                                     d.BirthCountryId == birthCountryID);
+
+        if (director != null && image != null && director.DirectorImage!.SequenceEqual(image))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

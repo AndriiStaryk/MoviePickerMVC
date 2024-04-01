@@ -148,6 +148,8 @@ public class ActorsController : Controller
 
         if (ModelState.IsValid)
         {
+            bool isEditing = actorImage == null ? false : true;
+
             if (!await ActorViewModel.IsActorExist(actor.Name, actor.BirthDate, actor.BirthCountryId, actorImage, _context))
             {
                 try
@@ -302,31 +304,4 @@ public class ActorsController : Controller
             FileDownloadName = $"actors_{DateTime.UtcNow.ToShortDateString()}.xlsx"
         };
     }
-
-
-    //public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage)
-    //{
-    //    byte[]? image = null;
-    //    if (actorImage != null && actorImage.Length > 0)
-    //    {
-    //        using (var memoryStream = new MemoryStream())
-    //        {
-    //            await actorImage.CopyToAsync(memoryStream);
-    //            image = memoryStream.ToArray();
-    //        }
-    //    }
-
-    //    var actor = await _context.Actors.FirstOrDefaultAsync(a => a.Name == name &&
-    //                                                               a.BirthDate == birthDate &&
-    //                                                               a.BirthCountryId == birthCountryID);
-
-    //    if (actor != null && image != null && actor.ActorImage.SequenceEqual(image))
-    //    {
-    //        return true; 
-    //    }
-
-    //    return false;
-    //}
-
-
 }

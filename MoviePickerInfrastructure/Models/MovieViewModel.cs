@@ -86,6 +86,18 @@ public class MovieViewModel
                 context.MoviesLanguages.Remove(ml);
             }
         }
+
+        var rs = context.Reviews
+            .Where(r => r.MovieId == movie.Id).ToList();
+
+        foreach (var r in rs)
+        {
+            if (r != null)
+            {
+                context.Reviews.Remove(r);
+            }
+        }
+
         context.SaveChanges();
     }
 
@@ -153,7 +165,7 @@ public class MovieViewModel
                 m.Rating == rating &&
                 m.Description == description);
 
-        if (movie != null && image != null && movie.MovieImage.SequenceEqual(image))
+        if (movie != null && image != null && movie.MovieImage!.SequenceEqual(image))
         {
             return true;
         }
