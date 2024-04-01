@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" data-bs-theme="dark"> 
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 sticky-top" data-bs-theme="dark"> 
         @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 text-white"> *@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index" style="color: #FFA07A;">MoviePicker</a>
@@ -77,41 +77,34 @@
                    
 
 
+                    <style>
+                        .input-group {
+                            display: flex;
+                            align-items: center;
+                        }
 
+                        .form-control {
+                            border-radius: 25px;
+                        }
+
+                        .input-group-append {
+                            margin-left: -1px;
+                        }
+
+                        .btn {
+                            border-radius: 25px;
+                        }
+                    </style>
 
                     <ul class="navbar-nav ml-auto">
-
-                        @*  <form class="form-inline my-2 my-lg-0" action="/search" method="get">
-                            <div class="d-flex">
-                                <div class="input-group rounded-pill search-wrapper mr-2">
-                                    <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-success rounded-pill px-3 align-self-center" type="submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.413l-3.85-3.85zm-4.242 0a4.5 4.5 0 1 1 1.397-1.398 4.5 4.5 0 0 1-1.398 1.398z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                        <li class="nav-item">
+                            <div class="input-group">
+                                <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
                             </div>
-                        </form> 
-
-
- *@
-                        <div class="input-group rounded-pill search-wrapper mr-2" style="display: flex; align-items: center; ">
-
-                            <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success rounded-pill px-3 align-self-center" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.413l-3.85-3.85zm-4.242 0a4.5 4.5 0 1 1 1.397-1.398 4.5 4.5 0 0 1-1.398 1.398z" />
-                                    </svg>
-                                </button>
-                            </div>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="PersonalAccount" asp-action="Index">@Localizer["personalAccount"]</a>
-
-                        </div>
-
+                        </li>
                     </ul>
 
                     <ul class="navbar-nav">
@@ -122,6 +115,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#" onclick="changeLanguage('en-US')">en</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="changeLanguage('uk-UA')">uk</a></li>
+        
+      
                             </ul>
                         </li>
                     </ul>
@@ -142,3 +137,73 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+<script>
+   
+
+    // function setLanguagePreference(lang) {
+    //     document.cookie = "language=" + lang + ";path=/";
+    // }
+
+    // // Function to get language preference from cookie
+    // function getLanguagePreference() {
+    //     var name = "language=";
+    //     var decodedCookie = decodeURIComponent(document.cookie);
+    //     var cookieArray = decodedCookie.split(';');
+    //     for (var i = 0; i < cookieArray.length; i++) {
+    //         var cookie = cookieArray[i];
+    //         while (cookie.charAt(0) == ' ') {
+    //             cookie = cookie.substring(1);
+    //         }
+    //         if (cookie.indexOf(name) == 0) {
+    //             return cookie.substring(name.length, cookie.length);
+    //         }
+    //     }
+    //     return "";
+    // }
+
+    // // Function to change language and set cookie preference
+    // function changeLanguage(languageCode) {
+    //     setLanguagePreference(languageCode);
+    //     location.reload(); // Reload the page to reflect language change
+    // }
+
+    // // Function to append language query parameter to URLs
+    // function appendLanguageQueryParam() {
+    //     var lang = getLanguagePreference();
+    //     if (lang && !window.location.search.includes('ui-culture=')) {
+    //         var currentUrl = window.location.href;
+    //         var separator = currentUrl.includes("?") ? "&" : "?";
+    //         window.history.replaceState({}, '', currentUrl + separator + 'ui-culture=' + lang);
+    //     }
+    // }
+
+    // // Function to update language button text
+    // function updateLanguageButton() {
+    //     var lang = getLanguagePreference();
+    //     var languageButton = document.getElementById('languageButton');
+    //     if (lang) {
+    //         if (lang === 'en-US') {
+    //             languageButton.textContent = 'en';
+    //         } else if (lang === 'uk-UA') {
+    //             languageButton.textContent = 'uk';
+    //         }
+    //     }
+    // }
+
+    // // Call the function to append language query parameter when the page loads
+    // window.onload = function () {
+    //     appendLanguageQueryParam();
+    //     updateLanguageButton();
+    // };
+
+
+
+
+</script>
+
+
+
+
+

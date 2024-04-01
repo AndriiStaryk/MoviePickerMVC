@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using MoviePickerDomain.Model;
 
@@ -95,7 +96,71 @@ public class MovieViewModel
         context.SaveChanges();
     }
 
-    
+    public static void CalculateRating(Movie movie, MoviePickerV2Context context)
+    {
+        var sum = 0.0;
+
+        var reviews = context.Reviews
+            .Where(review => review.MovieId == movie.Id).ToList();
+        var ratings = reviews.Select(r => r.Rating).ToList();
+
+        if (ratings.Count == 0)
+        {
+            movie.Rating = 0;
+            return;
+        }
+
+        foreach(var rating in ratings)
+        {
+            sum += rating;
+        }
+        
+        movie.Rating = Math.Round(sum / ratings.Count, 1);
+    }
+
+
+    static public async Task<bool> IsMovieExist(string title,
+                                     DateOnly releaseDate,
+                                     int directorID,
+                                     long? budget,
+                                     long? boxOfficeRevenue,
+                                     int? duration,
+                                     double? rating,
+                                     string? description,
+                                     IFormFile? movieImage,
+                                     MoviePickerV2Context context)
+    {
+
+        byte[]? image = [];
+        if (movieImage != null && movieImage.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await movieImage.CopyToAsync(memoryStream);
+                image = memoryStream.ToArray();
+            }
+        }
+
+
+        var movie = await context.Movies
+            .FirstOrDefaultAsync(
+                m => m.Title == title &&
+                m.ReleaseDate == releaseDate &&
+                m.DirectorId == directorID &&
+                m.Budget == budget &&
+                m.BoxOfficeRevenue == boxOfficeRevenue &&
+                m.Duration == duration &&
+                m.Rating == rating &&
+                m.Description == description);
+
+        if (movie != null && image != null && movie.MovieImage.SequenceEqual(image))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
 }
 

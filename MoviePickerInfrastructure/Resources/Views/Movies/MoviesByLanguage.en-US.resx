@@ -189,6 +189,9 @@
   <data name="movies" xml:space="preserve">
     <value>Movies</value>
   </data>
+  <data name="moviesByLanguage" xml:space="preserve">
+    <value> Movies by language</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

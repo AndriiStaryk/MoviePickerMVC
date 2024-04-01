@@ -65,7 +65,7 @@ public class DirectorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile directorImage)
+    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile? directorImage)
     {
         if (ModelState.IsValid)
         {
@@ -78,6 +78,15 @@ public class DirectorsController : Controller
                     {
                         await directorImage.CopyToAsync(memoryStream);
                         director.DirectorImage = memoryStream.ToArray();
+                    }
+                }
+                else
+                {
+                    string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_person_image.jpg";
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                        director.DirectorImage = defaultImageBytes;
                     }
                 }
 

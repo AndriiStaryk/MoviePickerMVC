@@ -24,7 +24,6 @@ public class ActorViewModel
 
     public void DeleteActor()
     {
-
         var mas = _context.MoviesActors
             .Where(ma => ma.ActorId == Actor.Id).ToList();
 
@@ -40,7 +39,11 @@ public class ActorViewModel
         _context.SaveChanges();
     }
 
-    static public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage, MoviePickerV2Context context)
+    static public async Task<bool> IsActorExist(string name,
+                                                DateOnly birthDate,
+                                                int birthCountryID, 
+                                                IFormFile? actorImage,
+                                                MoviePickerV2Context context)
     {
         byte[]? image = null;
         if (actorImage != null && actorImage.Length > 0)

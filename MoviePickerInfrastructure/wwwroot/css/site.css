@@ -139,7 +139,14 @@ button {
     object-fit: cover;
 }
 
+.card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+}
 
+    .card-link:hover .card {
+        background-color: rgba(0, 0, 0, 0.1); /* Slightly change background color on hover */
+    }
 
 /* Adjust the button size and padding */
 /*.btn-outline-success {
@@ -189,5 +196,59 @@ button {
 
 .card {
     margin-bottom: 20px;
+   /* min-width: min-content;*/
 }
 
+
+#container-card-genres {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+}
+
+#container-card-genres > div {
+    max-width: min-content;
+}
+
+#container-card-da {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+    #container-card-da > div {
+        max-width: min-content;
+    }
+
+
+
+/* Hide scrollbar for input fields */
+input[type="text"],
+input[type="date"],
+input[type="file"],
+select,
+textarea {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+    /* Hide scrollbar for WebKit/Blink browsers */
+    input[type="text"]::-webkit-scrollbar,
+    input[type="date"]::-webkit-scrollbar,
+    input[type="file"]::-webkit-scrollbar,
+    select::-webkit-scrollbar,
+    textarea::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Adjust padding of the scrollbar for WebKit/Blink browsers */
+    input[type="text"]::-webkit-scrollbar-thumb,
+    input[type="date"]::-webkit-scrollbar-thumb,
+    input[type="file"]::-webkit-scrollbar-thumb,
+    select::-webkit-scrollbar-thumb,
+    textarea::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }

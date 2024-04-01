@@ -7,20 +7,15 @@ namespace MoviePickerInfrastructure.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-        public IActionResult Action1()
-        {
-            return View();
-        }
+        } 
 
-        public IActionResult Action2()
+        public IActionResult ChangeLanguage(string culture)
         {
-            return View();
-        }
+            // Set language preference in a cookie
+            Response.Cookies.Append("language", culture, new CookieOptions { Path = "/" });
 
-        public IActionResult Action3()
-        {
-            return View();
+            // Redirect back to the previous page
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }

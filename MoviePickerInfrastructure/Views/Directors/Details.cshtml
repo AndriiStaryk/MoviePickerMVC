@@ -46,20 +46,32 @@
 
 <hr />
 
+
+
+
+
 <table class="table">
     <tr>
         <th>@Localizer["moviesDirected"]</th>
     </tr>
     <tr>
         <td>
-            <ul>
+            <div class="row">
                 @foreach (var movie in Model.MoviesDirected)
                 {
-                    <li>
-                        <a asp-action="MovieInfo" asp-route-movieId="@movie.Id">  @movie.Title </a>
-                    </li>
+                    <div class="col-md-4 mb-3">
+                        <a asp-action="MovieInfo" asp-route-movieId="@movie.Id" class="card-link">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">@movie.Title</h5>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
                 }
-            </ul>
+            </div>
         </td>
     </tr>
 </table>

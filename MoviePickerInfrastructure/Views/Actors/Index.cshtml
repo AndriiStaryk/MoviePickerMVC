@@ -11,16 +11,17 @@
     <h1>@Localizer["titleActors"]</h1>
     <div class="ml-auto">
         <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNew"]</a>
-        <a class="btn btn-primary rounded-pill" asp-action="ImportActors">@Localizer["import"]</a>
+        <a asp-action="Import" class="btn btn-primary rounded-pill">@Localizer["import"]</a>
+        <a asp-action="Export" class="btn btn-primary rounded-pill">@Localizer["export"]</a>
     </div>
 </div>
 
 
-<div class="row">
+<div class="row" id="container-card-da">
     @foreach (var item in Model)
     {
         
-        <div class="col-md-3 mb-3">
+       @*  <div class="col-md-3 mb-3"> *@
             <div class="card">
                 <div class="card-body">
                     <div>
@@ -48,7 +49,7 @@
                     </div>
                 </div>
             </div>
-       </div>
+       @* </div> *@
        
     }
 </div>

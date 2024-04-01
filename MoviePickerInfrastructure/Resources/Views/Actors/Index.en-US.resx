@@ -127,7 +127,7 @@
     <value>Birth Date</value>
   </data>
   <data name="createNew" xml:space="preserve">
-    <value>Create New</value>
+    <value>Create new actor</value>
   </data>
   <data name="delete" xml:space="preserve">
     <value>Delete</value>
@@ -137,6 +137,9 @@
   </data>
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="import" xml:space="preserve">
     <value>Import</value>

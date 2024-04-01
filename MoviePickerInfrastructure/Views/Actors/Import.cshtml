@@ -1,22 +1,33 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Import";
 }
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["import"]</h1>
-    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@Localizer["import"]</h1>
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">@Localizer["uploadExcelFile"]</h3>
+            @using (Html.BeginForm("Import", "Actors", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+            {
+
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label for="fileExcel" class="form-label"></label>
+                    <input type="file" class="form-control" name="fileExcel" id="fileExcel" />
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            }
+        </div>
+    </div>
 </div>
 
-<div>
-    <h3>Оберіть excel-файл для завантаження</h3>
-    @using (Html.BeginForm("Import", "Actors", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
-    {
-        <div>
-            Завантажте Excel-файл:
-            <input type="file" name="fileExcel" id="fileExcel" />
-            <div>
-                <input type="submit" value="Завантажити" />
-            </div>
-        </div>
-    }
-</div>

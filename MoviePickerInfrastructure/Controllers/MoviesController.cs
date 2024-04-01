@@ -32,9 +32,14 @@ public class MoviesController : Controller
     // GET: Movies
     public async Task<IActionResult> Index()
     {
+        var movies = _context.Movies.Include(m => m.Director).ToList();
 
-        var moviePickerContext = _context.Movies.Include(m => m.Director);
-        return View(await moviePickerContext.ToListAsync());
+        foreach(var mov in movies)
+        {
+            MovieViewModel.CalculateRating(mov, _context);
+        }
+
+        return View(movies);
     }
 
     public IActionResult MoviesByGenre(int genreId)
@@ -141,19 +146,20 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
+    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
         if (ModelState.IsValid)
         {
-            if (!await IsMovieExist(movie.Title,
-                                    movie.ReleaseDate,
-                                    movie.DirectorId,
-                                    movie.Budget,
-                                    movie.BoxOfficeRevenue,
-                                    movie.Duration,
-                                    movie.Rating,
-                                    movie.Description,
-                                    movieImage))
+            if (!await MovieViewModel.IsMovieExist(movie.Title,
+                                                   movie.ReleaseDate,
+                                                   movie.DirectorId,
+                                                   movie.Budget,
+                                                   movie.BoxOfficeRevenue,
+                                                   movie.Duration,
+                                                   movie.Rating,
+                                                   movie.Description,
+                                                   movieImage,
+                                                   _context))
             {
                 _movieViewModel.Movie = movie;
 
@@ -163,6 +169,15 @@ public class MoviesController : Controller
                     {
                         await movieImage.CopyToAsync(memoryStream);
                         movie.MovieImage = memoryStream.ToArray();
+                    }
+                } 
+                else
+                {
+                    string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_movie_image.jpg";
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                        movie.MovieImage = defaultImageBytes;
                     }
                 }
 
@@ -232,7 +247,7 @@ public class MoviesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
+    public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
         if (id != movie.Id)
         {
@@ -241,15 +256,16 @@ public class MoviesController : Controller
 
         if (ModelState.IsValid)
         {
-            if (!await IsMovieExist(movie.Title,
-                                    movie.ReleaseDate,
-                                    movie.DirectorId,
-                                    movie.Budget,
-                                    movie.BoxOfficeRevenue,
-                                    movie.Duration,
-                                    movie.Rating,
-                                    movie.Description,
-                                    movieImage))
+            if (!await MovieViewModel.IsMovieExist(movie.Title,
+                                                   movie.ReleaseDate,
+                                                   movie.DirectorId,
+                                                   movie.Budget,
+                                                   movie.BoxOfficeRevenue,
+                                                   movie.Duration,
+                                                   movie.Rating,
+                                                   movie.Description,
+                                                   movieImage,
+                                                   _context))
             {
                 try
                 {
@@ -325,74 +341,7 @@ public class MoviesController : Controller
 
 
 
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Rating,Description,Id")] MovieViewModel movieViewModel, int[] genres, int[] actors, int[] languages)
-    //{
-    //    if (id != movieViewModel.Movie.Id)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    if (ModelState.IsValid)
-    //    {
-    //        if (!await IsMovieExist(movieViewModel.Movie.Title, movieViewModel.Movie.ReleaseDate, movieViewModel.Movie.DirectorId, movieViewModel.Movie.Budget, movieViewModel.Movie.BoxOfficeRevenue, movieViewModel.Movie.Rating))
-    //        {
-    //            try
-    //            {
-
-    //                var movie = movieViewModel.Movie; // Get the main movie entity from the view model
-
-    //                movieViewModel = new MovieViewModel(_context, movie);
-
-    //                _context.Update(movie);
-
-    //                foreach (var genreId in genres)
-    //                {
-    //                    movie.MoviesGenres.Add(new MoviesGenre { MovieId = movie.Id, GenreId = genreId });
-    //                }
-
-    //                foreach (var actorId in actors)
-    //                {
-    //                    movie.MoviesActors.Add(new MoviesActor { MovieId = movie.Id, ActorId = actorId });
-    //                }
-
-    //                foreach (var languageId in languages)
-    //                {
-    //                    movie.MoviesLanguages.Add(new MoviesLanguage { MovieId = movie.Id, LanguageId = languageId });
-    //                }
-
-    //                await _context.SaveChangesAsync();
-    //            }
-    //            catch (DbUpdateConcurrencyException)
-    //            {
-    //                if (!MovieExists(movieViewModel.Movie.Id))
-    //                {
-    //                    return NotFound();
-    //                }
-    //                else
-    //                {
-    //                    throw;
-    //                }
-    //            }
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        else
-    //        {
-    //            ModelState.AddModelError(string.Empty, "This movie already exists.");
-    //        }
-    //    }
-
-    //    // Repopulate ViewData for dropdowns
-    //    ViewData["DirectorId"] = new SelectList(_context.Directors, "Id", "Name", movieViewModel.Movie.DirectorId);
-    //    ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
-    //    ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Name");
-    //    ViewData["LanguageId"] = new SelectList(_context.Languages, "Id", "Name");
-
-    //    return View(movieViewModel);
-    //}
-
-
+    
 
     // GET: Movies/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -436,45 +385,45 @@ public class MoviesController : Controller
         return _context.Movies.Any(e => e.Id == id);
     }
 
-    public async Task<bool> IsMovieExist(string title,
-                                         DateOnly releaseDate,
-                                         int directorID, 
-                                         long? budget,
-                                         long? boxOfficeRevenue,
-                                         int? duration,
-                                         double? rating,
-                                         string? description,
-                                         IFormFile? movieImage)
-    {
+    //public async Task<bool> IsMovieExist(string title,
+    //                                     DateOnly releaseDate,
+    //                                     int directorID,
+    //                                     long? budget,
+    //                                     long? boxOfficeRevenue,
+    //                                     int? duration,
+    //                                     double? rating,
+    //                                     string? description,
+    //                                     IFormFile? movieImage)
+    //{
 
-        byte[]? image = [];
-        if (movieImage != null && movieImage.Length > 0)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                await movieImage.CopyToAsync(memoryStream);
-                image = memoryStream.ToArray();
-            }
-        }
+    //    byte[]? image = [];
+    //    if (movieImage != null && movieImage.Length > 0)
+    //    {
+    //        using (var memoryStream = new MemoryStream())
+    //        {
+    //            await movieImage.CopyToAsync(memoryStream);
+    //            image = memoryStream.ToArray();
+    //        }
+    //    }
 
 
-        var movie = await _context.Movies
-            .FirstOrDefaultAsync(
-                m => m.Title == title &&
-                m.ReleaseDate == releaseDate &&
-                m.DirectorId == directorID &&
-                m.Budget == budget &&
-                m.BoxOfficeRevenue == boxOfficeRevenue &&
-                m.Duration == duration &&
-                m.Rating == rating &&
-                m.Description == description);
+    //    var movie = await _context.Movies
+    //        .FirstOrDefaultAsync(
+    //            m => m.Title == title &&
+    //            m.ReleaseDate == releaseDate &&
+    //            m.DirectorId == directorID &&
+    //            m.Budget == budget &&
+    //            m.BoxOfficeRevenue == boxOfficeRevenue &&
+    //            m.Duration == duration &&
+    //            m.Rating == rating &&
+    //            m.Description == description);
 
-        if (movie != null && image != null && movie.MovieImage.SequenceEqual(image))
-        {
-            return true;
-        }
+    //    if (movie != null && image != null && movie.MovieImage.SequenceEqual(image))
+    //    {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }
 

@@ -17,15 +17,13 @@ public class ActorDataPortServiceFactory : IDataPortServiceFactory<Actor>
         }
         throw new NotImplementedException($"No import service implemented for movies with content type {contentType}");
     }
-    //public IExportService<Actor> GetExportService(string contentType)
-    //{
-
-        
-    //    //if (contentType is "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    //    //{
-    //    //    return new ActorExportService(_context);
-    //    //}
-    //    //throw new NotImplementedException($"No export service implemented for movies with content type {contentType}");
-    //}
+    public IExportService<Actor> GetExportService(string contentType)
+    {
+        if (contentType is "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        {
+            return new ActorExportService(_context);
+        }
+        throw new NotImplementedException($"No export service implemented for movies with content type {contentType}");
+    }
 
 }

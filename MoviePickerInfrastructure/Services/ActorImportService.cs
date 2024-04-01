@@ -23,103 +23,89 @@ public class ActorImportService : IImportService<Actor>
             throw new ArgumentException("Дані не можуть бути прочитані", nameof(stream));
         }
 
-        using (XLWorkbook workBook = new XLWorkbook(stream))
+        try 
         {
-            //перегляд усіх листів (в даному випадку категорій книг)
-            foreach (IXLWorksheet worksheet in workBook.Worksheets)
+            using (XLWorkbook workBook = new XLWorkbook(stream))
             {
-                ////worksheet.Name - назва категорії. Пробуємо знайти в БД, якщо відсутня, то створюємо нову
-
-                //var actName = worksheet.Name;
-                //var actor = await _context.Actors.FirstOrDefaultAsync(act => act.Name == actName, cancellationToken);
-                //if (actor == null)
-                //{
-                //    actor = new Actor();
-                //    actor.Name = actName;
-                    
-                //    //actor.Info = "from EXCEL";
-                //    //додати в контекст
-                //    _context.Actors.Add(actor);
-                //}
-
-
-                foreach (var row in worksheet.RowsUsed().Skip(1))
+                foreach (IXLWorksheet worksheet in workBook.Worksheets)
                 {
-                    await AddActorAsync(row, cancellationToken);
+                    if (worksheet.RowsUsed().Count() <= 1) {
+                        throw new Exception("The worksheet is empty");
+                    }
+
+                    foreach (var row in worksheet.RowsUsed().Skip(1))
+                    {
+                        try
+                        {
+                            await AddActorAsync(row, cancellationToken);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception(ex.Message, ex);
+                        }
+                    }
                 }
-
-
             }
+            await _context.SaveChangesAsync(cancellationToken);
+        } catch (Exception ex)
+        {
+            throw new Exception("An error occurred during import: " + ex.Message, ex);
         }
-        await _context.SaveChangesAsync(cancellationToken);
-    }
+       } 
 
+    //private async Task AddMovie(string name, )
 
-    private async Task AddActorAsync(IXLRow row, CancellationToken cancellationToken)
+    private async Task<string> AddActorAsync(IXLRow row, CancellationToken cancellationToken)
     {
-
         const int NameColumn = 1;
         const int BirthDateColumn = 2;
         const int BirthCountryColumn = 3;
 
         var actorName = row.Cell(NameColumn).Value.ToString();
-        var actorBirthDateString = row.Cell(BirthDateColumn).Value.ToString();
+        var actorBirthDateTimeString = row.Cell(BirthDateColumn).Value.ToString();
         var actorBirthCountryString = row.Cell(BirthCountryColumn).Value.ToString();
 
-
+       
         if (string.IsNullOrEmpty(actorName) &&
-            string.IsNullOrEmpty(actorBirthDateString) &&
+            string.IsNullOrEmpty(actorBirthDateTimeString) &&
             string.IsNullOrEmpty(actorBirthCountryString))
         {
-            return;
+            throw new Exception("Some of required fields are empty." );
         }
-       
-        var actorBithCountry = _context.Countries.FirstOrDefault(c => c.Name == actorBirthCountryString);
 
-        if (actorBithCountry == null)
+        var actorBirthCountry = _context.Countries.FirstOrDefault(c => c.Name == actorBirthCountryString);
+        if (actorBirthCountry == null)
         {
-            return;
-        }
-        
-
-            if (!DateOnly.TryParse(actorBirthDateString, out DateOnly actorBirthDate))
-            {
-                return;
-            }
-
-            if (!await ActorViewModel.IsActorExist(actorName, actorBirthDate, actorBithCountry.Id, null, _context))
-            {
-                var actor = new Actor();
-                actor.Name = actorName;
-                actor.BirthDate = actorBirthDate;
-                actor.BirthCountryId = actorBithCountry.Id;
-                
-                _context.Actors.Add(actor);
-            }
+            throw new Exception($"Actor: '{actorName}' have invalid birth country.");
         }
 
+        if (!DateTime.TryParse(actorBirthDateTimeString, out DateTime actorBirthDateTime))
+        {
+            throw new Exception($"Actor: '{actorName}' have invalid birth date format.");
+        }
 
-        //if (!string.IsNullOrEmpty(actorName) &&
-        //!string.IsNullOrEmpty(actorBirthDateString) &&
-        //!string.IsNullOrEmpty(actorBirthCountryString))
-        //{
+        DateOnly actorBirthDate = new DateOnly(actorBirthDateTime.Year, actorBirthDateTime.Month, actorBirthDateTime.Day);
 
-        //    var actorBithCountryId = _context.Countries.FirstOrDefault(c => c.Name == actorBirthCountryString).Id;
+        if (!await ActorViewModel.IsActorExist(actorName, actorBirthDate, actorBirthCountry.Id, null, _context))
+        {
+            var actor = new Actor();
+            actor.Name = actorName;
+            actor.BirthDate = actorBirthDate;
+            actor.BirthCountryId = actorBirthCountry.Id;
 
-        //    if (DateTime.TryParse(actorBirthDateString, out DateTime actorBirthDate)) 
-        //    {
+            string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_person_image.jpg";
+            if (System.IO.File.Exists(imagePath))
+            {
+                byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                actor.ActorImage = defaultImageBytes;
+            }
 
-        //    }
-
-        //    if (!await ActorViewModel.IsActorExist(actorName, actorBirthDate, actorBithCountryId, null, _context))
-        //    {
-        //        actor = new Actor();
-        //        actor.Name = actName;
-        //        //actor.BirthDate = row.Cell(BirthDateColumn).Value;
-        //        string countryName = row.Cell(BirthCountryColumn).Value.ToString();
-        //        _context.Actors.Add(actor);
-        //    }
-        //}
-
-    
+            _context.Actors.Add(actor);
+            return "";
+        }
+        else
+        {
+            throw new Exception($"Actor: {actorName} already exists.");
+        }
+    }
 }

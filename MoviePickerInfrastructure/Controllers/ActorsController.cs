@@ -76,7 +76,7 @@ public class ActorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile actorImage)
+    public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile? actorImage)
     {
         if (ModelState.IsValid)
         {
@@ -91,6 +91,18 @@ public class ActorsController : Controller
                         actor.ActorImage = memoryStream.ToArray();
                     }
                 }
+                else
+                {
+                    string imagePath = "C:\\Users\\Andrii\\source\\repos\\MoviePickerWebApplication_v2\\src\\MoviePickerMVC\\MoviePickerInfrastructure\\wwwroot\\Images\\no_person_image.jpg";
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        byte[] defaultImageBytes = System.IO.File.ReadAllBytes(imagePath);
+                        actor.ActorImage = defaultImageBytes;
+                    }
+                }
+
+
+
                 _context.Add(actor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -247,14 +259,50 @@ public class ActorsController : Controller
 
     public async Task<IActionResult> Import(IFormFile fileExcel, CancellationToken cancellationToken = default)
     {
-        var importService = _actorDataPortServiceFactory.GetImportService(fileExcel.ContentType);
+        
+        try
+        {
+            if (fileExcel == null)
+            {
+                throw new Exception("Choose the file");
+            }
+            var importService = _actorDataPortServiceFactory.GetImportService(fileExcel.ContentType);
 
-        using var stream = fileExcel.OpenReadStream();
+            using var stream = fileExcel.OpenReadStream();
 
-        await importService.ImportFromStreamAsync(stream, cancellationToken);
+            await importService.ImportFromStreamAsync(stream, cancellationToken);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
 
-        return RedirectToAction(nameof(Index));
+            ViewBag.ErrorMessage = ex.Message;
+            return View();
+        }
+
+       
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Export([FromQuery] string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    CancellationToken cancellationToken = default)
+    {
+        var exportService = _actorDataPortServiceFactory.GetExportService(contentType);
+
+        var memoryStream = new MemoryStream();
+
+        await exportService.WriteToAsync(memoryStream, cancellationToken);
+
+        await memoryStream.FlushAsync(cancellationToken);
+        memoryStream.Position = 0;
+
+
+        return new FileStreamResult(memoryStream, contentType)
+        {
+            FileDownloadName = $"actors_{DateTime.UtcNow.ToShortDateString()}.xlsx"
+        };
+    }
+
 
     //public async Task<bool> IsActorExist(string name, DateOnly birthDate, int birthCountryID, IFormFile? actorImage)
     //{

@@ -189,6 +189,9 @@
   <data name="movies" xml:space="preserve">
     <value>Фільми</value>
   </data>
+  <data name="moviesByDirector" xml:space="preserve">
+    <value>Фільми режисера</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

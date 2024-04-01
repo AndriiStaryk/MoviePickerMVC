@@ -12,11 +12,11 @@
     <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewGenre"]</a>
 </div>
 
-<div class="container">
-    <div class="row">
+<div class="container" >
+    <div class="row" id="container-card-genres">
         @foreach (var item in Model)
         {
-            <div class="col-md-3 mb-3">
+            
                 <div class="card">
                     <div class="card-body flex-lg-row">
                         <h5 class="card-title">@item.Name</h5>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+           @*  </div> *@
         }
     </div>
 </div>
