@@ -55,7 +55,7 @@ public class DirectorImportService : IImportService<Director>
         }
     }
 
-  
+
     private async Task<string> AddDirectorAsync(IXLRow row, CancellationToken cancellationToken)
     {
         const int NameColumn = 1;
@@ -67,8 +67,8 @@ public class DirectorImportService : IImportService<Director>
         var directorBirthCountryString = row.Cell(BirthCountryColumn).Value.ToString();
 
 
-        if (string.IsNullOrEmpty(directorName) &&
-            string.IsNullOrEmpty(directorBirthDateTimeString) &&
+        if (string.IsNullOrEmpty(directorName) ||
+            string.IsNullOrEmpty(directorBirthDateTimeString) ||
             string.IsNullOrEmpty(directorBirthCountryString))
         {
             throw new Exception("Some of required fields are empty.");

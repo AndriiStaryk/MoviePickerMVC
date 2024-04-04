@@ -5,9 +5,8 @@ using MoviePickerDomain.Model;
 
 namespace MoviePickerInfrastructure.Services;
 
-public class DirectorExportService: IExportService<Director>
+public class DirectorExportService : IExportService<Director>
 {
-    private const string RootWorksheetName = "";
 
     private static readonly IReadOnlyList<string> HeaderNames =
     new string[]
@@ -70,7 +69,7 @@ public class DirectorExportService: IExportService<Director>
         }
     }
 
-   
+
 
     public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
     {

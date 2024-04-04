@@ -2,26 +2,26 @@
 
 namespace MoviePickerInfrastructure.Services;
 
-public class DirectorDataPortServiceFactory : IDataPortServiceFactory<Director>
+public class MovieDataPortServiceFactory : IDataPortServiceFactory<Movie>
 {
     private readonly MoviePickerV2Context _context;
-    public DirectorDataPortServiceFactory(MoviePickerV2Context context)
+    public MovieDataPortServiceFactory(MoviePickerV2Context context)
     {
         _context = context;
     }
-    public IImportService<Director> GetImportService(string contentType)
+    public IImportService<Movie> GetImportService(string contentType)
     {
         if (contentType is "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         {
-            return new DirectorImportService(_context);
+            return new MovieImportService(_context);
         }
         throw new NotImplementedException($"No import service implemented for movies with content type {contentType}");
     }
-    public IExportService<Director> GetExportService(string contentType)
+    public IExportService<Movie> GetExportService(string contentType)
     {
         if (contentType is "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         {
-            return new DirectorExportService(_context);
+            return new MovieExportService(_context);
         }
         throw new NotImplementedException($"No export service implemented for movies with content type {contentType}");
     }

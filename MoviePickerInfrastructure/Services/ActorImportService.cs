@@ -23,13 +23,14 @@ public class ActorImportService : IImportService<Actor>
             throw new ArgumentException("Дані не можуть бути прочитані", nameof(stream));
         }
 
-        try 
+        try
         {
             using (XLWorkbook workBook = new XLWorkbook(stream))
             {
                 foreach (IXLWorksheet worksheet in workBook.Worksheets)
                 {
-                    if (worksheet.RowsUsed().Count() <= 1) {
+                    if (worksheet.RowsUsed().Count() <= 1)
+                    {
                         throw new Exception("The worksheet is empty");
                     }
 
@@ -47,13 +48,12 @@ public class ActorImportService : IImportService<Actor>
                 }
             }
             await _context.SaveChangesAsync(cancellationToken);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             throw new Exception("An error occurred during import: " + ex.Message, ex);
         }
-       } 
-
-    //private async Task AddMovie(string name, )
+    }
 
     private async Task<string> AddActorAsync(IXLRow row, CancellationToken cancellationToken)
     {
@@ -66,8 +66,8 @@ public class ActorImportService : IImportService<Actor>
         var actorBirthCountryString = row.Cell(BirthCountryColumn).Value.ToString();
 
        
-        if (string.IsNullOrEmpty(actorName) &&
-            string.IsNullOrEmpty(actorBirthDateTimeString) &&
+        if (string.IsNullOrEmpty(actorName) ||
+            string.IsNullOrEmpty(actorBirthDateTimeString) ||
             string.IsNullOrEmpty(actorBirthCountryString))
         {
             throw new Exception("Some of required fields are empty." );

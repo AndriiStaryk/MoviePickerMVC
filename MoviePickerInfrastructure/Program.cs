@@ -2,7 +2,10 @@ using MoviePickerInfrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity;
 using System.Globalization;
+using MoviePickerDomain.Model;
+using System.Configuration;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Configuration.AddJsonFile("appsettings.json");
+
 builder.Services.AddDbContext<MoviePickerV2Context>(option => option.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
 ));
+
+builder.Services.AddDbContext<IdentityContext>(option => option.UseSqlServer(
+    builder.Configuration.GetConnectionString("IdentityConnection")
+    ));
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
 
 
 
@@ -49,6 +61,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseAuthentication();
 
 app.UseRouting();
 

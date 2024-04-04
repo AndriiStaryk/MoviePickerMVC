@@ -7,13 +7,14 @@
 
 <div class="background-image-blurred"></div>
 
-
-    <div class="d-flex justify-content-between align-items-center container">
-        <h1>@Localizer["movies"]</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>@Localizer["movies"]</h1>
+    <div class="ml-auto">
         <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewMovie"]</a>
+        <a asp-action="Import" class="btn btn-primary rounded-pill">@Localizer["import"]</a>
+        <a asp-action="Export" class="btn btn-primary rounded-pill">@Localizer["export"]</a>
     </div>
-
-
+</div>
 
 <div class="container">
     <div class="row">

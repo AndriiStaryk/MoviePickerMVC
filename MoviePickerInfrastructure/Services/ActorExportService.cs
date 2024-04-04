@@ -8,8 +8,7 @@ namespace MoviePickerInfrastructure.Services;
 
 public class ActorExportService : IExportService<Actor>
 {
-    private const string RootWorksheetName = "";
-
+   
     private static readonly IReadOnlyList<string> HeaderNames =
         new string[]
         {

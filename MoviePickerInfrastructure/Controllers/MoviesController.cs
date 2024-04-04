@@ -15,6 +15,7 @@ using System.IO;
 using System.Numerics;
 using Newtonsoft.Json;
 using DocumentFormat.OpenXml.Office2010.PowerPoint;
+using MoviePickerInfrastructure.Services;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -23,10 +24,12 @@ public class MoviesController : Controller
     private readonly MoviePickerV2Context _context;
     private MovieViewModel _movieViewModel;
     private Movie _movie = new Movie();
+    private MovieDataPortServiceFactory _movieDataPortServiceFactory;
     public MoviesController(MoviePickerV2Context context)
     {
         _context = context;
         _movieViewModel = new MovieViewModel(context, _movie);
+        _movieDataPortServiceFactory = new MovieDataPortServiceFactory(_context);
     }
 
     // GET: Movies
@@ -384,6 +387,41 @@ public class MoviesController : Controller
     {
         return _context.Movies.Any(e => e.Id == id);
     }
+
+
+    [HttpGet]
+    public IActionResult Import()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Import(IFormFile fileExcel, CancellationToken cancellationToken = default)
+    {
+
+        try
+        {
+            if (fileExcel == null)
+            {
+                throw new Exception("Choose the file");
+            }
+            
+            var importService = _movieDataPortServiceFactory.GetImportService(fileExcel.ContentType);
+
+            using var stream = fileExcel.OpenReadStream();
+
+            await importService.ImportFromStreamAsync(stream, cancellationToken);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+
+            ViewBag.ErrorMessage = ex.Message;
+            return View();
+        }
+    }
+
 
     //public async Task<bool> IsMovieExist(string title,
     //                                     DateOnly releaseDate,
