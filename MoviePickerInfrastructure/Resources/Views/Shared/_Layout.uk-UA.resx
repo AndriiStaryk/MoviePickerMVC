@@ -129,8 +129,17 @@
   <data name="genres" xml:space="preserve">
     <value>Жанри</value>
   </data>
+  <data name="import" xml:space="preserve">
+    <value>Імпортувати</value>
+  </data>
   <data name="languages" xml:space="preserve">
     <value>Мови</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Увійти</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Вийти</value>
   </data>
   <data name="movies" xml:space="preserve">
     <value>Фільми</value>
@@ -152,6 +161,9 @@
   </data>
   <data name="privacy" xml:space="preserve">
     <value>Конфіденційність</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Зареєструватися</value>
   </data>
   <data name="reviews" xml:space="preserve">
     <value>Відгуки</value>

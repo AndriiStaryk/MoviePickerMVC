@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model ChangeRoleViewModel
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mr-auto">@Localizer["roleChangingFor"] @Model.UserEmail</h2>
+    <div class="ml-auto">
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+    </div>
+</div>
+
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="userId" value="@Model.UserId" />
+    <div class="form-group">
+        @foreach (IdentityRole role in Model.AllRoles)
+        {
+            <input type="checkbox" name="roles" value="@role.Name"
+            @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")
+            @(User.IsInRole("super_admin") && !User.IsInRole(role.Name) ? "" : "disabled") />
+            @role.Name <br />
+        }
+    </div>
+
+    @if (!User.IsInRole("user"))
+    {
+        <button type="submit" class="btn btn-primary">@Localizer["save"]</button>
+    }
+</form>

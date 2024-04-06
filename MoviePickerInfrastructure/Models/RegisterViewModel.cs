@@ -4,6 +4,11 @@ namespace MoviePickerInfrastructure.Models;
 
 public class RegisterViewModel
 {
+
+    [Required]
+    [DataType(DataType.Text)]
+    public string Login { get; set; }
+
     [Required]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
@@ -12,6 +17,7 @@ public class RegisterViewModel
     public int Year { get; set; }
 
     [Required]
+    [DataType(DataType.Password)]
     //passsword
     public string Password { get; set; }
 
