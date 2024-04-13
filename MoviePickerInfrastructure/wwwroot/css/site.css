@@ -176,10 +176,17 @@ padding: 20px; /* Add padding for card container */
 }
 
 .card {
-margin-bottom: 20px;
-/* min-width: min-content;*/
+    margin-bottom: 20px;
+    /* min-width: min-content;*/
+    transition: transform 0.2s;
+    transform-style: preserve-3d;
 }
 
+
+
+.card:hover {
+    transform: rotateX(-15deg) rotateY(15deg);
+}
 
 #container-card-genres {
 display: flex;

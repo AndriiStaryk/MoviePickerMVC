@@ -1,6 +1,4 @@
-﻿@* @model MoviePickerDomain.Model.Movie
- *@
-
+﻿
  @model MovieViewModel
 
 @{
@@ -19,7 +17,7 @@
 </div>
 
 
-<h4>@Model.Movie.Title</h4>
+<h4><strong>@Model.Movie.Title</strong></h4>
 <hr />
 
 
@@ -45,13 +43,9 @@
 
 
 
-
-
-
-
     <table class="table">
         <tr>
-            <th>@Localizer["genres"]</th>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["genres"]</th>
         </tr>
         <tr>
             <td>
@@ -60,13 +54,11 @@
                     {
                         <div class="col-md-4 mb-3">
                             <a asp-action="MoviesByGenre" asp-route-genreId="@genre.Id" class="card-link">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">@genre.Name</h5>
-                                   
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@genre.Name</h5>
+                                    </div>
                                 </div>
-                          
-                            </div>
                             </a>
                         </div>
                     }
@@ -75,33 +67,28 @@
         </tr>
     </table>
 
-
-
+   
     <table class="table">
         <tr>
-            <th>@Localizer["director"]</th>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["director"]</th>
         </tr>
         <tr>
             <td>
                 <a asp-action="DirectorInfo" asp-route-directorId="@Model.Movie.DirectorId" class="card-link">
                     <div class="card">
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.Movie.Director!.Name</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.Movie.Director!.Name</h5>
+                        </div>
                     </div>
-                   
-                </div>
                 </a>
-
             </td>
         </tr>
     </table>
 
-
-
+    
     <table class="table">
         <tr>
-            <th>@Localizer["actors"]</th>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["actors"]</th>
         </tr>
         <tr>
             <td>
@@ -124,14 +111,12 @@
     </table>
 
     
-
     <table class="table">
         <tr>
-            <th>@Localizer["languages"]</th>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["languages"]</th>
         </tr>
         <tr>
             <td>
-
                 <div class="row">
                     @foreach (var language in Model.Languages)
                     {
@@ -146,20 +131,17 @@
                         </div>
                     }
                 </div>
-                </td>
+            </td>
         </tr>
     </table>
 
-
+    
     <table class="table">
         <tr>
-            
-            <th>@Localizer["reviews"]</th>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["reviews"]</th>
         </tr>
         <tr>
             <td>
-
-    
                 <div class="row">
                     @foreach (var review in Model.Reviews)
                     {
@@ -176,117 +158,6 @@
                         </div>
                     }
                 </div>
-           
+            </td>
         </tr>
     </table>
-
-
-
-    @* <table class="table">
-    <tr>
-    <th>@Localizer["genres"]</th>
-    </tr>
-    <tr>
-    <td>
-    <ul>
-    @foreach(var genre in Model.Genres)
-    {
-    <li>
-    <a asp-action="MoviesByGenre" asp-route-genreId="@genre.Id">  @genre.Name </a>
-    </li>
-    }
-    </ul>
-    </td>
-    </tr>
-    </table> *@
-
-
-    @* <table class="table">
-    <tr>
-    <th>@Localizer["director"]</th>
-    </tr>
-    <tr>
-    <td>
-    <ul>
-
-    <a asp-action="DirectorInfo" asp-route-directorId="@Model.Movie.DirectorId">  @Model.Movie.Director!.Name </a>
-
-
-    </ul>
-    </td>
-    </tr>
-    </table> *@
-
-
-
-    @* <table class="table">
-    <tr>
-    <th>@Localizer["actors"]</th>
-    </tr>
-    <tr>
-    <td>
-    <ul>
-    @foreach (var actor in Model.Actors)
-    {
-    <li>
-    <a asp-action="ActorInfo" asp-route-actorId="@actor.Id">  @actor.Name </a>
-    </li>
-    }
-    </ul>
-    </td>
-    </tr>
-    </table>
-    *@
-
-    @* <table class="table">
-    <tr>
-    <th>@Localizer["languages"]</th>
-    </tr>
-    <tr>
-    <td>
-    <ul>
-    @foreach (var language in Model.Languages)
-    {
-    <li>
-    <a asp-action="MoviesByLanguage" asp-route-languageId="@language.Id">  @language.Name </a>
-    </li>
-    }
-    </ul>
-    </td>
-    </tr>
-    </table> *@
-
-
-    @* <table class="table">
-    <tr>
-    <th>@Localizer["reviews"]</th>
-    </tr>
-    <tr>
-    <td>
-    <ul>
-    @foreach (var review in Model.Reviews)
-    {
-    <li>
-    <a asp-action="ShowReviewInfo" asp-route-reviewId="@review.Id">  @review.Title : @review.Text : @review.Rating</a>
-    </li>
-    }
-    </ul>
-    </td>
-    </tr>
-    </table>
-    *@
-
-    @* <div class="row">
-    @foreach (var review in Model.Reviews)
-    {
-    <div class="col-md-4 mb-3">
-    <div class="card">
-    <div class="card-body">
-    <h5 class="card-title"><strong>@review.Title</strong>@(review.Rating)/10</h5>
-    <p class="card-text">@review.Text</p>
-    <small class="text-muted">@review.CreationTime.ToString()</small>
-    </div>
-    </div>
-    </div>
-    }
-    </div> *@

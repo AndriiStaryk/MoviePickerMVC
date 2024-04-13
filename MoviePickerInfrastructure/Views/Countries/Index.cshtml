@@ -4,33 +4,39 @@
     ViewData["Title"] = "Index";
 }
 
-<h1><strong>@Localizer["countries"]</strong></h1>
 
-<p>
-    <a asp-action="Create">@Localizer["createNewCountry"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-               @*  @Html.DisplayNameFor(model => model.Name) *@
-                @Localizer["country"]
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="background-image-blurred"></div>
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1><strong>@Localizer["countries"]</strong></h1>
+
+    @if (Accessibility.AllExceptUser(User))
+    {
+        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewCountry"]</a>
+    }
+</div>
+
+<div class="container">
+    <div class="row" id="container-card-genres">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-body flex-lg-row">
+                    <h5 class="card-title"><strong>@item.Name</strong></h5>
+                    <div class="btn-group" role="group" aria-label="Actions">
+
+                        <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+
+                        @if (Accessibility.AllExceptUser(User))
+                        {
+                            <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                            <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
