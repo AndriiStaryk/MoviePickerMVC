@@ -1,103 +1,72 @@
 body {
-    font-family: Candara, sans-serif; /* This is a simple, clean font */
+font-family: Candara, sans-serif; /* This is a simple, clean font */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Georgia', serif; /* This is a more decorative font for headings */
+font-family: 'Georgia', serif; /* This is a more decorative font for headings */
 }
 
 nav {
-    font-family: Candara, Courier, monospace; /* This is a monospace font */
-    font-weight: bold; /* This makes the text bold */
+font-family: Candara, Courier, monospace; /* This is a monospace font */
+font-weight: bold; /* This makes the text bold */
 }
 
 .navbar-brand {
-    font-weight: bold;   /* This makes the text bold */
-    font-size: 1.5em;  /* This makes the text larger */
-    color: #FFFFFF;  /* Set navbar brand text color to white */
+font-weight: bold;   /* This makes the text bold */
+font-size: 1.5em;  /* This makes the text larger */
+color: #FFFFFF;  /* Set navbar brand text color to white */
 }
 
 .navbar {
-    background-color: #87CEFA;  /* This is a light sky blue color */
+background-color: #87CEFA;  /* This is a light sky blue color */
 }
 
 .nav-link {
-    color: #FFFFFF;  /* Set navigation link text color to white */
+color: #FFFFFF;  /* Set navigation link text color to white */
 }
 
 
 /* Change the color of links */
 a {
-    color: #FF6347; /* This is a tomato color */
+color: #FF6347; /* This is a tomato color */
 }
 
 
 .btn {
-    background-color: #FFA07A !important; /* This is a light salmon color */
-    color: #FFFFFF !important; /* This is white color for the text on the button */
+background-color: #FFA07A !important; /* This is a light salmon color */
+color: #FFFFFF !important; /* This is white color for the text on the button */
 }
 
-    /* Change the color of buttons when hovered over */
-    .btn:hover {
-        background-color: #FF6347 !important; /* This is a tomato color */
-    }
+/* Change the color of buttons when hovered over */
+.btn:hover {
+    background-color: #FF6347 !important; /* This is a tomato color */
+}
 
 /* Add padding to the button */
 .btn {
-    padding: 10px 20px; /* This adds 10px of padding to the top and bottom, and 20px of padding to the left and right */
-    margin-top: 10px; /* This adds 10px of space above the button */
+padding: 10px 20px; /* This adds 10px of padding to the top and bottom, and 20px of padding to the left and right */
+margin-top: 10px; /* This adds 10px of space above the button */
 }
 
 .btn-group > .btn {
-    margin-right: 5px;
+margin-right: 5px;
 }
 
 
 .tag-input {
-    display: flex;
-    flex-direction: column; /* Adjust to stack elements vertically */
-    align-items: flex-start; /* Align elements to the left */
+display: flex;
+flex-direction: column; /* Adjust to stack elements vertically */
+align-items: flex-start; /* Align elements to the left */
 }
 
 .picker-wrapper {
-    display: flex;
-    align-items: center;
-    border-radius: 20px; /* Rounded rectangle */
-    background-color: #ccc; /* Background color for picker and button */
-    padding: 5px; /* Padding between picker and button */
-    justify-content: space-between; /* Distribute elements evenly */
+display: flex;
+align-items: center;
+border-radius: 20px; /* Rounded rectangle */
+background-color: #ccc; /* Background color for picker and button */
+padding: 5px; /* Padding between picker and button */
+justify-content: space-between; /* Distribute elements evenly */
 }
-
-    .picker-wrapper select,
-    button {
-        border: none;
-        background: none;
-        padding: 3px 8px;
-        border-radius: 20px; /* Rounded rectangle */
-        color: #FFD700; /* Text color */
-    }
-
-.selected-genres {
-    display: flex;
-    flex-wrap: wrap; /* Allow genres to wrap onto new lines */
-    max-height: 50px; /* Set a max-height for the container */
-    overflow-y: auto; /* Add vertical scrollbar if needed */
-}
-
-.tag {
-    display: inline-flex;
-    align-items: center;
-    background-color: #FFA07A; /* Button color */
-    color: white;
-    padding: 3px 8px;
-    margin: 3px;
-    border-radius: 20px; /* Rounded rectangle */
-    cursor: pointer;
-}
-
-    .tag:hover {
-        background-color: #FF6347; /* Button hover color */
-    }
 
 .picker-wrapper select,
 button {
@@ -105,123 +74,135 @@ button {
     background: none;
     padding: 3px 8px;
     border-radius: 20px; /* Rounded rectangle */
-    color: #FF6347; /* Text color for picker and button */
+    color: #FFD700; /* Text color */
+}
+
+.selected-genres {
+display: flex;
+flex-wrap: wrap; /* Allow genres to wrap onto new lines */
+max-height: 50px; /* Set a max-height for the container */
+overflow-y: auto; /* Add vertical scrollbar if needed */
+}
+
+.tag {
+display: inline-flex;
+align-items: center;
+background-color: #FFA07A; /* Button color */
+color: white;
+padding: 3px 8px;
+margin: 3px;
+border-radius: 20px; /* Rounded rectangle */
+cursor: pointer;
+}
+
+.tag:hover {
+    background-color: #FF6347; /* Button hover color */
+}
+
+.picker-wrapper select,
+button {
+border: none;
+background: none;
+padding: 3px 8px;
+border-radius: 20px; /* Rounded rectangle */
+color: #FF6347; /* Text color for picker and button */
 }
 
 .small-image {
-    width: auto;
-    height: 125px;
+width: auto;
+height: 125px;
 }
 
 .image-container {
-    width: 100px;
-    height: 200px;
-    overflow: hidden; /* Ensure image does not overflow container */
+width: 100px;
+height: 200px;
+overflow: hidden; /* Ensure image does not overflow container */
 }
 
 .image-fit {
-    width: 90%; /* Make image fill container width */
-    height: auto; /* Maintain aspect ratio */
+width: 90%; /* Make image fill container width */
+height: auto; /* Maintain aspect ratio */
     
 }
 
 .image-fit-movie {
-    width: 200px;
-    height: 300px;
-    margin-right: 15px;
-    object-fit: cover;
+width: 200px;
+height: 300px;
+margin-right: 15px;
+object-fit: cover;
 }
 
 .image-fit-person {
-    width: 100px;
-    height: 160px;
-    margin-right: 15px;
-    object-fit: cover;
+width: 100px;
+height: 160px;
+margin-right: 15px;
+object-fit: cover;
 }
 
 .card-link {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit text color */
+text-decoration: none; /* Remove underline */
+color: inherit; /* Inherit text color */
 }
 
-    .card-link:hover .card {
-        background-color: rgba(0, 0, 0, 0.1); /* Slightly change background color on hover */
-    }
+.card-link:hover .card {
+    background-color: rgba(0, 0, 0, 0.1); /* Slightly change background color on hover */
+}
 
-/* Adjust the button size and padding */
-/*.btn-outline-success {
-    height: 30px;*/ /* Adjust the height of the button */
-    /*padding: 0.375rem 0.5rem;*/ /* Adjust the padding of the button */
-/*}*/
-
-    /* Center the icon in the button */
-    /*.btn-outline-success svg {
-        vertical-align: middle;
-    }*/
-/* Custom CSS to add padding between the search bar and button */
-/*.input-group-append {
-    margin-left: 10px;*/ /* Adjust the amount of padding between the search bar and button */
-/*}*/
-
-/* Ensure the search bar and button are vertically aligned */
-/*.input-group {
-    align-items: center;
-}*/
 
 .search-wrapper {
-    align-items: center;
-    gap: 5px;
+align-items: center;
+gap: 5px;
 }
 
 
 .background-image-blurred {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/Images/moviePickerLogo4_upscaled.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(7px); /* Apply blur effect */
-    z-index: -1; /* Send it behind other content */
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url('/Images/moviePickerLogo4_upscaled.jpg');
+background-size: cover;
+background-position: center;
+filter: blur(7px); /* Apply blur effect */
+z-index: -1; /* Send it behind other content */
 }
 
 
 .card-container {
-    padding-top: 50px; /* Adjust according to navbar height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    padding: 20px; /* Add padding for card container */
+padding-top: 50px; /* Adjust according to navbar height */
+overflow-y: auto; /* Enable vertical scrolling */
+padding: 20px; /* Add padding for card container */
 }
 
 .card {
-    margin-bottom: 20px;
-   /* min-width: min-content;*/
+margin-bottom: 20px;
+/* min-width: min-content;*/
 }
 
 
 #container-card-genres {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
-    text-align: center;
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: space-around;
+text-align: center;
 }
 
 #container-card-genres > div {
-    max-width: min-content;
+max-width: min-content;
 }
 
 #container-card-da {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
+display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+justify-content: space-around;
 }
 
-    #container-card-da > div {
-        max-width: min-content;
-    }
+#container-card-da > div {
+    max-width: min-content;
+}
 
 
 
@@ -231,24 +212,24 @@ input[type="date"],
 input[type="file"],
 select,
 textarea {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+scrollbar-width: none; /* Firefox */
+-ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-    /* Hide scrollbar for WebKit/Blink browsers */
-    input[type="text"]::-webkit-scrollbar,
-    input[type="date"]::-webkit-scrollbar,
-    input[type="file"]::-webkit-scrollbar,
-    select::-webkit-scrollbar,
-    textarea::-webkit-scrollbar {
-        display: none;
-    }
+/* Hide scrollbar for WebKit/Blink browsers */
+input[type="text"]::-webkit-scrollbar,
+input[type="date"]::-webkit-scrollbar,
+input[type="file"]::-webkit-scrollbar,
+select::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+    display: none;
+}
 
-    /* Adjust padding of the scrollbar for WebKit/Blink browsers */
-    input[type="text"]::-webkit-scrollbar-thumb,
-    input[type="date"]::-webkit-scrollbar-thumb,
-    input[type="file"]::-webkit-scrollbar-thumb,
-    select::-webkit-scrollbar-thumb,
-    textarea::-webkit-scrollbar-thumb {
-        background-color: transparent;
-    }
+/* Adjust padding of the scrollbar for WebKit/Blink browsers */
+input[type="text"]::-webkit-scrollbar-thumb,
+input[type="date"]::-webkit-scrollbar-thumb,
+input[type="file"]::-webkit-scrollbar-thumb,
+select::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}

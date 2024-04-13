@@ -144,6 +144,9 @@
   <data name="import" xml:space="preserve">
     <value>Імпортувати</value>
   </data>
+  <data name="moviesToActors" xml:space="preserve">
+    <value>Співвідношення між кількістю фільмів та акторів</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

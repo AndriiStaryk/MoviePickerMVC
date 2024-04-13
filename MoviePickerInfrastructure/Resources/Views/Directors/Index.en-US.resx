@@ -195,6 +195,9 @@
   <data name="language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="moviesToDirectors" xml:space="preserve">
+    <value>The ratio between the number of films and directors</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

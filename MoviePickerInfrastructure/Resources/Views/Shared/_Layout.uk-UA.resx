@@ -168,4 +168,7 @@
   <data name="reviews" xml:space="preserve">
     <value>Відгуки</value>
   </data>
+  <data name="roles" xml:space="preserve">
+    <value>Ролі</value>
+  </data>
 </root>

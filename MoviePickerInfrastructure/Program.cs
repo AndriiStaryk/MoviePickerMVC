@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Identity;
 using System.Globalization;
 using MoviePickerDomain.Model;
+using MoviePickerInfrastructure.Models;
 using System.Configuration;
+using Microsoft.AspNetCore.Hosting;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,7 +66,17 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<IStartup>();
+            })
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddHttpContextAccessor();
 
+                services.AddSingleton<Accessibility>();
+            });
 
 app.UseRequestLocalization();
 

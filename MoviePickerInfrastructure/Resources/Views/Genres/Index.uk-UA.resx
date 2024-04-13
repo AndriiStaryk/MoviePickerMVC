@@ -186,6 +186,9 @@
   <data name="language" xml:space="preserve">
     <value>Мова</value>
   </data>
+  <data name="moviesToGenres" xml:space="preserve">
+    <value>Співвідношення між кількістю фільмів та жанрів</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

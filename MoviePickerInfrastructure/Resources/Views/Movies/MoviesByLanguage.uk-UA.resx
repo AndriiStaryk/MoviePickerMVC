@@ -183,6 +183,12 @@
   <data name="language" xml:space="preserve">
     <value>Мова</value>
   </data>
+  <data name="millions" xml:space="preserve">
+    <value>мільйонів</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>хвилин</value>
+  </data>
   <data name="movie" xml:space="preserve">
     <value>Фільм</value>
   </data>
@@ -200,6 +206,9 @@
   </data>
   <data name="releaseDate" xml:space="preserve">
     <value>Дата випуску</value>
+  </data>
+  <data name="releaseYear" xml:space="preserve">
+    <value>Рік випуску</value>
   </data>
   <data name="save" xml:space="preserve">
     <value>Зберегти</value>

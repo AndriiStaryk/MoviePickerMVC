@@ -10,8 +10,11 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>@Localizer["directors"]</h1>
     <div class="ml-auto">
-        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewDirector"]</a>
-        <a asp-action="Import" class="btn btn-primary rounded-pill">@Localizer["import"]</a>
+        @if (Accessibility.AllExceptUser(User))
+        {
+            <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewDirector"]</a>
+            <a asp-action="Import" class="btn btn-primary rounded-pill">@Localizer["import"]</a>
+        }
         <a asp-action="Export" class="btn btn-primary rounded-pill">@Localizer["export"]</a>
     </div>
 </div>
@@ -20,41 +23,43 @@
 <div class="row" id="container-card-da">
     @foreach (var item in Model)
     {
-        @* <div class="col-md-3 mb-3"> *@
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h5 class="card-title text-truncate">@item.Name</h5>
-                        <div class="d-flex flex-column">
-                            <div class="d-flex mb-3">
-                                <div class="ml-auto">
-                                    @if (item.DirectorImage != null && item.DirectorImage.Length > 0)
-                                    {
-                                        <img src="data:image;base64,@Convert.ToBase64String(item.DirectorImage)" alt="Director Image" class="image-fit-person">
-                                    }
-                                </div>
-                                <div>
-                                    <p class="card-text">@Localizer["age"]: @item.GetYears()</p>
-                                    <p class="card-text">@Localizer["birthCountry"]: @item.BirthCountry.Name</p>
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title text-truncate">@item.Name</h5>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex mb-3">
+                            <div class="ml-auto">
+                                @if (item.DirectorImage != null && item.DirectorImage.Length > 0)
+                                {
+                                    <img src="data:image;base64,@Convert.ToBase64String(item.DirectorImage)" alt="Director Image" class="image-fit-person">
+                                }
+                            </div>
+                            <div>
+                                <p class="card-text">@Localizer["age"]: @item.GetYears()</p>
+                                <p class="card-text">@Localizer["birthCountry"]: @item.BirthCountry.Name</p>
 
-                                </div>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Actions">
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
+                            @if (Accessibility.AllExceptUser(User))
+                            {
                                 <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
-                                <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
                                 <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-        @* </div> *@
+        </div>
+        
     }
 </div>
 
 
 <div class="container">
-    <div id="chart1"></div>
+    <div id="chart1" @* style="background-color: rgba(0, 0, 0, 0.3); *@"></div>
 </div>
 @section scripts {
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -67,7 +72,7 @@
             $.get('/api/Charts/JsonDirectorsData', function (JsonData) {
                 data = google.visualization.arrayToDataTable(JsonData, false);
                 var options = {
-                    title: "Співвідношення кількості фільмів та режисерів",
+                    title: "@Localizer["moviesToDirectors"]",
                     width: 500,
                     height: 400,
                     backgroundColor: 'transparent',

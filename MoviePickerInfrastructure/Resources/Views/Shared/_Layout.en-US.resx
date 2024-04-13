@@ -168,4 +168,7 @@
   <data name="reviews" xml:space="preserve">
     <value>Reviews</value>
   </data>
+  <data name="roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
 </root>

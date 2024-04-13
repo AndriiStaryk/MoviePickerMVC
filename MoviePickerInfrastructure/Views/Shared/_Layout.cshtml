@@ -34,7 +34,7 @@
                         </li>
 
 
-                        @if (User.IsInRole("super_admin") || User.IsInRole("admin"))
+                        @if (Accessibility.AllExceptUser(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Countries" asp-action="Index" style="color: #FFF;">@Localizer["countries"]</a>
@@ -43,16 +43,14 @@
                                 <a class="nav-link text-white" asp-area="" asp-controller="Languages" asp-action="Index" style="color: #FFF;">@Localizer["languages"]</a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Reviews" asp-action="Index" style="color: #FFF;">@Localizer["reviews"]</a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Roles" asp-action="Index" style="color: #FFF;">@Localizer["roles"]</a>
+                            </li>
                         }
-
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Reviews" asp-action="Index" style="color: #FFF;">@Localizer["reviews"]</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Roles" asp-action="Index" style="color: #FFF;">@Localizer["roles"]</a>
-                        </li>
 
                         @*  @if (User.IsInRole("Administrator"))
                         {

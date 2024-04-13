@@ -46,16 +46,24 @@ public class RolesController : Controller
         {
             // список ролей користувача
             var userRoles = await _userManager.GetRolesAsync(user);
-            // получаем все роли
-            var allRoles = _roleManager.Roles.ToList();
-            // список ролей, які було додано
-            var addedRoles = roles.Except(userRoles);
-            // список ролей, які було видалено
-            var removedRoles = userRoles.Except(roles);
 
-            await _userManager.AddToRolesAsync(user, addedRoles);
+            bool isSuperAdmin = userRoles.Contains("super_admin");
 
-            await _userManager.RemoveFromRolesAsync(user, removedRoles);
+            if (isSuperAdmin)
+            {
+                roles.Add("super_admin");
+            }
+
+          
+            // Remove any roles that the user currently has but were not submitted in the form data
+            var rolesToRemove = userRoles.Except(roles);
+            await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+
+            // Add any roles that were submitted in the form data but the user does not currently have
+            var rolesToAdd = roles.Except(userRoles);
+            await _userManager.AddToRolesAsync(user, rolesToAdd);
+
+
 
             return RedirectToAction("UserList");
         }

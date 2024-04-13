@@ -117,40 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="age" xml:space="preserve">
-    <value>Age</value>
+  <data name="accessRights" xml:space="preserve">
+    <value>Access rights</value>
   </data>
-  <data name="birthCountry" xml:space="preserve">
-    <value>Birth Country</value>
+  <data name="backToList" xml:space="preserve">
+    <value>Back to list</value>
   </data>
-  <data name="birthDate" xml:space="preserve">
-    <value>Birth Date</value>
+  <data name="roleChagingFor" xml:space="preserve">
+    <value>Role changing for</value>
   </data>
-  <data name="createNew" xml:space="preserve">
-    <value>Create new actor</value>
+  <data name="rolesList" xml:space="preserve">
+    <value>Roles list</value>
   </data>
-  <data name="delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="details" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="export" xml:space="preserve">
-    <value>Export</value>
-  </data>
-  <data name="import" xml:space="preserve">
-    <value>Import</value>
-  </data>
-  <data name="moviesToActors" xml:space="preserve">
-    <value>The ratio between the number of films and actors</value>
-  </data>
-  <data name="nameOfPerson" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="titleActors" xml:space="preserve">
-    <value>Actors</value>
+  <data name="usersList" xml:space="preserve">
+    <value>Users list</value>
   </data>
 </root>

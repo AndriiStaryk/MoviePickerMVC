@@ -13,11 +13,18 @@
 <form asp-action="Edit" method="post">
     <input type="hidden" name="userId" value="@Model.UserId" />
     <div class="form-group">
-        @foreach (IdentityRole role in Model.AllRoles)
+        @foreach (IdentityRole role in Model.AllRoles)//.Where(r => r.Name != "super_admin"))
         {
+            @* <input type="checkbox" name="roles" value="@role.Name"
+            @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")
+            @(User.IsInRole("super_admin") ? "readonly" : "") /> @role.Name <br /> *@
+
             <input type="checkbox" name="roles" value="@role.Name"
             @(Model.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")
-            @(User.IsInRole("super_admin") && !User.IsInRole(role.Name) ? "" : "disabled") />
+
+            @(User.IsInRole("admin") && role.Name == "admin" ? "disabled" : "")
+            @(User.IsInRole("user") ? "disabled" : "")
+            @(role.Name == "super_admin" ? "disabled" : "") />
             @role.Name <br />
         }
     </div>
