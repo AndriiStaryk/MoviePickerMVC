@@ -171,4 +171,7 @@
   <data name="roles" xml:space="preserve">
     <value>Roles</value>
   </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

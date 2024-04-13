@@ -102,7 +102,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <div class="input-group">
-                                <input class="form-control rounded-pill" type="search" placeholder="Search" aria-label="Search" name="q">
+                                <input id="searchInput" class="form-control rounded-pill" type="search" placeholder="@Localizer["search"]" aria-label="Search" name="q">
                             </div>
                         </li>
                         <li class="nav-item">
@@ -118,14 +118,14 @@
                             {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["login"]</a>
-                                </li>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["register"]</a>
                             </li>
                             }
 
                             
-                        </li>
+                      @*   </li> *@
 
 
                             
@@ -139,8 +139,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#" onclick="changeLanguage('en-US')">en</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="changeLanguage('uk-UA')">uk</a></li>
-        
-      
+                               
                             </ul>
                         </li>
                     </ul>
@@ -166,63 +165,19 @@
 <script>
    
 
-    // function setLanguagePreference(lang) {
-    //     document.cookie = "language=" + lang + ";path=/";
-    // }
-
-    // // Function to get language preference from cookie
-    // function getLanguagePreference() {
-    //     var name = "language=";
-    //     var decodedCookie = decodeURIComponent(document.cookie);
-    //     var cookieArray = decodedCookie.split(';');
-    //     for (var i = 0; i < cookieArray.length; i++) {
-    //         var cookie = cookieArray[i];
-    //         while (cookie.charAt(0) == ' ') {
-    //             cookie = cookie.substring(1);
-    //         }
-    //         if (cookie.indexOf(name) == 0) {
-    //             return cookie.substring(name.length, cookie.length);
-    //         }
-    //     }
-    //     return "";
-    // }
-
-    // // Function to change language and set cookie preference
-    // function changeLanguage(languageCode) {
-    //     setLanguagePreference(languageCode);
-    //     location.reload(); // Reload the page to reflect language change
-    // }
-
-    // // Function to append language query parameter to URLs
-    // function appendLanguageQueryParam() {
-    //     var lang = getLanguagePreference();
-    //     if (lang && !window.location.search.includes('ui-culture=')) {
-    //         var currentUrl = window.location.href;
-    //         var separator = currentUrl.includes("?") ? "&" : "?";
-    //         window.history.replaceState({}, '', currentUrl + separator + 'ui-culture=' + lang);
-    //     }
-    // }
-
-    // // Function to update language button text
-    // function updateLanguageButton() {
-    //     var lang = getLanguagePreference();
-    //     var languageButton = document.getElementById('languageButton');
-    //     if (lang) {
-    //         if (lang === 'en-US') {
-    //             languageButton.textContent = 'en';
-    //         } else if (lang === 'uk-UA') {
-    //             languageButton.textContent = 'uk';
-    //         }
-    //     }
-    // }
-
-    // // Call the function to append language query parameter when the page loads
-    // window.onload = function () {
-    //     appendLanguageQueryParam();
-    //     updateLanguageButton();
-    // };
-
-
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                // Navigate to the desired URL when Enter is pressed
+                event.preventDefault(); // Prevents the default form submission
+                var searchQuery = searchInput.value.trim();
+                if (searchQuery !== "") {
+                    window.location.href = "/Movies/Search?q=" + encodeURIComponent(searchQuery);
+                }
+            }
+        });
+    });
 
 
 </script>

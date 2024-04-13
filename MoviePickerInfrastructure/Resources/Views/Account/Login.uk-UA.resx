@@ -129,7 +129,7 @@
   <data name="logInButton" xml:space="preserve">
     <value>Увійти</value>
   </data>
-  <data name="logInTittle" xml:space="preserve">
+  <data name="logInTitle" xml:space="preserve">
     <value>Вхід</value>
   </data>
   <data name="password" xml:space="preserve">

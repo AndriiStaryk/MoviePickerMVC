@@ -31,11 +31,11 @@
             <div style="padding: 0 10px;">
                 <!-- Add padding here -->
                 <dl class="row m-0">
-                    <dt class="col-sm-5">@Localizer["nameOfPerson"]</dt>
+                    <dt class="col-sm-5"><strong>@Localizer["nameOfPerson"]</strong></dt>
                     <dd class="col-sm-7">@Html.DisplayFor(model => model.Director.Name)</dd>
-                    <dt class="col-sm-5">@Localizer["birthDate"]</dt>
+                    <dt class="col-sm-5"><strong>@Localizer["birthDate"]</strong></dt>
                     <dd class="col-sm-7">@Html.DisplayFor(model => model.Director.BirthDate)</dd>
-                    <dt class="col-sm-5">@Localizer["birthCountry"]</dt>
+                    <dt class="col-sm-5"><strong>@Localizer["birthCountry"]</strong></dt>
                     <dd class="col-sm-7">@Html.DisplayFor(model => model.Director.BirthCountry.Name)</dd>
                 </dl>
             </div>

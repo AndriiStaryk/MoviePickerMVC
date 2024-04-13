@@ -8,7 +8,7 @@
 <div class="background-image-blurred"></div>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["directors"]</h1>
+    <h1><strong>@Localizer["directors"]</strong></h1>
     <div class="ml-auto">
         @if (Accessibility.AllExceptUser(User))
         {
@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-body">
                 <div>
-                    <h5 class="card-title text-truncate">@item.Name</h5>
+                    <h5 class="card-title text-truncate"><strong>@item.Name</strong></h5>
                     <div class="d-flex flex-column">
                         <div class="d-flex mb-3">
                             <div class="ml-auto">
@@ -36,8 +36,8 @@
                                 }
                             </div>
                             <div>
-                                <p class="card-text">@Localizer["age"]: @item.GetYears()</p>
-                                <p class="card-text">@Localizer["birthCountry"]: @item.BirthCountry.Name</p>
+                                <p class="card-text"><strong>@Localizer["age"]:</strong> @item.GetYears()</p>
+                                <p class="card-text"><strong>@Localizer["birthCountry"]:</strong> @item.BirthCountry.Name</p>
 
                             </div>
                         </div>

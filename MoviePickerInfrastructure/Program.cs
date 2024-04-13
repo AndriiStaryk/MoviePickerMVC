@@ -24,17 +24,20 @@ builder.Services.AddDbContext<MoviePickerV2Context>(option => option.UseSqlServe
 builder.Services.AddDbContext<IdentityContext>(option => option.UseSqlServer(
     builder.Configuration.GetConnectionString("IdentityConnection")
     ));
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
 
 
 
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+//builder.Services.AddControllersWithViews()
+//    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+/*builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");*/;
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -65,18 +68,6 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while seeding the database." + DateTime.Now.ToString());
     }
 }
-
-Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<IStartup>();
-            })
-            .ConfigureServices((hostContext, services) =>
-            {
-                services.AddHttpContextAccessor();
-
-                services.AddSingleton<Accessibility>();
-            });
 
 app.UseRequestLocalization();
 

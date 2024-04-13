@@ -8,7 +8,7 @@
 <div class="background-image-blurred"></div>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["movies"]</h1>
+    <h1><strong>@Localizer["movies"] @Localizer[ViewData["filterMessage"].ToString()] @ViewData["parameter"]</strong></h1>
     <div class="ml-auto">
         @if (Accessibility.AllExceptUser(User))
         {
@@ -26,7 +26,7 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@item.Title</h5>
+                        <h5 class="card-title text-truncate"><strong>@item.Title</strong></h5>
                         <div class="d-flex flex-column">
                             <div class="d-flex mb-3">
                                 <div class="ml-auto">
@@ -36,12 +36,12 @@
                                     }
                                 </div>
                                 <div>
-                                    <p class="card-text">@Localizer["director"]: @item.Director.Name</p>
-                                    <p class="card-text">@Localizer["releaseYear"]: @item.ReleaseDate.Year</p>
-                                    <p class="card-text">@Localizer["duration"]: @item.Duration @Localizer["minutes"]</p>
-                                    <p class="card-text">@Localizer["rating"]: @item.Rating</p>
-                                    <p class="card-text">@Localizer["budget"]: @item.ShowCash(item.Budget) @Localizer["millions"]</p>
-                                    <p class="card-text">@Localizer["boxOfficeRevenue"]: @item.ShowCash(item.BoxOfficeRevenue) @Localizer["millions"]</p>
+                                    <p class="card-text"><strong>@Localizer["director"]: </strong>@item.Director.Name</p>
+                                    <p class="card-text"><strong>@Localizer["releaseYear"]:</strong> @item.ReleaseDate.Year</p>
+                                    <p class="card-text"><strong>@Localizer["duration"]: </strong>@item.Duration @Localizer["minutes"]</p>
+                                    <p class="card-text"><strong>@Localizer["rating"]: </strong>@item.Rating</p>
+                                    <p class="card-text"><strong>@Localizer["budget"]: </strong>@item.ShowCash(item.Budget) @Localizer["millions"]</p>
+                                    <p class="card-text"><strong>@Localizer["boxOfficeRevenue"]: </strong>@item.ShowCash(item.BoxOfficeRevenue) @Localizer["millions"]</p>
                                 </div>
                             </div>
                             <div class="btn-group" role="group" aria-label="Actions">

@@ -195,6 +195,21 @@
   <data name="movies" xml:space="preserve">
     <value>Фільми</value>
   </data>
+  <data name="moviesByActor" xml:space="preserve">
+    <value>за актором:</value>
+  </data>
+  <data name="moviesByDirector" xml:space="preserve">
+    <value>за режисером:</value>
+  </data>
+  <data name="moviesByGenre" xml:space="preserve">
+    <value>за жанром:</value>
+  </data>
+  <data name="moviesByLanguage" xml:space="preserve">
+    <value>за мовою:</value>
+  </data>
+  <data name="moviesBySearch" xml:space="preserve">
+    <value>за запитом:</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Ім'я</value>
   </data>

@@ -171,4 +171,7 @@
   <data name="roles" xml:space="preserve">
     <value>Ролі</value>
   </data>
+  <data name="search" xml:space="preserve">
+    <value>Пошук</value>
+  </data>
 </root>

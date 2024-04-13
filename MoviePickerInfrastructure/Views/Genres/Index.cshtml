@@ -8,7 +8,7 @@
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["genres"]</h1>
+    <h1><strong>@Localizer["genres"]</strong></h1>
 
     @if (Accessibility.AllExceptUser(User))
     {
@@ -22,7 +22,7 @@
         {
             <div class="card">
                 <div class="card-body flex-lg-row">
-                    <h5 class="card-title">@item.Name</h5>
+                    <h5 class="card-title"><strong>@item.Name</strong></h5>
                     <div class="btn-group" role="group" aria-label="Actions">
 
                         <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>

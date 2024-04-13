@@ -195,6 +195,21 @@
   <data name="movies" xml:space="preserve">
     <value>Movies</value>
   </data>
+  <data name="moviesByActor" xml:space="preserve">
+    <value>by actor:</value>
+  </data>
+  <data name="moviesByDirector" xml:space="preserve">
+    <value>by director:</value>
+  </data>
+  <data name="moviesByGenre" xml:space="preserve">
+    <value>by genre:</value>
+  </data>
+  <data name="moviesByLanguage" xml:space="preserve">
+    <value>by language:</value>
+  </data>
+  <data name="moviesBySearch" xml:space="preserve">
+    <value>by search:</value>
+  </data>
   <data name="nameOfPerson" xml:space="preserve">
     <value>Name</value>
   </data>

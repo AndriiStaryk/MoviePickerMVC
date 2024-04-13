@@ -19,7 +19,7 @@
 </div>
 
 
-<h4>@Localizer["movie"]</h4>
+<h4>@Model.Movie.Title</h4>
 <hr />
 
 
@@ -32,13 +32,14 @@
             }
         </div>
         <div>
-            <p class="card-text">@Localizer["director"]: @Model.Movie.Director.Name</p>
-            <p class="card-text">@Localizer["releaseDate"]: @Model.Movie.ReleaseDate</p>
-            <p class="card-text">@Localizer["duration"]: @Model.Movie.Duration @Localizer["minutes"]</p>
-            <p class="card-text">@Localizer["rating"]: @Model.Movie.Rating</p>
-            <p class="card-text">@Localizer["budget"]: @Model.Movie.ShowCash(Model.Movie.Budget) @Localizer["millions"]</p>
-            <p class="card-text">@Localizer["boxOfficeRevenue"]: @Model.Movie.ShowCash(Model.Movie.BoxOfficeRevenue) @Localizer["millions"]</p>
-            <p class="card-text">@Localizer["description"]: @Model.Movie.Description</p>
+            <p class="card-text"><strong>@Localizer["director"]:</strong> @Model.Movie.Director.Name</p>
+            <p class="card-text"><strong>@Localizer["releaseDate"]:</strong> @Model.Movie.ReleaseDate</p>
+            <p class="card-text"><strong>@Localizer["duration"]:</strong> @Model.Movie.Duration @Localizer["minutes"]</p>
+            <p class="card-text"><strong>@Localizer["rating"]:</strong> @Model.Movie.Rating</p>
+            <p class="card-text"><strong>@Localizer["budget"]:</strong> @Model.Movie.ShowCash(Model.Movie.Budget) @Localizer["millions"]</p>
+            <p class="card-text"><strong>@Localizer["boxOfficeRevenue"]:</strong> @Model.Movie.ShowCash(Model.Movie.BoxOfficeRevenue) @Localizer["millions"]</p>
+            <p class="card-text"><strong>@Localizer["description"]:</strong> @Model.Movie.Description</p>
+
         </div>
     </div>
 

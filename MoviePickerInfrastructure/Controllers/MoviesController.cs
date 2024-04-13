@@ -16,6 +16,8 @@ using System.Numerics;
 using Newtonsoft.Json;
 using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using MoviePickerInfrastructure.Services;
+using Microsoft.AspNetCore.Mvc.Localization;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -32,18 +34,42 @@ public class MoviesController : Controller
         _movieDataPortServiceFactory = new MovieDataPortServiceFactory(_context);
     }
 
-    // GET: Movies
+    //GET: Movies
     public async Task<IActionResult> Index()
     {
         var movies = _context.Movies.Include(m => m.Director).ToList();
 
-        foreach(var mov in movies)
+        foreach (var mov in movies)
         {
             MovieViewModel.CalculateRating(mov, _context);
         }
 
+        ViewData["filterMessage"] = "";
+        ViewData["parameter"] = "";
+
         return View(movies);
     }
+
+
+    // GET: /Movies/Index?q=searchTerm
+    public IActionResult Search(string q)
+    {
+        IQueryable<Movie> moviesBySearch = _context.Movies.Include(m => m.Director);
+
+        if (!string.IsNullOrEmpty(q))
+        {
+
+            string searchTerm = q.ToLower();
+
+            moviesBySearch = moviesBySearch.Where(m => m.Title.ToLower().Contains(searchTerm));
+        }
+
+        ViewData["filterMessage"] = "moviesBySearch";
+        ViewData["parameter"] = q;
+
+        return View("Index", moviesBySearch.ToList());
+    }
+
 
     public IActionResult MoviesByGenre(int genreId)
     {
@@ -53,7 +79,12 @@ public class MoviesController : Controller
             .Select(mg => mg.Movie)
             .ToList();
 
-        return View(moviesByGenre);
+        ViewData["filterMessage"] = "moviesByGenre";
+        ViewData["parameter"] = _context.Genres.FirstOrDefault(g => g.Id == genreId).Name;
+
+        return View("Index", moviesByGenre);
+
+        //return View(moviesByGenre);
 
     }
 
@@ -72,7 +103,12 @@ public class MoviesController : Controller
             .Select(ma => ma.Movie)
             .ToList();
 
-        return View(moviesByActor);
+        ViewData["filterMessage"] = "moviesByActor";
+        ViewData["parameter"] = _context.Actors.FirstOrDefault(a => a.Id == actorId).Name;
+
+        return View("Index", moviesByActor);
+
+        //return View(moviesByActor);
     }
 
     public IActionResult MoviesByLanguage(int languageId)
@@ -83,7 +119,11 @@ public class MoviesController : Controller
             .Select(ml => ml.Movie)
             .ToList();
 
-        return View(moviesByLanguage);
+        ViewData["filterMessage"] = "moviesByLanguage";
+        ViewData["parameter"] = _context.Languages.FirstOrDefault(l => l.Id == languageId).Name;
+
+        return View("Index", moviesByLanguage);
+        //return View(moviesByLanguage);
     }
 
 
@@ -103,10 +143,16 @@ public class MoviesController : Controller
 
     public async Task<IActionResult> MoviesByDirector(int directorId)
     {
-        var moviesByDirectorContext = _context.Movies
-            .Where(m => m.DirectorId == directorId);
+        var moviesByDirector = _context.Movies
+            .Where(m => m.DirectorId == directorId)
+            .ToList();
 
-        return View(await moviesByDirectorContext.ToListAsync());
+        ViewData["filterMessage"] = "moviesByDirector";
+        ViewData["parameter"] = _context.Directors.FirstOrDefault(d => d.Id == directorId).Name;
+
+        return View("Index", moviesByDirector);
+
+        //return View(await moviesByDirectorContext.ToListAsync());
     }
  
     // GET: Movies/Details/5
@@ -421,47 +467,5 @@ public class MoviesController : Controller
             return View();
         }
     }
-
-
-    //public async Task<bool> IsMovieExist(string title,
-    //                                     DateOnly releaseDate,
-    //                                     int directorID,
-    //                                     long? budget,
-    //                                     long? boxOfficeRevenue,
-    //                                     int? duration,
-    //                                     double? rating,
-    //                                     string? description,
-    //                                     IFormFile? movieImage)
-    //{
-
-    //    byte[]? image = [];
-    //    if (movieImage != null && movieImage.Length > 0)
-    //    {
-    //        using (var memoryStream = new MemoryStream())
-    //        {
-    //            await movieImage.CopyToAsync(memoryStream);
-    //            image = memoryStream.ToArray();
-    //        }
-    //    }
-
-
-    //    var movie = await _context.Movies
-    //        .FirstOrDefaultAsync(
-    //            m => m.Title == title &&
-    //            m.ReleaseDate == releaseDate &&
-    //            m.DirectorId == directorID &&
-    //            m.Budget == budget &&
-    //            m.BoxOfficeRevenue == boxOfficeRevenue &&
-    //            m.Duration == duration &&
-    //            m.Rating == rating &&
-    //            m.Description == description);
-
-    //    if (movie != null && image != null && movie.MovieImage.SequenceEqual(image))
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
 }
 
