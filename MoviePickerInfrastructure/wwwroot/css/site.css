@@ -183,9 +183,8 @@ padding: 20px; /* Add padding for card container */
 }
 
 
-
 .card:hover {
-    transform: rotateX(-15deg) rotateY(15deg);
+    /*transform: rotateX(-15deg) rotateY(15deg);*/
 }
 
 #container-card-genres {
@@ -241,3 +240,23 @@ textarea::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
 
+
+
+/*login form*/
+.employee-details-container {
+    display: inline-grid;
+    grid-gap: 100px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.passwordInput {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    cursor: pointer;
+}
+
+.material-symbols-outlined {
+    color: #222; 
+}
