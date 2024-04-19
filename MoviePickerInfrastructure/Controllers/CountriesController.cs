@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
-using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers;
 
+[Authorize(Roles = Accessibility.Roles)]
 public class CountriesController : Controller
 {
     private readonly MoviePickerV2Context _context;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Humanizer.Bytes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,8 @@ public class DirectorsController : Controller
     }
 
     // GET: Directors/Create
+    [Authorize(Roles = Accessibility.Roles)]
+
     public IActionResult Create()
     {
         ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name");
@@ -68,6 +71,8 @@ public class DirectorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile? directorImage)
     {
         if (ModelState.IsValid)
@@ -111,6 +116,8 @@ public class DirectorsController : Controller
     }
 
     // GET: Directors/Edit/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -132,6 +139,7 @@ public class DirectorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
 
     public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Director director, IFormFile? directorImage)
     {
@@ -200,6 +208,8 @@ public class DirectorsController : Controller
 
 
     // GET: Directors/Delete/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -221,6 +231,8 @@ public class DirectorsController : Controller
     // POST: Directors/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var director = await _context.Directors.FindAsync(id);
@@ -242,6 +254,8 @@ public class DirectorsController : Controller
 
 
     [HttpGet]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public IActionResult Import()
     {
         return View();
@@ -249,6 +263,8 @@ public class DirectorsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
 
     public async Task<IActionResult> Import(IFormFile fileExcel, CancellationToken cancellationToken = default)
     {

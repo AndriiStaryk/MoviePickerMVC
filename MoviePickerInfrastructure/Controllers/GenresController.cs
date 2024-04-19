@@ -4,11 +4,12 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviePickerDomain.Model;
-using MoviePickerInfrastructure;
+using MoviePickerInfrastructure.Models;
 using Newtonsoft.Json;
 
 namespace MoviePickerInfrastructure.Controllers;
@@ -38,27 +39,7 @@ public class GenresController : Controller
         return View(await moviesByGenreContext.ToListAsync());
     }
 
-    // GET: Genres/Details/5
-    //public async Task<IActionResult> Details(int? id)
-    //{
-    //    if (id == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    var genre = await _context.Genres
-    //        .FirstOrDefaultAsync(m => m.Id == id);
-
-    //    if (genre == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    
-
-    //     return View(genre);
-    //}
-
+    
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -77,8 +58,6 @@ public class GenresController : Controller
             .Where(mg => mg.GenreId == id)
             .Select(mg => mg.Movie).ToList();
 
-        //var serializedMovies = JsonConvert.SerializeObject(moviesByGenre);
-        //TempData["MoviesByGenre"] = serializedMovies;
 
         return RedirectToAction("MoviesByGenre", "Movies", new { genreId = id });
     }
@@ -87,6 +66,8 @@ public class GenresController : Controller
 
 
     // GET: Genres/Create
+    [Authorize(Roles = Accessibility.Roles)]
+
     public IActionResult Create()
     {
         return View();
@@ -97,6 +78,8 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Create([Bind("Name,Id")] Genre genre)
     {
         if (ModelState.IsValid)
@@ -116,6 +99,8 @@ public class GenresController : Controller
     }
 
     // GET: Genres/Edit/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -136,6 +121,8 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int id, [Bind("Name,Id")] Genre genre)
     {
         if (id != genre.Id)
@@ -175,6 +162,8 @@ public class GenresController : Controller
     }
 
     // GET: Genres/Delete/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -195,6 +184,8 @@ public class GenresController : Controller
     // POST: Genres/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var genre = await _context.Genres.FindAsync(id);

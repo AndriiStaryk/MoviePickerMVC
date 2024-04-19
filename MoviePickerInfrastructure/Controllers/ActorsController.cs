@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,8 @@ public class ActorsController : Controller
     }
 
     // GET: Actors/Create
+
+    [Authorize(Roles = Accessibility.Roles)]
     public IActionResult Create()
     {
         ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name");
@@ -76,6 +79,7 @@ public class ActorsController : Controller
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
+    [Authorize(Roles = Accessibility.Roles)]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile? actorImage)
     {
@@ -118,8 +122,11 @@ public class ActorsController : Controller
     }
 
     // GET: Actors/Edit/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int? id)
     {
+
         if (id == null)
         {
             return NotFound();
@@ -132,6 +139,7 @@ public class ActorsController : Controller
         }
         ViewData["BirthCountryId"] = new SelectList(_context.Countries, "Id", "Name", actor.BirthCountryId);
         return View(actor);
+
     }
 
     // POST: Actors/Edit/5
@@ -139,6 +147,7 @@ public class ActorsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
 
     public async Task<IActionResult> Edit(int id, [Bind("Name,BirthDate,BirthCountryId,Id")] Actor actor, IFormFile? actorImage)
     {
@@ -207,8 +216,11 @@ public class ActorsController : Controller
 
 
     // GET: Actors/Delete/5
+    [Authorize(Roles = Accessibility.Roles)]
     public async Task<IActionResult> Delete(int? id)
     {
+
+
         if (id == null)
         {
             return NotFound();
@@ -223,11 +235,13 @@ public class ActorsController : Controller
         }
 
         return View(actor);
+
     }
 
     // POST: Actors/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var actor = await _context.Actors.FindAsync(id);
@@ -252,9 +266,12 @@ public class ActorsController : Controller
 
 
     [HttpGet]
+    [Authorize(Roles = Accessibility.Roles)]
     public IActionResult Import()
     {
+
         return View();
+
     }
 
     [HttpPost]

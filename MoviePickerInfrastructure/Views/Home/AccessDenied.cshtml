@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = Localizer["accessDenied"];
+}
+
+
+<style>
+    body {
+        background-color: black;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Hide scrollbars */
+    }
+
+    .text-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<body>
+    <div class="text-center">
+        <h1>@Localizer["accessDenied"] 😢</h1>
+        <p>@Localizer["msg"]</p>
+        <div>
+            <iframe src="https://chromedino.com/" frameborder="0" scrolling="no" width="600" height="400" loading="lazy"></iframe>
+            <style type="text/css">
+                iframe {
+                    border: none;
+                    background-color: #121212; 
+                    filter: invert(1);
+                }</style>
+        </div>
+    </div>
+</body>
+
+<script>
+    window.addEventListener('load', function () {
+        var gameFrame = document.getElementById('gameFrame');
+        gameFrame.style.visibility = 'visible'; 
+        gameFrame.focus(); 
+    });
+</script>

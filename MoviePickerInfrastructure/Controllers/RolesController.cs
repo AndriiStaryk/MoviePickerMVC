@@ -6,6 +6,8 @@ using MoviePickerInfrastructure.Models;
 
 namespace MoviePickerInfrastructure.Controllers;
 
+[Authorize(Roles = Accessibility.Roles)]
+
 public class RolesController : Controller
 {
     RoleManager<IdentityRole> _roleManager;

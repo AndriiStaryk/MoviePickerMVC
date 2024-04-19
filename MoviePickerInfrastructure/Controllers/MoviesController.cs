@@ -18,6 +18,7 @@ using DocumentFormat.OpenXml.Office2010.PowerPoint;
 using MoviePickerInfrastructure.Services;
 using Microsoft.AspNetCore.Mvc.Localization;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MoviePickerInfrastructure.Controllers;
 
@@ -178,6 +179,8 @@ public class MoviesController : Controller
     }
 
     // GET: Movies/Create
+    [Authorize(Roles = Accessibility.Roles)]
+
     public IActionResult Create()
     {
         _movieViewModel = new MovieViewModel(_context, _movie);
@@ -195,6 +198,8 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
         if (ModelState.IsValid)
@@ -267,6 +272,8 @@ public class MoviesController : Controller
 
 
     // GET: Movies/Edit/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -296,6 +303,8 @@ public class MoviesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Edit(int id, [Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
         if (id != movie.Id)
@@ -390,9 +399,11 @@ public class MoviesController : Controller
 
 
 
-    
+
 
     // GET: Movies/Delete/5
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -414,6 +425,8 @@ public class MoviesController : Controller
     // POST: Movies/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var movie = await _context.Movies.FindAsync(id);
@@ -436,6 +449,8 @@ public class MoviesController : Controller
 
 
     [HttpGet]
+    [Authorize(Roles = Accessibility.Roles)]
+
     public IActionResult Import()
     {
         return View();

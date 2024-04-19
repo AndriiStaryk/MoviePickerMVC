@@ -8,6 +8,7 @@ using MoviePickerDomain.Model;
 using MoviePickerInfrastructure.Models;
 using System.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,12 +33,23 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
 
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+
+    options.LoginPath = "/Home/AccessDenied";
+    options.LogoutPath = "/Identity/Account/logout";
+    options.AccessDeniedPath = "/Home/AccessDenied";
+});
+
+builder.Services.AddAuthentication().AddCookie();
+
 
 //builder.Services.AddControllersWithViews()
 //    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
 
 
-/*builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");*/;
+/*builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");*/
+;
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
