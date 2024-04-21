@@ -4,52 +4,54 @@
     ViewData["Title"] = @Localizer["editing"];
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["editing"]</h1>
-    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
-</div>
-
-<h4>@Localizer["director"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"> @Localizer["nameOfPerson"] </label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"> @Localizer["birthDate"] </label>
-                <input asp-for="BirthDate" class="form-control" type="date" />
-                <span asp-validation-for="BirthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BirthCountryId" class="control-label"> @Localizer["birthCountry"] </label>
-                <select asp-for="BirthCountryId" class="form-control" asp-items="ViewBag.BirthCountryId"></select>
-                <span asp-validation-for="BirthCountryId" class="text-danger"></span>
-            </div>
-
-            @if (Model.DirectorImage != null && Model.DirectorImage.Length > 0)
-            {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.DirectorImage)" alt="Director Image" class="image-fit">
-            }
-
-            <div class="form-group">
-                <label asp-for="DirectorImage" class="control-label"> @Localizer["changeDirectorImage"] </label>
-                <input type="file" name="DirectorImage" accept="image/*" class="form-control" />
-                <span asp-validation-for="DirectorImage" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="@Localizer["save"]" class="btn btn-primary rounded-pill" />
-            </div>
-        </form>
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header">@Localizer["editing"]</h1>
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
     </div>
-</div>
 
+    <h4>@Localizer["director"]</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"> @Localizer["nameOfPerson"] </label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate" class="control-label"> @Localizer["birthDate"] </label>
+                    <input asp-for="BirthDate" class="form-control" type="date" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthCountryId" class="control-label"> @Localizer["birthCountry"] </label>
+                    <select asp-for="BirthCountryId" class="form-control" asp-items="ViewBag.BirthCountryId"></select>
+                    <span asp-validation-for="BirthCountryId" class="text-danger"></span>
+                </div>
+
+                @if (Model.DirectorImage != null && Model.DirectorImage.Length > 0)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.DirectorImage)" alt="Director Image" class="image-fit">
+                }
+
+                <div class="form-group">
+                    <label asp-for="DirectorImage" class="control-label"> @Localizer["changeDirectorImage"] </label>
+                    <input type="file" name="DirectorImage" accept="image/*" class="form-control" />
+                    <span asp-validation-for="DirectorImage" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Localizer["save"]" class="btn btn-primary rounded-pill" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
 
 
 @section Scripts {

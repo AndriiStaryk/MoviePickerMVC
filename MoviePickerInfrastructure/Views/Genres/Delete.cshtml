@@ -4,27 +4,29 @@
     ViewData["Title"] = @Localizer["deleting"];
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["deleting"]</h1>
-    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
-</div>
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header">@Localizer["deleting"]</h1>
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+    </div>
 
-<h3>@Localizer["deletingQuestion"]</h3>
-<div>
-    <h4>@Localizer["genre"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.Name) *@
-            @Localizer["title"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@Localizer["delete"]" class="btn btn-danger rounded-pill" />
-    </form>
+    <h3>@Localizer["deletingQuestion"]</h3>
+    <div>
+        <h4>@Localizer["genre"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.Name) *@
+                @Localizer["title"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@Localizer["delete"]" class="btn btn-danger rounded-pill" />
+        </form>
+    </div>
 </div>

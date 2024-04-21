@@ -4,56 +4,60 @@
     ViewData["Title"] = @Localizer["reviews"];
 }
 
+<div class="content">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1><strong>@Localizer["reviews"]</strong></h1>
-    <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["create"]</a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header"><strong>@Localizer["reviews"]</strong></h1>
+        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["create"]</a>
+    </div>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*  @Html.DisplayNameFor(model => model.Title) *@
+                    @Localizer["title"]
+                </th>
+                <th>
+                    @* @Html.DisplayNameFor(model => model.Text) *@
+                    @Localizer["text"]
+                </th>
+                <th>
+                    @* @Html.DisplayNameFor(model => model.Rating) *@
+                    @Localizer["rating"]
+                </th>
+                <th>
+                    @* @Html.DisplayNameFor(model => model.Movie) *@
+                    @Localizer["movie"]
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Movie.Title)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-               @*  @Html.DisplayNameFor(model => model.Title) *@
-                @Localizer["title"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Text) *@
-                @Localizer["text"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Rating) *@
-                @Localizer["rating"]
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Movie) *@
-                @Localizer["movie"]
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>

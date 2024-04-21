@@ -4,22 +4,24 @@
     ViewData["Title"] = @Localizer["details"];
 }
 
-<h1>@Localizer["details"]</h1>
+<div class="content">
+    <h1 class="page-header">@Localizer["details"]</h1>
 
-<div>
-    <h4>@Localizer["countryInfo"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.Name) *@
-            @Localizer["country"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["edit"]</a> |
-    <a asp-action="Index">@Localizer["backToList"]</a>
+    <div>
+        <h4>@Localizer["countryInfo"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.Name) *@
+                @Localizer["country"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">@Localizer["edit"]</a> |
+        <a asp-action="Index">@Localizer["backToList"]</a>
+    </div>
 </div>

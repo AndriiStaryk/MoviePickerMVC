@@ -1,23 +1,25 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
 
-<h2><strong>@Localizer["rolesList"]</strong></h2>
-<table class="table">
-    @foreach (var role in Model)
-    {
-        <tr>
-            <td>@role.Name</td>
-            @* <td>
+<div class="content">
+    <h2><strong>@Localizer["rolesList"]</strong></h2>
+    <table class="table">
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                @* <td>
 
-                @if (User.IsInRole("super_admin"))
-                {
-                    <form asp-action="Delete" asp-route-id="@role.Id" method="post">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            @Localizer["delete"]
-                    </button>
-                </form>
-                }
+            @if (User.IsInRole("super_admin"))
+            {
+            <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-danger">
+            @Localizer["delete"]
+            </button>
+            </form>
+            }
             </td> *@
-        </tr>
-    }
-</table>
-<a asp-action="UserList">@Localizer["usersList"]</a>
+            </tr>
+        }
+    </table>
+    <a asp-action="UserList">@Localizer["usersList"]</a>
+</div>

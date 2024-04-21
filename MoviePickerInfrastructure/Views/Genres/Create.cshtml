@@ -4,27 +4,29 @@
     ViewData["Title"] = @Localizer["creation"];
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["creation"]</h1>
-    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
-</div>
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header">@Localizer["creation"]</h1>
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+    </div>
 
 
-<h4>@Localizer["genre"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"> @Localizer["title"] </label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="@Localizer["create"]" class="btn btn-primary rounded-pill" />
-            </div>
-        </form>
+    <h4>@Localizer["genre"]</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"> @Localizer["title"] </label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="@Localizer["create"]" class="btn btn-primary rounded-pill" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

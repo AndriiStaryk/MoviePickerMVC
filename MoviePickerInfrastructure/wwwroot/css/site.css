@@ -2,13 +2,26 @@ body {
     font-family: Candara, sans-serif; /* This is a simple, clean font */
 }
 
+.card {
+    background-color: #0f1c26;
+}
+
 h1, h2, h3, h4, h5, h6 {
 font-family: 'Georgia', serif; /* This is a more decorative font for headings */
+}
+
+.page-header {
+    text-shadow: 0px 0px 2px #2c2a2a;
+    letter-spacing: 0.02em;
 }
 
 nav {
 font-family: Candara, Courier, monospace; /* This is a monospace font */
 font-weight: bold; /* This makes the text bold */
+}
+
+.bg-dark {
+    background-color: #0f1c26 !important;
 }
 
 .navbar-brand {
@@ -182,6 +195,14 @@ padding: 20px; /* Add padding for card container */
     transform-style: preserve-3d;
 }
 
+.card-body-genre {
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+    padding: 10px;
+}
+
+
 
 .card:hover {
     /*transform: rotateX(-15deg) rotateY(15deg);*/
@@ -260,3 +281,53 @@ textarea::-webkit-scrollbar-thumb {
 .material-symbols-outlined {
     color: #222; 
 }
+
+/*start nav*/
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+.content {
+    padding-top: 125px;
+}
+
+/*end nav*/
+
+/*start genre*/
+.card-genre-container {
+    padding: 2px;
+    background-color: #0f1c26;
+    border: unset;
+    color: #fff;
+    cursor: pointer;
+    justify-content: center;
+    display: flex;
+    border-radius: 5px;
+    margin-right: 9px;
+    margin-bottom: 35px;
+}
+
+.card-genre-container:hover {
+    border: 2px solid #ff9233;
+    box-shadow: 0 0 5px #ff9233;
+    color: #fff;
+}
+/*end genre*/
+
+.btn {
+    background-color: #040a0c !important;
+    color: #FFFFFF !important;
+}
+
+    .btn:hover {
+        background-color: #2684a2 !important;
+    }   

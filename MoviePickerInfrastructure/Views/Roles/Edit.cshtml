@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model ChangeRoleViewModel
 
-
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="content">
     <h2 class="mr-auto">@Localizer["roleChangingFor"] @Model.UserEmail</h2>
     <div class="ml-auto">
         <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
@@ -34,3 +33,5 @@
         <button type="submit" class="btn btn-primary">@Localizer["save"]</button>
     }
 </form>
+</div>
+

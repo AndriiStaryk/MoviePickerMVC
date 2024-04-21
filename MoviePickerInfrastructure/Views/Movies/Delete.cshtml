@@ -4,69 +4,72 @@
     ViewData["Title"] = @Localizer["deleting"];
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>@Localizer["deleting"]</h1>
-    <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
-</div>
+<div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header">@Localizer["deleting"]</h1>
+        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+    </div>
 
-<h3>@Localizer["deletingQuestion"]</h3>
-<div>
-    <h4>@Localizer["movie"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.Title) *@
-            @Localizer["title"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.ReleaseDate) *@
-            @Localizer["releaseDate"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-        <dt class = "col-sm-2">
-           @*  @Html.DisplayNameFor(model => model.Budget) *@
-            @Localizer["budget"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Budget)
-        </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.BoxOfficeRevenue) *@
-            @Localizer["boxOfficeRevenue"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BoxOfficeRevenue)
-        </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.Duration) *@
-            @Localizer["duration"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-        <dt class = "col-sm-2">
-           @*  @Html.DisplayNameFor(model => model.Rating) *@
-            @Localizer["rating"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @* @Html.DisplayNameFor(model => model.Director) *@
-            @Localizer["director"]
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Director.Name)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@Localizer["delete"]" class="btn btn-danger rounded-pill" />
-    </form>
+    <h3>@Localizer["deletingQuestion"]</h3>
+    <div>
+        <h4>@Localizer["movie"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.Title) *@
+                @Localizer["title"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.ReleaseDate) *@
+                @Localizer["releaseDate"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </dd>
+            <dt class="col-sm-2">
+                @*  @Html.DisplayNameFor(model => model.Budget) *@
+                @Localizer["budget"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Budget)
+            </dd>
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.BoxOfficeRevenue) *@
+                @Localizer["boxOfficeRevenue"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BoxOfficeRevenue)
+            </dd>
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.Duration) *@
+                @Localizer["duration"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Duration)
+            </dd>
+            <dt class="col-sm-2">
+                @*  @Html.DisplayNameFor(model => model.Rating) *@
+                @Localizer["rating"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Rating)
+            </dd>
+            <dt class="col-sm-2">
+                @* @Html.DisplayNameFor(model => model.Director) *@
+                @Localizer["director"]
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Director.Name)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@Localizer["delete"]" class="btn btn-danger rounded-pill" />
+        </form>
+    </div>
+
 </div>

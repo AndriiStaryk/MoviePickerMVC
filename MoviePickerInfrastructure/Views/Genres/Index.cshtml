@@ -4,45 +4,67 @@
     ViewData["Title"] = @Localizer["genres"];
 }
 
-<div class="background-image-blurred"></div>
+<div class="content">
+    <div class="background-image-blurred"></div>
 
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1><strong>@Localizer["genres"]</strong></h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header"><strong>@Localizer["genres"]</strong></h1>
 
-    @if (Accessibility.AllExceptUser(User))
-    {
-        <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewGenre"]</a>
-    }
-</div>
-
-<div class="container" >
-    <div class="row" id="container-card-genres">
-        @foreach (var item in Model)
+        @if (Accessibility.AllExceptUser(User))
         {
-            <div class="card">
-                <div class="card-body flex-lg-row">
-                    <h5 class="card-title"><strong>@item.Name</strong></h5>
-                    <div class="btn-group" role="group" aria-label="Actions">
-
-                        <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a>
-
-                        @if (Accessibility.AllExceptUser(User))
-                        {
-                            <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
-                            <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
-                        }
-                    </div>
-                </div>
-            </div>
-         
+            <a asp-action="Create" class="btn btn-primary rounded-pill">@Localizer["createNewGenre"]</a>
         }
     </div>
-</div>
+
+    <div class="container">
+        <div class="row" id="container-card-genres">
+            @foreach (var item in Model)
+            {
+                <div class="card card-genre-container" id="@("card-" + item.Id)">
+                    <div class="card-body card-body-genre flex-lg-row">
+                        <div class="card-ganre-title">
+                        <h5 class="card-title"><strong>@item.Name</strong></h5>
+                        </div>
 
 
-<div class="container">
-    <div id="chart1"></div>
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            @*  <a class="btn btn-secondary rounded-pill mr-1" asp-action="Details" asp-route-id="@item.Id">@Localizer["details"]</a> *@
+                            @if (Accessibility.AllExceptUser(User))
+                            {
+                                <a class="btn btn-primary rounded-pill mr-1" asp-action="Edit" asp-route-id="@item.Id">@Localizer["edit"]</a>
+                                <a class="btn btn-danger rounded-pill" asp-action="Delete" asp-route-id="@item.Id">@Localizer["delete"]</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var cards = document.querySelectorAll('.card');
+
+            cards.forEach(function (card) {
+
+                card.addEventListener('click', function () {
+
+                    var cardId = card.getAttribute('id');
+
+                    var itemId = cardId.split('-')[1];
+
+                    window.location.href = '@Url.Action("Details", "Genres")/' + itemId;
+                });
+            });
+        });
+    </script>
+
+
+    <div class="container">
+        <div id="chart1"></div>
+    </div>
 </div>
 @section scripts {
     <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

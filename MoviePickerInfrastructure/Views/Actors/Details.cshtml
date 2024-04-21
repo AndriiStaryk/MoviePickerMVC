@@ -7,68 +7,71 @@
 }
 
 @* <div class="background-image-blurred"></div> *@
+<div class="content">
 
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="mr-auto">@Localizer["details"]</h1>
-    <div class="ml-auto">
-         @if (Accessibility.AllExceptUser(User))
-        {
-            <a asp-action="Edit" asp-route-id="@Model?.Actor.Id" class="btn btn-primary rounded-pill">@Localizer["edit"]</a>
-        }
-        <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
-    </div>
-</div>
-
-
-<h4>@Localizer["actor"]</h4>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="d-flex align-items-center">
-            @if (Model.Actor.ActorImage != null && Model.Actor.ActorImage.Length > 0)
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="page-header" class="mr-auto">@Localizer["details"]</h1>
+        <div class="ml-auto">
+            @if (Accessibility.AllExceptUser(User))
             {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.Actor.ActorImage)" alt="Actor Image" class="small-image mr-3">
+                <a asp-action="Edit" asp-route-id="@Model?.Actor.Id" class="btn btn-primary rounded-pill">@Localizer["edit"]</a>
             }
-            <div>
-                <dl class="row m-0">
-                    <dt class="col-sm-4"><strong>@Localizer["name"]</strong></dt>
-                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.Name)</dd>
-                    <dt class="col-sm-4"><strong>@Localizer["birthDate"]</strong></dt>
-                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthDate)</dd>
-                    <dt class="col-sm-4"><strong>@Localizer["birthCountry"]</strong></dt>
-                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthCountry.Name)</dd>
-                </dl>
+            <a asp-action="Index" class="btn btn-primary rounded-pill">@Localizer["backToList"]</a>
+        </div>
+    </div>
+
+
+    <h4>@Localizer["actor"]</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center">
+                @if (Model.Actor.ActorImage != null && Model.Actor.ActorImage.Length > 0)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.Actor.ActorImage)" alt="Actor Image" class="small-image mr-3">
+                }
+                <div>
+                    <dl class="row m-0">
+                        <dt class="col-sm-4"><strong>@Localizer["name"]</strong></dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.Name)</dd>
+                        <dt class="col-sm-4"><strong>@Localizer["birthDate"]</strong></dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthDate)</dd>
+                        <dt class="col-sm-4"><strong>@Localizer["birthCountry"]</strong></dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Actor.BirthCountry.Name)</dd>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<table class="table">
-    <tr>
-        <th style="font-size: 1.2em; font-weight: bold;">@Localizer["moviesActed"]</th>
-    </tr>
-    <tr>
-        <td>
-            <div class="row">
-                @foreach (var movie in Model.MoviesWithThisActor)
-                {
-                    <div class="col-md-4 mb-3">
-                        <a asp-action="MovieInfo" asp-route-movieId="@movie.Id" class="card-link">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">@movie.Title</h5>
+    <table class="table">
+        <tr>
+            <th style="font-size: 1.2em; font-weight: bold;">@Localizer["moviesActed"]</th>
+        </tr>
+        <tr>
+            <td>
+                <div class="row">
+                    @foreach (var movie in Model.MoviesWithThisActor)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <a asp-action="MovieInfo" asp-route-movieId="@movie.Id" class="card-link">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@movie.Title</h5>
+
+                                    </div>
 
                                 </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
 
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
-        </td>
-    </tr>
-</table>
 
+</div>
