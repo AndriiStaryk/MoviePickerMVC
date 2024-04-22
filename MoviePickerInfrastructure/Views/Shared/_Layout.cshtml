@@ -1,6 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <style>
+        .dropdown-menu {
+            z-index: 9000;
+        }
+    </style>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MoviePickerInfrastructure</title>
@@ -13,7 +19,7 @@
          <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 sticky-top" data-bs-theme="dark"> 
         @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 text-white"> *@
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index" style="color: #FFA07A;">MoviePicker</a>
+                <a class="navbar-brand" asp-area="" asp-controller="MainPage" asp-action="Index" style="color: #f60;">MoviePicker</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

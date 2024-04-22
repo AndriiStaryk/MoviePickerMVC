@@ -49,7 +49,7 @@ builder.Services.AddAuthentication().AddCookie();
 
 
 /*builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");*/
-;
+
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <label asp-for="Genres" class="control-label"> @Localizer["genres"] </label>
-                    <select asp-for="Genres" class="form-control" multiple="multiple">
+                    <select asp-for="Genres" class="form-control" multiple="multiple" size="7">
 
                         @foreach (var item in ViewData["GenreId"] as SelectList)
                         {
@@ -69,7 +69,7 @@
 
                 <div class="form-group">
                     <label asp-for="Actors" class="control-label"> @Localizer["actors"] </label>
-                    <select asp-for="Actors" class="form-control" multiple="multiple">
+                    <select asp-for="Actors" class="form-control" multiple="multiple" size="7">
                         @foreach (var item in ViewData["ActorId"] as SelectList)
                         {
                             var actorId = Convert.ToInt32(item.Value);
@@ -90,7 +90,7 @@
 
                 <div class="form-group">
                     <label asp-for="Languages" class="control-label"> @Localizer["languages"] </label>
-                    <select asp-for="Languages" class="form-control" multiple="multiple">
+                    <select asp-for="Languages" class="form-control" multiple="multiple" size="7">
 
                         @foreach (var item in ViewData["LanguageId"] as SelectList)
                         {

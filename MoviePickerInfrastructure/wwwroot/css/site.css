@@ -1,13 +1,20 @@
 body {
-    font-family: Candara, sans-serif; /* This is a simple, clean font */
+    font-family: Candara, sans-serif; 
 }
 
 .card {
     background-color: #0f1c26;
+    border: 2px solid #0f1c26;
+}
+
+.card:hover {
+    border: 2px solid #ff9233;
+    box-shadow: 0 0 5px #ff9233;
+    color: #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
-font-family: 'Georgia', serif; /* This is a more decorative font for headings */
+font-family: 'Georgia', serif;
 }
 
 .page-header {
@@ -16,8 +23,12 @@ font-family: 'Georgia', serif; /* This is a more decorative font for headings */
 }
 
 nav {
-font-family: Candara, Courier, monospace; /* This is a monospace font */
-font-weight: bold; /* This makes the text bold */
+font-family: Candara, Courier, monospace; 
+font-weight: bold; 
+}
+
+.nav-link {
+    color: white;
 }
 
 .bg-dark {
@@ -25,21 +36,16 @@ font-weight: bold; /* This makes the text bold */
 }
 
 .navbar-brand {
-font-weight: bold;   /* This makes the text bold */
-font-size: 1.5em;  /* This makes the text larger */
-color: #FFFFFF;  /* Set navbar brand text color to white */
+font-weight: bold;  
+font-size: 1.5em;  
+color: #FFFFFF;  
 }
 
 .navbar {
-background-color: #87CEFA;  /* This is a light sky blue color */
-}
-
-.nav-link {
-color: #FFFFFF;  /* Set navigation link text color to white */
+background-color: #87CEFA;
 }
 
 
-/* Change the color of links */
 a {
 color: #FF6347; /* This is a tomato color */
 }
@@ -204,10 +210,6 @@ padding: 20px; /* Add padding for card container */
 
 
 
-.card:hover {
-    /*transform: rotateX(-15deg) rotateY(15deg);*/
-}
-
 #container-card-genres {
 display: flex;
 flex-wrap: wrap;
@@ -232,6 +234,8 @@ justify-content: space-around;
 }
 
 
+
+/* _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- */
 
 /* Hide scrollbar for input fields */
 input[type="text"],
@@ -260,7 +264,7 @@ select::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
-
+/* _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- */
 
 
 /*login form*/
@@ -279,7 +283,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .material-symbols-outlined {
-    color: #222; 
+    color: #f60; 
 }
 
 /*start nav*/
@@ -289,7 +293,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .navbar {
-    overflow: hidden;
+    padding: 15px 5px;
     position: fixed;
     top: 0;
     width: 100%;
@@ -316,12 +320,15 @@ textarea::-webkit-scrollbar-thumb {
     margin-bottom: 35px;
 }
 
-.card-genre-container:hover {
-    border: 2px solid #ff9233;
-    box-shadow: 0 0 5px #ff9233;
-    color: #fff;
+.card-genre-container {
+    border: 2px solid transparent;
+    box-shadow: 0 0 5px transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    /* Add a fixed height to prevent height changes on hover */
+    height: auto; /* Adjust the height as needed */
 }
-/*end genre*/
+
+
 
 .btn {
     background-color: #040a0c !important;
@@ -330,4 +337,39 @@ textarea::-webkit-scrollbar-thumb {
 
     .btn:hover {
         background-color: #2684a2 !important;
-    }   
+    }
+
+:root,
+[data-bs-theme=light] {
+   /* background-color: black !important;*/
+    --bs-body-bg: black !important;
+}
+
+
+
+
+/*form input*/
+/*.form-control:focus {
+    background-color: #000;
+    outline: 0;
+    color: white;
+    box-shadow: none;
+    border: 1px solid white;
+}
+
+
+.form-group input, .form-group select, .form-group textarea {
+    position: relative;
+    width: 100%;
+    background: #333;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1em;
+}*/
+
+
+
+/*end input*/
