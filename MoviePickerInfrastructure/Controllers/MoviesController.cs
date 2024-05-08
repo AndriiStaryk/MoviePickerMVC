@@ -36,7 +36,7 @@ public class MoviesController : Controller
     }
 
     //GET: Movies
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         var movies = _context.Movies.Include(m => m.Director).ToList();
 
@@ -81,12 +81,9 @@ public class MoviesController : Controller
             .ToList();
 
         ViewData["filterMessage"] = "moviesByGenre";
-        ViewData["parameter"] = _context.Genres.FirstOrDefault(g => g.Id == genreId).Name;
+        ViewData["parameter"] = _context.Genres.FirstOrDefault(g => g.Id == genreId)!.Name;
 
         return View("Index", moviesByGenre);
-
-        //return View(moviesByGenre);
-
     }
 
 
@@ -105,11 +102,9 @@ public class MoviesController : Controller
             .ToList();
 
         ViewData["filterMessage"] = "moviesByActor";
-        ViewData["parameter"] = _context.Actors.FirstOrDefault(a => a.Id == actorId).Name;
+        ViewData["parameter"] = _context.Actors.FirstOrDefault(a => a.Id == actorId)!.Name;
 
         return View("Index", moviesByActor);
-
-        //return View(moviesByActor);
     }
 
     public IActionResult MoviesByLanguage(int languageId)
@@ -121,10 +116,9 @@ public class MoviesController : Controller
             .ToList();
 
         ViewData["filterMessage"] = "moviesByLanguage";
-        ViewData["parameter"] = _context.Languages.FirstOrDefault(l => l.Id == languageId).Name;
+        ViewData["parameter"] = _context.Languages.FirstOrDefault(l => l.Id == languageId)!.Name;
 
         return View("Index", moviesByLanguage);
-        //return View(moviesByLanguage);
     }
 
 
@@ -139,21 +133,17 @@ public class MoviesController : Controller
         return RedirectToAction("Details", "Directors", new { id = directorId });
     }
 
-   
 
-
-    public async Task<IActionResult> MoviesByDirector(int directorId)
+    public IActionResult MoviesByDirector(int directorId)
     {
         var moviesByDirector = _context.Movies
             .Where(m => m.DirectorId == directorId)
             .ToList();
 
         ViewData["filterMessage"] = "moviesByDirector";
-        ViewData["parameter"] = _context.Directors.FirstOrDefault(d => d.Id == directorId).Name;
+        ViewData["parameter"] = _context.Directors.FirstOrDefault(d => d.Id == directorId)!.Name;
 
         return View("Index", moviesByDirector);
-
-        //return View(await moviesByDirectorContext.ToListAsync());
     }
  
     // GET: Movies/Details/5
@@ -163,8 +153,6 @@ public class MoviesController : Controller
         {
             return NotFound();
         }
-
-        
         var movie = await _context.Movies
             .Include(m => m.Director)
             .FirstOrDefaultAsync(m => m.Id == id);
@@ -172,9 +160,7 @@ public class MoviesController : Controller
         {
             return NotFound();
         }
-
         _movieViewModel = new MovieViewModel(_context, movie);
-
         return View(_movieViewModel);
     }
 
@@ -200,7 +186,8 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     [Authorize(Roles = Accessibility.Roles)]
 
-    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie, int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
+    public async Task<IActionResult> Create([Bind("Title,ReleaseDate,DirectorId,Budget,BoxOfficeRevenue,Duration,Description,Id")] Movie movie,
+                                            int[] genres, int[] actors, int[] languages, IFormFile? movieImage)
     {
         if (ModelState.IsValid)
         {
