@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Requests";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            padding-top: 100px; /* Adding padding of 100px at the top */
+            font-family: Arial, sans-serif; /* Set font family */
+        }
+
+        table {
+            width: 100%; /* Make table width 100% */
+            border-collapse: collapse; /* Collapse table borders */
+        }
+
+        th, td {
+            border: 1px solid white; /* Set border for th and td */
+            padding: 8px; /* Add padding */
+            text-align: left; /* Align text to left */
+        }
+    </style>
+</head>
+<body>
+    <h1>Ця сторінка для запитів </h1>
+
+    <table>
+        <tr>
+            <th>Запити</th>
+        </tr>
+        @for (int i = 1; i <= 9; i++)
+        {
+            <tr>
+                <td>
+                    @{
+                        string requestNameLink = "Request" + i.ToString();
+                        string requestNameDisplay = "Запит" + i.ToString();
+                    }
+                    <a asp-action="@requestNameLink">@requestNameDisplay</a>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>
