@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Requests";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запит 1</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            padding-top: 100px; /* Adding padding of 100px at the top */
+            font-family: Arial, sans-serif;
+        }
+
+        .sentence {
+            display: inline;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            display: inline;
+            margin: 0 10px; /* Adjust margin as needed */
+            padding: 0 0 5px 0; /* Remove padding on sides, keep only at the bottom */
+            font-size: 1.5rem;
+            width: 60px; /* Adjust width as needed */
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid white; /* Underscore line */
+            background: none;
+            color: white;
+            vertical-align: middle; /* Adjust vertical alignment */
+            position: relative;
+            top: -2px; /* Adjust the value to raise the input field */
+        }
+
+            .input-field::placeholder {
+                color: white;
+                opacity: 0; /* Hide the placeholder text */
+            }
+
+        .submit-button {
+            display: inline;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: white;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+            .submit-button:hover {
+                background-color: gray;
+            }
+
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            font-size: 1rem;
+            padding: 0.5rem;
+            width: calc(100% - 1rem);
+            margin: 0 auto;
+            display: block;
+            /* background: none; */
+            color: white;
+            border: 1px solid white;
+        }
+
+        .row {
+            padding-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <form asp-controller="DB_Lab" asp-action="Request5" method="post">
+        <div class="form-group">
+            <label for="moviesCount" class="sentence">
+                Актори, які знімались у 
+            </label>
+            <input type="number" name="moviesCount" class="input-field" placeholder="__" maxlength="3" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3);" required>
+            <label class="sentence">або більше фільмах</label>
+
+            <button type="submit" class="submit-button">Пошук</button>
+        </div>
+    </form>
+
+    <div>
+        <label class="sentence">
+            @ViewBag.RequestTextRaw
+        </label>
+    </div>
+
+    @if (ViewBag.Actors != null)
+    {
+        <div class="row" id="container-card-da">
+            @foreach (var item in ViewBag.Actors)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title text-truncate"><strong>@item.Name</strong></h5>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex mb-3">
+                                    <div class="ml-auto">
+                                        @if (item.ActorImage != null && item.ActorImage.Length > 0)
+                                        {
+                                            <img src="data:image;base64,@Convert.ToBase64String(item.ActorImage)" alt="Actor Image" class="image-fit-person">
+                                        }
+                                    </div>
+                                    <div>
+                                        <p class="card-text"><strong>@Localizer["age"]:</strong> @item.GetYears()</p>
+
+                                        @{
+                                            var country = await new MoviePickerV2Context().Countries.FindAsync(item.BirthCountryId);
+                                        }
+                                        <p class="card-text"><strong>@Localizer["birthCountry"]:</strong> @country.Name</p> 
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
+</body>
+</html>

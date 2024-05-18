@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Requests";
+    ViewData["Title"] = "Запит 2";
 }
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запит 1</title>
+    <title>Запит 2</title>
     <style>
         body {
             background-color: black;
@@ -21,26 +21,21 @@
             font-size: 1.5rem;
         }
 
-        .input-field {
+        .select-field {
             display: inline;
             margin: 0 10px; /* Adjust margin as needed */
             padding: 0 0 5px 0; /* Remove padding on sides, keep only at the bottom */
             font-size: 1.5rem;
-            width: 60px; /* Adjust width as needed */
             text-align: center;
             border: none;
             border-bottom: 2px solid white; /* Underscore line */
-            background: none;
+            background: black;
             color: white;
             vertical-align: middle; /* Adjust vertical alignment */
             position: relative;
-            top: -2px; /* Adjust the value to raise the input field */
+            top: -2px; /* Adjust the value to raise the select field */
+            appearance: none; /* Remove default styling */
         }
-
-            .input-field::placeholder {
-                color: white;
-                opacity: 0; /* Hide the placeholder text */
-            }
 
         .submit-button {
             display: inline;
@@ -57,43 +52,40 @@
                 background-color: gray;
             }
 
-
         .form-group {
-            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
 
-        .form-control {
-            font-size: 1rem;
-            padding: 0.5rem;
-            width: calc(100% - 1rem);
-            margin: 0 auto;
-            display: block;
-            /* background: none; */
+        /* Custom arrow for select field */
+        .select-field::after {
+            content: "▼";
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
             color: white;
-            border: 1px solid white;
         }
-
-        .container {
-            padding-top: 20px; 
-        }
-
-
     </style>
 </head>
 <body>
-
-    <form asp-controller="DB_Lab" asp-action="Request1" method="post">
+    <form asp-controller="DB_Lab" asp-action="Request3" method="post">
         <div class="form-group">
-            <label for="minAge" class="sentence">
-                Фільми, в яких грає принаймні один актор, якому більше за
+            <label for="countryId" class="sentence">
+                Фільми, які дубльовані
             </label>
-            <input type="number" name="minAge" id="minAge" class="input-field" placeholder="__" maxlength="3" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3);" required>
-            <label for="minAge" class="sentence">років</label>
-
+            <select name="languageId"  class="select-field" required>
+                <option value=""></option>
+                @foreach (var language in ViewBag.Languages)
+                {
+                    <option value="@language.Value">@language.Text</option>
+                }
+            </select>
+            <label class="sentence">мовою</label>
             <button type="submit" class="submit-button">Пошук</button>
         </div>
     </form>
-
 
     <div>
         <label class="sentence">
@@ -101,9 +93,10 @@
         </label>
     </div>
 
+
     @if (ViewBag.Movies != null)
     {
-        <div class="container">
+        <div class="container" style="margin-top: 20px;">
             <div class="row">
                 @foreach (var item in ViewBag.Movies)
                 {
@@ -120,7 +113,6 @@
                                             }
                                         </div>
                                         <div>
-                                            @* <p class="card-text"><strong>@Localizer["director"]: </strong>@item.Director.Name</p> *@
                                             <p class="card-text"><strong>@Localizer["releaseYear"]:</strong> @item.ReleaseDate.Year</p>
                                             <p class="card-text"><strong>@Localizer["duration"]: </strong>@item.Duration @Localizer["minutes"]</p>
                                             <p class="card-text"><strong>@Localizer["rating"]: </strong>@item.Rating</p>

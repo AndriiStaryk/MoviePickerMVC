@@ -74,26 +74,23 @@
         }
 
         .container {
-            padding-top: 20px; 
+            padding-top: 20px;
         }
-
 
     </style>
 </head>
 <body>
 
-    <form asp-controller="DB_Lab" asp-action="Request1" method="post">
+    <form asp-controller="DB_Lab" asp-action="Request4" method="post">
         <div class="form-group">
-            <label for="minAge" class="sentence">
-                Фільми, в яких грає принаймні один актор, якому більше за
+            <label for="reviewsCount" class="sentence">
+                Фільми, в яких кількість відгуків більше за
             </label>
-            <input type="number" name="minAge" id="minAge" class="input-field" placeholder="__" maxlength="3" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3);" required>
-            <label for="minAge" class="sentence">років</label>
+            <input type="number" name="reviewsCount" class="input-field" placeholder="__" maxlength="3" oninput="if (this.value.length > 3) this.value = this.value.slice(0, 3);" required>
 
             <button type="submit" class="submit-button">Пошук</button>
         </div>
     </form>
-
 
     <div>
         <label class="sentence">
