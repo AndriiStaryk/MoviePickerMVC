@@ -1,10 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-
-@{
-    ViewData["Title"] = "Requests";
+﻿@{
+    ViewData["Title"] = "Запит 8";
 }
 
 <!DOCTYPE html>
@@ -12,16 +7,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Page 1</title>
+    <title>Запит 2</title>
     <style>
         body {
             background-color: black;
             color: white;
             padding-top: 100px; /* Adding padding of 100px at the top */
+            font-family: Arial, sans-serif;
         }
+
+        .sentence {
+            display: inline;
+            font-size: 1.5rem;
+        }
+
+        .select-field {
+            display: inline;
+            margin: 0 10px; /* Adjust margin as needed */
+            padding: 0 0 5px 0; /* Remove padding on sides, keep only at the bottom */
+            font-size: 1.5rem;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid white; /* Underscore line */
+            background: black;
+            color: white;
+            vertical-align: middle; /* Adjust vertical alignment */
+            position: relative;
+            top: -2px; /* Adjust the value to raise the select field */
+            appearance: none; /* Remove default styling */
+        }
+
+        .submit-button {
+            display: inline;
+            font-size: 1.5rem;
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: white;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+
+            .submit-button:hover {
+                background-color: gray;
+            }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Custom arrow for select field */
+        .select-field::after {
+            content: "▼";
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: white;
+        }
+
+        .row {
+            padding-top: 20px;
+        }
+
     </style>
 </head>
 <body>
-    <h1>This is page for request1</h1>
+    <form asp-controller="DB_Lab" asp-action="Request8" method="post">
+        <div class="form-group">
+            <label class="sentence">
+                Режисери, які зняли принаймні один фільм такого ж жанру як жанри фільму
+            </label>
+            <select name="movieId" class="select-field" required>
+                <option value=""></option>
+                @foreach (var movie in ViewBag.AllMovies)
+                {
+                    <option value="@movie.Value">@movie.Text</option>
+                }
+            </select>
+            <button type="submit" class="submit-button">Пошук</button>
+        </div>
+    </form>
+
+    <div>
+        <label class="sentence">
+            @ViewBag.RequestTextRaw
+        </label>
+    </div>
+
+     @if (ViewBag.Directors != null)
+    {
+        <div class="row" id="container-card-da">
+            @foreach (var item in ViewBag.Directors)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title text-truncate"><strong>@item.Name</strong></h5>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex mb-3">
+                                    <div class="ml-auto">
+                                        @if (item.DirectorImage != null && item.DirectorImage.Length > 0)
+                                        {
+                                            <img src="data:image;base64,@Convert.ToBase64String(item.DirectorImage)" alt="Director Image" class="image-fit-person">
+                                        }
+                                    </div>
+                                    <div>
+                                        <p class="card-text"><strong>@Localizer["age"]:</strong> @item.GetYears()</p>
+
+                                        @{
+                                            var country = await new MoviePickerV2Context().Countries.FindAsync(item.BirthCountryId);
+                                        }
+                                        <p class="card-text"><strong>@Localizer["birthCountry"]:</strong> @country.Name</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    }
 </body>
 </html>

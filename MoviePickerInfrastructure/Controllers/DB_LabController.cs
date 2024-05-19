@@ -22,6 +22,8 @@ public class DB_LabController : Controller
     }
     public async Task<IActionResult> Request1(int? minAge)
     {
+        //Фільми, в яких грає принаймні один актор, якому більше за {minAge} років
+
         var movies = await _context.Movies   
             .ToListAsync();
 
@@ -55,7 +57,8 @@ public class DB_LabController : Controller
 
     public async Task<IActionResult> Request2(int? countryId)
     {
- 
+        //Фільми, в яких грає принаймні один актор, з {country.Name}
+
         ViewBag.Countries = new SelectList(_context.Countries, "Id", "Name");
 
         var movies = await _context.Movies.ToListAsync();
@@ -89,6 +92,8 @@ public class DB_LabController : Controller
     }
     public async Task<IActionResult> Request3(int? languageId)
     {
+        //Фільми, які дубльовані {language.Name} мовою
+
         ViewBag.Languages = new SelectList(_context.Languages, "Id", "Name");
 
         var movies = await _context.Movies.ToListAsync();
@@ -120,6 +125,8 @@ public class DB_LabController : Controller
     }
     public async Task<IActionResult> Request4(int? reviewsCount)
     {
+        //Фільми, в яких кількість відгуків більше за {reviewsCount}
+
         var movies = await _context.Movies
             .ToListAsync();
 
@@ -155,6 +162,8 @@ public class DB_LabController : Controller
     }
     public async Task<IActionResult> Request5(int? moviesCount)
     {
+        //Актори, які знімались у {moviesCount} або більше фільмах
+
         var actors = await _context.Actors
             .ToListAsync();
 
@@ -190,16 +199,155 @@ public class DB_LabController : Controller
 
         return View();
     }
-    public async Task<IActionResult> Request6()
+    public async Task<IActionResult> Request6(int? movieId)
     {
+        //назви фільмів, в яких знімались точно такі ж актори, як в фільмі "Х"
+
+        ViewBag.AllMovies = new SelectList(_context.Movies, "Id", "Title");
+
+        var movies = await _context.Movies
+            .ToListAsync();
+
+        if (movieId == null)
+        {
+            ViewBag.Movies = movies;
+            ViewBag.RequestTextRaw = "Результати за запитом: \"Усі фільми\"";
+            return View();
+        }
+
+            string sql = @"
+            WITH MovieActors AS (
+            SELECT ma.ActorID
+            FROM MoviesActors ma
+            WHERE ma.MovieID = @movieId
+            ),
+            MatchingMovies AS (
+                SELECT ma.MovieID
+                FROM MoviesActors ma
+                JOIN MovieActors ma2 ON ma.ActorID = ma2.ActorID
+                GROUP BY ma.MovieID
+                HAVING COUNT(DISTINCT ma.ActorID) = (SELECT COUNT(*) FROM MovieActors)
+            )
+            SELECT m.*
+            FROM Movies m
+            JOIN MatchingMovies mm ON m.Id = mm.MovieID
+            WHERE m.Id <> @movieId;
+            ";
+
+
+            movies = await _context.Movies
+                            .FromSqlRaw(sql, new SqlParameter("@movieId", movieId.Value))
+                            .ToListAsync();
+
+            var movie = await _context.Movies.FindAsync(movieId);
+
+            ViewBag.Movies = movies;
+            ViewBag.RequestTextRaw = $"Результати за запитом: \"Фільми, в яких знімались точно такі ж актори, як в фільмі {movie.Title}\"";
+
         return View();
+
+
     }
-    public async Task<IActionResult> Request7()
+    public async Task<IActionResult> Request7(int? directorId)
     {
+        //імена акторів, що знімались в усіх фільмах режисера "Х"
+
+        ViewBag.Directors = new SelectList(_context.Directors, "Id", "Name");
+
+        var actors = await _context.Actors
+            .ToListAsync();
+
+        if (directorId == null)
+        {
+            ViewBag.Actors = actors;
+            ViewBag.RequestTextRaw = "Результати за запитом: \"Усі фільми\"";
+            return View();
+        }
+
+        string sql = @"
+        WITH DirectorMovies AS (
+            SELECT m.Id AS MovieID
+            FROM Movies m
+            WHERE m.DirectorID = @directorId
+        ),
+        ActorInDirectorMovies AS (
+            SELECT ma.ActorID, dm.MovieID
+            FROM MoviesActors ma
+            JOIN DirectorMovies dm ON ma.MovieID = dm.MovieID
+        ),
+        ActorMovieCounts AS (
+            SELECT ActorID, COUNT(DISTINCT MovieID) AS MovieCount
+            FROM ActorInDirectorMovies
+            GROUP BY ActorID
+        ),
+        TotalDirectorMovies AS (
+            SELECT COUNT(DISTINCT MovieID) AS TotalMovies
+            FROM DirectorMovies
+        )
+        SELECT a.*
+        FROM Actors a
+        JOIN ActorMovieCounts amc ON a.Id = amc.ActorID
+        JOIN TotalDirectorMovies tdm ON amc.MovieCount = tdm.TotalMovies;
+        ";
+
+        
+        actors = await _context.Actors
+                        .FromSqlRaw(sql, new SqlParameter("@directorId", directorId))
+                        .ToListAsync();
+
+
+        var director = await _context.Directors.FindAsync(directorId);
+
+        ViewBag.Actors = actors;
+        ViewBag.RequestTextRaw = $"Результати за запитом: \"Актори, які знімались в усіх фільмах режисера {director.Name}\"";
+
         return View();
+
     }
-    public async Task<IActionResult> Request8()
+    public async Task<IActionResult> Request8(int? movieId)
     {
+        //Режисери, які зняли принаймні один фільм такого ж жанру як жанри фільму "Х"
+
+        ViewBag.AllMovies = new SelectList(_context.Movies, "Id", "Title");
+
+        var directors = await _context.Directors
+            .ToListAsync();
+
+        if (movieId == null)
+        {
+            ViewBag.Directors = directors;
+            ViewBag.RequestTextRaw = "Результати за запитом: \"Усі режисери\"";
+            return View();
+        }
+
+        string sql = @"
+        WITH MovieGenres AS (
+            SELECT mg.GenreID
+            FROM MoviesGenres mg
+            WHERE mg.MovieID = @movieId
+        ),
+        DirectorMovies AS (
+            SELECT DISTINCT m.DirectorID
+            FROM Movies m
+            JOIN MoviesGenres mg ON m.Id = mg.MovieID
+            WHERE mg.GenreID IN (SELECT GenreID FROM MovieGenres)
+        )
+        SELECT d.*
+        FROM Directors d
+        JOIN DirectorMovies dm ON d.Id = dm.DirectorID;
+        ";
+
+        
+        directors = await _context.Directors
+                        .FromSqlRaw(sql, new SqlParameter("@movieId", movieId))
+                        .ToListAsync();
+
+
+        var movie = await _context.Movies.FindAsync(movieId);
+
+        ViewBag.Directors = directors;
+        ViewBag.RequestTextRaw = $"Результати за запитом: \"Режисери, які зняли принаймні один фільм такаких самих жанрів як і фільм {movie.Title}\"";
+
         return View();
     }
     public async Task<IActionResult> Request9()
